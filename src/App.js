@@ -3,13 +3,15 @@ import Home from "./pages/Home";
 import HeaderSearch from "./components/HeaderSearch";
 import './App.less';
 import { Breadcrumb, Layout, Menu } from 'antd';
+import myData from './data.json';
 const { Header, Footer, Content } = Layout;
 
 function App() {
+  const { shoppingCartItems, user } = myData;
   return (
     <Layout className="layout">
       <div className="logo" />
-      <HeaderSearch></HeaderSearch>
+      <HeaderSearch shoppingCartItems={shoppingCartItems}></HeaderSearch>
       <Header>
         <Menu theme="light" mode="horizontal" style={{ background: '#F9F9F9' }}>
           <Menu.SubMenu key="ambos" title="Ambos">

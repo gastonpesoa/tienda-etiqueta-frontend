@@ -2,22 +2,22 @@ import { Col, Row } from 'antd';
 import logo from "../logo.png"
 import Search from "./Search";
 import ActionsUser from "./ActionsUser";
-import ShoppingCart from "./ShoppingCart";
+import ShoppingCartPopover from "./ShoppingCartPopover";
 
-const HeaderSearch = () => {
+const HeaderSearch = ({ shoppingCartItems }) => {
     return (
         <Row className='header-row-container'>
             <Col className='logo-container' span={2}>
-                <img src={logo} alt="Logo" className="logo"/>
+                <img src={logo} alt="Logo" className="logo" />
             </Col>
-            <Col className='header-col-container'span={20}>
-                <Search/>
-            </Col>
-            <Col className='header-col-container' span={1}>
-                <ActionsUser/>
+            <Col className='header-col-container' span={20}>
+                <Search />
             </Col>
             <Col className='header-col-container' span={1}>
-                <ShoppingCart/>
+                <ActionsUser />
+            </Col>
+            <Col className='header-col-container' span={1}>
+                <ShoppingCartPopover items={shoppingCartItems} />
             </Col>
         </Row>
     )

@@ -1,0 +1,28 @@
+{
+    "shoppingCartItems": [
+        {
+            "id": "1",
+            "nombre": "Camisa Azul Estampada",
+            "marca": "Tascani",
+            "talle": "XS",
+            "precio": 11400.00,
+            "puntaje": 5,
+            "unidades": 1,
+            "imagen": "https://sastreriadetali.com.ar/wp-content/uploads/2022/04/29.jpg"
+        },
+        {
+            "id": "2",
+            "nombre": "Corbata",
+            "marca": "Macowens",
+            "color": "Rojo",
+            "precio": 1280.00,
+            "puntaje": 5,
+            "unidades": 1,
+            "imagen": "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_59.jpg"
+        }
+    ],
+    "user": {
+        "id": 1,
+        "nombre": "Juan"
+    }
+}
