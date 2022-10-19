@@ -6,7 +6,6 @@ const { Option } = Select;
 const ShoppingCartPopoverItem = ({
     item: { id, nombre, marca, talle, color, precio, puntaje, unidades, imagen },
 }) => {
-    console.log(nombre, color)
     return (
         <Row>
             <Col span={8}>

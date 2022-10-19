@@ -1,59 +1,20 @@
 import { Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import HeaderSearch from "./components/HeaderSearch";
+import MenuHeader from "./components/MenuHeader";
 import './App.less';
 import { Breadcrumb, Layout, Menu } from 'antd';
 import myData from './data.json';
 const { Header, Footer, Content } = Layout;
 
 function App() {
-  const { shoppingCartItems, user } = myData;
+  const { shoppingCartItems, menu } = myData;
   return (
     <Layout className="layout">
       <div className="logo" />
       <HeaderSearch shoppingCartItems={shoppingCartItems}></HeaderSearch>
       <Header>
-        <Menu theme="light" mode="horizontal" style={{ background: '#F9F9F9' }}>
-          <Menu.SubMenu key="ambos" title="Ambos">
-            <Menu.Item key="ambos-slim">
-              Slim
-            </Menu.Item>
-            <Menu.Item key="ambos-slim-fit">
-              Slim fit
-            </Menu.Item>
-          </Menu.SubMenu>
-          <Menu.SubMenu key="trajes" title="Trajes">
-            <Menu.Item key="trajes-negros">
-              Trajes Negros
-            </Menu.Item>
-            <Menu.Item key="trajes-azules">
-              Trajes azules
-            </Menu.Item>
-            <Menu.Item key="trajes-blancos">
-              Trajes blancos
-            </Menu.Item>
-          </Menu.SubMenu>
-          <Menu.SubMenu key="camisas" title="Camisas">
-            <Menu.Item key="camisas-lisas">
-              Camisas Lisas
-            </Menu.Item>
-            <Menu.Item key="camisas-rayadas">
-              Camisas Rayadas
-            </Menu.Item>
-            <Menu.Item key="camisas-estampadas">
-              Camisas Estampadas
-            </Menu.Item>
-          </Menu.SubMenu>
-          <Menu.Item key="zapatos">
-            Zapatos
-          </Menu.Item>
-          <Menu.Item key="corbatas">
-            Corbatas
-          </Menu.Item>
-          <Menu.Item key="accesorios">
-            Accesorios
-          </Menu.Item>
-        </Menu>
+        <MenuHeader menu={menu} />
       </Header>
       <Content
         style={{

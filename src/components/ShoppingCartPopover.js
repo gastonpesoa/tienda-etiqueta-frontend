@@ -15,14 +15,15 @@ const ShoppingCartPopover = ({ items }) => {
                 <Col span={24}><Title level={3}>Carrito de compras</Title></Col>
             </Row>
             <Space direction='vertical'>
-
-                {items.length
-                    ? (items.map(item => (
-                        <ShoppingCartPopoverItem
-                            key={item.id}
-                            item={item}
-                        />)))
-                    : <Row><Col span={24}><Title level={4}>Tu carrito está vacío</Title></Col></Row>}
+                {
+                    items.length
+                        ? (items.map(item => (
+                            <ShoppingCartPopoverItem
+                                key={item.id}
+                                item={item}
+                            />)))
+                        : <Row><Col span={24}><Title level={4}>Tu carrito está vacío</Title></Col></Row>
+                }
             </Space>
             {
                 items.length > 0 &&

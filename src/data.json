@@ -21,8 +21,85 @@
             "imagen": "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_59.jpg"
         }
     ],
-    "user": {
-        "id": 1,
-        "nombre": "Juan"
-    }
+    "menu": [
+        {
+            "key": "ambos",
+            "title": "Ambos",
+            "link": "",
+            "items": [
+                {
+                    "key": "ambos-slim",
+                    "title": "Slim",
+                    "link": ""
+                },
+                {
+                    "key": "ambos-slim-fit",
+                    "title": "Slim fit",
+                    "link": ""
+                }
+            ]
+        },
+        {
+            "key": "trajes",
+            "title": "Trajes",
+            "link": "",
+            "items": [
+                {
+                    "key": "trajes-negros",
+                    "title": "Trajes Negros",
+                    "link": ""
+                },
+                {
+                    "key": "trajes-azules",
+                    "title": "Trajes Azules",
+                    "link": ""
+                },
+                {
+                    "key": "trajes-blancos",
+                    "title": "Trajes Blancos",
+                    "link": ""
+                }
+            ]
+        },
+        {
+            "key": "camisas",
+            "title": "Camisas",
+            "link": "",
+            "items": [
+                {
+                    "key": "camisas-lisas",
+                    "title": "Camisas Lisas",
+                    "link": ""
+                },
+                {
+                    "key": "camisas-rayadas",
+                    "title": "Camisas Rayadas",
+                    "link": ""
+                },
+                {
+                    "key": "camisas-estampadas",
+                    "title": "Camisas Estampadas",
+                    "link": ""
+                }
+            ]
+        },
+        {
+            "key": "zapatos",
+            "title": "Zapatos",
+            "link": "",
+            "items": []
+        },
+        {
+            "key": "corbatas",
+            "title": "Corbatas",
+            "link": "",
+            "items": []
+        },
+        {
+            "key": "accesorios",
+            "title": "Accesorios",
+            "link": "",
+            "items": []
+        }
+    ]
 }
