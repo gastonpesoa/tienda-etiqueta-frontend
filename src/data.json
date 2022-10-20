@@ -101,5 +101,23 @@
             "link": "",
             "items": []
         }
+    ],
+    "carouselSource": [
+        {
+            "src": "https://img.freepik.com/foto-gratis/tienda-ropa-tienda-ropa-perchas-tienda-boutique-moderna_1150-8886.jpg?w=996&t=st=1666222193~exp=1666222793~hmac=75f6335bce583359867e8bc4c9df98d26c3a9598e3aa95df758e10f52d285d0b",
+            "alt": "camisas"
+        },
+        {
+            "src": "https://img.freepik.com/foto-gratis/mancuernas-novio-estilo-hermoso-camisa_8353-645.jpg?w=996&t=st=1666222477~exp=1666223077~hmac=4578033935eb79237ca14a8496d2e66346e5f6df63cfbc11bc3fdf061709691f",
+            "alt": "traje"
+        },
+        {
+            "src": "https://img.freepik.com/foto-gratis/hombre-pensativo-traje-azul-sienta-alfeizar-ventana_8353-8843.jpg?w=1380&t=st=1666222500~exp=1666223100~hmac=1d41344cb1f3d3f052651512d8ee7a1aca7dbcbc4f206950924d218f18267048",
+            "alt": "traje2"
+        },
+        {
+            "src": "https://img.freepik.com/foto-gratis/captura-pantalla-hermosa-joven-caucasica-posando-al-aire-libre-vestido-formal_181624-58139.jpg?w=996&t=st=1666222587~exp=1666223187~hmac=dca9e637284b092af25e00cef53cf92d1bfe6fe0106a35b47d63253750556ae2",
+            "alt": "vestido"
+        }
     ]
 }

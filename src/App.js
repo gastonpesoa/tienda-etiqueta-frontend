@@ -8,7 +8,7 @@ import myData from './data.json';
 const { Header, Footer, Content } = Layout;
 
 function App() {
-  const { shoppingCartItems, menu } = myData;
+  const { shoppingCartItems, menu, carouselSource } = myData;
   return (
     <Layout className="layout">
       <div className="logo" />
@@ -16,30 +16,18 @@ function App() {
       <Header>
         <MenuHeader menu={menu} />
       </Header>
-      <Content
-        style={{
-          padding: '0 50px',
-        }}
-      >
-        <Breadcrumb
-          style={{
-            margin: '16px 0',
-          }}
-        >
+      <Content>
+        {/* <Breadcrumb style={{ margin: '16px 0' }}>
           <Breadcrumb.Item>Inicio</Breadcrumb.Item>
-        </Breadcrumb>
+        </Breadcrumb> */}
         <div className="site-layout-content">
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home carouselSource={carouselSource} />} />
           </Routes>
         </div>
       </Content>
-      <Footer
-        style={{
-          textAlign: 'center',
-        }}
-      >
-        Ant Design ©2018 Created by Ant UED
+      <Footer style={{ textAlign: 'center' }}>
+        Copyright © 2022 | Tienda Etiqueta
       </Footer>
     </Layout>
   );

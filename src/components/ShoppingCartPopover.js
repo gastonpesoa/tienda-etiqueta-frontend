@@ -50,7 +50,7 @@ const ShoppingCartPopover = ({ items }) => {
 
     return (
         <Popover content={popoverContent} placement='bottomRight'>
-            <Badge count={5}>
+            <Badge count={items.length}>
                 <ShoppingCartOutlined style={{ fontSize: '24px' }} />
             </Badge>
         </Popover>

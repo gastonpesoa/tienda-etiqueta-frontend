@@ -1,4 +1,4 @@
-import { Col, Row } from 'antd';
+import { Col, Row, Image } from 'antd';
 import logo from "../logo.png"
 import Search from "./Search";
 import ActionsUser from "./ActionsUser";
@@ -8,7 +8,7 @@ const HeaderSearch = ({ shoppingCartItems }) => {
     return (
         <Row className='header-row-container'>
             <Col className='logo-container' span={2}>
-                <img src={logo} alt="Logo" className="logo" />
+                <Image src={logo} alt="Logo" className="logo" preview={false}/>
             </Col>
             <Col className='header-col-container' span={20}>
                 <Search />

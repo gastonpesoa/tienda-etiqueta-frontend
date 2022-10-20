@@ -9,7 +9,7 @@ const ShoppingCartPopoverItem = ({
     return (
         <Row>
             <Col span={8}>
-                <Image className='shoppingcartpopoveritem-img' src={imagen} alt={nombre} />
+                <Image className='shoppingcartpopoveritem-img' src={imagen} alt={nombre} preview={false}/>
             </Col>
             <Col span={16}>
                 <Row>
