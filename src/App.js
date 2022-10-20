@@ -8,7 +8,7 @@ import myData from './data.json';
 const { Header, Footer, Content } = Layout;
 
 function App() {
-  const { shoppingCartItems, menu, carouselSource } = myData;
+  const { shoppingCartItems, menu, carouselSource, bestSellers, bestSuits } = myData;
   return (
     <Layout className="layout">
       <div className="logo" />
@@ -17,12 +17,16 @@ function App() {
         <MenuHeader menu={menu} />
       </Header>
       <Content>
-        {/* <Breadcrumb style={{ margin: '16px 0' }}>
-          <Breadcrumb.Item>Inicio</Breadcrumb.Item>
-        </Breadcrumb> */}
         <div className="site-layout-content">
           <Routes>
-            <Route path="/" element={<Home carouselSource={carouselSource} />} />
+            <Route path="/" element={
+              <Home
+                carouselSource={carouselSource}
+                bestSellers={bestSellers}
+                bestSuits={bestSuits}
+              />
+            }
+            />
           </Routes>
         </div>
       </Content>

@@ -4,10 +4,11 @@ import {
 } from 'antd';
 import LinksGroup from "../components/LinksGroup";
 import InfoCard from "../components/InfoCard";
+import ProductSmallCard from "../components/ProductSmallCard";
 const { Content } = Layout;
 const { Title, Text } = Typography;
 
-const Home = ({ carouselSource }) => {
+const Home = ({ carouselSource, bestSellers, bestSuits }) => {
     return (
         <>
             <div className='carousel-container-style'>
@@ -50,7 +51,7 @@ const Home = ({ carouselSource }) => {
                     </Col>
                 </Row>
                 <Row gutter={16} className='space-margin-bottom'>
-                    <Col sm={24} lg={8} >
+                    <Col sm={24} lg={6} >
                         <LinksGroup
                             title="Productos más vendidos"
                             items={[
@@ -62,23 +63,16 @@ const Home = ({ carouselSource }) => {
                             ]}
                         />
                     </Col>
-                    <Col sm={24} lg={8} >
-                        <Card>
-                            <p>Card content</p>
-                            <p>Card content</p>
-                            <p>Card content</p>
-                        </Card>
-                    </Col>
-                    <Col sm={24} lg={8} >
-                        <Card>
-                            <p>Card content</p>
-                            <p>Card content</p>
-                            <p>Card content</p>
-                        </Card>
-                    </Col>
+                    {
+                        bestSellers.map(item => (
+                            <Col key={item.id} sm={24} lg={6} >
+                                <ProductSmallCard key={item.id} product={item} />
+                            </Col>
+                        ))
+                    }
                 </Row>
                 <Row gutter={16} className='space-margin-bottom'>
-                    <Col sm={24} lg={8} >
+                    <Col sm={24} lg={6} >
                         <LinksGroup
                             title="Mejores en Trajes"
                             items={[
@@ -90,20 +84,13 @@ const Home = ({ carouselSource }) => {
                             ]}
                         />
                     </Col>
-                    <Col sm={24} lg={8} >
-                        <Card>
-                            <p>Card content</p>
-                            <p>Card content</p>
-                            <p>Card content</p>
-                        </Card>
-                    </Col>
-                    <Col sm={24} lg={8} >
-                        <Card>
-                            <p>Card content</p>
-                            <p>Card content</p>
-                            <p>Card content</p>
-                        </Card>
-                    </Col>
+                    {
+                        bestSuits.map(item => (
+                            <Col key={item.id} sm={24} lg={6} >
+                                <ProductSmallCard key={item.id} product={item} />
+                            </Col>
+                        ))
+                    }
                 </Row>
             </Content>
         </>
