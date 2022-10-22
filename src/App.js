@@ -1,5 +1,6 @@
 import { Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
+import Login from "./pages/Login";
 import HeaderSearch from "./components/HeaderSearch";
 import MenuHeader from "./components/MenuHeader";
 import './App.less';
@@ -25,6 +26,10 @@ function App() {
                 bestSellers={bestSellers}
                 bestSuits={bestSuits}
               />
+            }
+            />
+            <Route path="/login" element={
+              <Login />
             }
             />
           </Routes>
