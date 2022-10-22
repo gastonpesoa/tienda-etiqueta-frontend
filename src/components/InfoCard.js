@@ -2,13 +2,16 @@ import { Card, Typography, Button } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
 const { Title, Text } = Typography;
 
-const InfoCard = ({ title, subTitle, buttonText }) => {
+const InfoCard = ({ title, subTitle, buttonText, backgroundImage }) => {
     return (
         <Card
             style={{
-                width: '100%',
-                height:'250px',
-                background: '#C8DEB3'
+                width: '95%',
+                height: '300px',
+                backgroundImage: `url(${process.env.PUBLIC_URL + backgroundImage})`,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'right',
+                backgroundColor:'#C8DEB3'
             }}
         >
             <Title level={5} type="success">{subTitle}</Title>
@@ -16,7 +19,7 @@ const InfoCard = ({ title, subTitle, buttonText }) => {
             <Button
                 size='large'
                 icon={<RightOutlined />}
-                style={{ marginTop: '60px' }}
+                style={{ marginTop: '100px' }}
             >
                 {buttonText}
             </Button>

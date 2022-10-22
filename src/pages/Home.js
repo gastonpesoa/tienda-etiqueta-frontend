@@ -22,7 +22,7 @@ const Home = ({ carouselSource, bestSellers, bestSuits }) => {
             </div>
             <Content style={{ padding: '0 50px' }} >
                 <Row gutter={16} className='space-margin-bottom'>
-                    <Col sm={24} lg={8} >
+                    <Col sm={24} lg={6} >
                         <LinksGroup
                             title="Menú de Categorías"
                             items={[
@@ -35,18 +35,20 @@ const Home = ({ carouselSource, bestSellers, bestSuits }) => {
                             buttonText="Más categorias"
                         />
                     </Col>
-                    <Col sm={24} lg={8} >
+                    <Col sm={24} lg={9} >
                         <InfoCard
                             title="Tarjetas de crédito"
                             subTitle="Promociones bancarias"
                             buttonText="Ver promociones"
-                        />
+                            backgroundImage="/promociones-bancarias.svg"
+                            />
                     </Col>
-                    <Col sm={24} lg={8} >
+                    <Col sm={24} lg={9} >
                         <InfoCard
                             title="Tarjetas de débito"
                             subTitle="Medios de pago"
                             buttonText="Ver más"
+                            backgroundImage="/medios-de-pago.svg"
                         />
                     </Col>
                 </Row>
