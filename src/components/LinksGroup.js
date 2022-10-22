@@ -8,7 +8,7 @@ const LinksGroup = ({ title, items, buttonText }) => {
             <Title level={4}>{title}</Title>
             {
                 items.map(item => (
-                    <Text underline type="success">{item.title}</Text>
+                    <Button type='link' style={{ padding: '0' }}>{item.title}</Button>
                 ))
             }
             {

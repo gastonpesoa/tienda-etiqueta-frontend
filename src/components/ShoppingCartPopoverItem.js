@@ -1,5 +1,6 @@
-import '../App.less';
 import { Row, Col, Image, Typography, Select, Divider } from 'antd';
+import Price from "./Price";
+import '../App.less';
 const { Title, Text } = Typography;
 const { Option } = Select;
 
@@ -9,7 +10,7 @@ const ShoppingCartPopoverItem = ({
     return (
         <Row>
             <Col span={8}>
-                <Image className='shoppingcartpopoveritem-img' src={imagen} alt={nombre} preview={false}/>
+                <Image className='shoppingcartpopoveritem-img' src={imagen} alt={nombre} preview={false} />
             </Col>
             <Col span={16}>
                 <Row>
@@ -47,9 +48,7 @@ const ShoppingCartPopoverItem = ({
                     precio &&
                     <Row>
                         <Col span={12}>
-                            <Title level={5} type="success">
-                                {`$${parseFloat(precio).toFixed(2)}`}
-                            </Title>
+                            <Price price={precio} level={5} type={"success"} />
                         </Col>
                         <Col span={12}>
                             <Text type='secondary'>

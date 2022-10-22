@@ -1,10 +1,10 @@
-import { Space, Typography, Button, Card } from 'antd';
+import { Space, Typography, Button, Card, Row, Col } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
+import Price from "./Price";
 const { Title, Text } = Typography;
 const { Meta } = Card;
 
 const ProductSmallCard = ({ product }) => {
-    console.log("product", product)
     return (
         <Card
             hoverable
@@ -19,7 +19,7 @@ const ProductSmallCard = ({ product }) => {
                 style={{ height: '100px' }}
             />
             <Space>
-                <Title level={4}>{`$${parseFloat(product.price).toFixed(2)}`}</Title>
+                <Price price={product.price} type={'default'} level={5} style={{ marginTop: '10px' }} />
                 <Button type="primary" size='large'>Comprar</Button>
             </Space>
         </Card>

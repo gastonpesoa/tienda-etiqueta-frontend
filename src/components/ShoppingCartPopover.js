@@ -1,6 +1,7 @@
 import { Badge, Popover, Col, Row, Space, Button, Typography, List } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import ShoppingCartPopoverItem from "./ShoppingCartPopoverItem";
+import Price from "./Price";
 const { Title, Text } = Typography;
 
 const ShoppingCartPopover = ({ items }) => {
@@ -31,9 +32,7 @@ const ShoppingCartPopover = ({ items }) => {
                     <Row>
                         <Col span={12}><Title level={5}>Subtotal</Title></Col>
                         <Col span={12} style={{ textAlign: 'right' }}>
-                            <Title level={4}>
-                                {`$${parseFloat(subtotal).toFixed(2)}`}
-                            </Title>
+                            <Price price={subtotal} level={4} type={"default"} />
                         </Col>
                     </Row>
                     <Row>
