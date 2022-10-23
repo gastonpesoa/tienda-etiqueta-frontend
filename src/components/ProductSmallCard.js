@@ -1,7 +1,5 @@
-import { Space, Typography, Button, Card, Row, Col, Image } from 'antd';
-import { RightOutlined } from '@ant-design/icons';
+import { Button, Card, Row, Col, Image } from 'antd';
 import Price from "./Price";
-const { Title, Text } = Typography;
 const { Meta } = Card;
 
 const ProductSmallCard = ({ product }) => {

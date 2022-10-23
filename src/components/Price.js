@@ -1,5 +1,5 @@
 import { Typography } from 'antd';
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 const Price = ({ price, type, level, style }) => {
     return (

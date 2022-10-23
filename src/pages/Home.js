@@ -1,12 +1,8 @@
-import {
-    Carousel, Image, Row, Col,
-    Typography, Layout, Space, Button, Card
-} from 'antd';
+import { Carousel, Image, Row, Col, Layout } from 'antd';
 import LinksGroup from "../components/LinksGroup";
 import InfoCard from "../components/InfoCard";
 import ProductSmallCard from "../components/ProductSmallCard";
 const { Content } = Layout;
-const { Title, Text } = Typography;
 
 const Home = ({ carouselSource, bestSellers, bestSuits }) => {
     return (
@@ -41,7 +37,7 @@ const Home = ({ carouselSource, bestSellers, bestSuits }) => {
                             subTitle="Promociones bancarias"
                             buttonText="Ver promociones"
                             backgroundImage="/promociones-bancarias.svg"
-                            />
+                        />
                     </Col>
                     <Col sm={24} lg={9} >
                         <InfoCard

@@ -1,8 +1,8 @@
-import { Badge, Popover, Col, Row, Space, Button, Typography, List } from 'antd';
+import { Badge, Popover, Col, Row, Space, Button, Typography } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import ShoppingCartPopoverItem from "./ShoppingCartPopoverItem";
 import Price from "./Price";
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 const ShoppingCartPopover = ({ items }) => {
 

@@ -11,7 +11,7 @@ const InfoCard = ({ title, subTitle, buttonText, backgroundImage }) => {
                 backgroundImage: `url(${process.env.PUBLIC_URL + backgroundImage})`,
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'right',
-                backgroundColor:'#C8DEB3'
+                backgroundColor: '#C8DEB3'
             }}
         >
             <Title level={5} type="success">{subTitle}</Title>

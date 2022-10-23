@@ -1,6 +1,6 @@
 import { Space, Typography, Button } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 const LinksGroup = ({ title, items, buttonText }) => {
     return (
