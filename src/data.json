@@ -25,7 +25,7 @@
         {
             "key": "ambos",
             "title": "Ambos",
-            "link": "",
+            "link": "/ambos",
             "items": [
                 {
                     "key": "ambos-slim",
@@ -42,7 +42,7 @@
         {
             "key": "trajes",
             "title": "Trajes",
-            "link": "",
+            "link": "/trajes",
             "items": [
                 {
                     "key": "trajes-negros",
@@ -64,7 +64,7 @@
         {
             "key": "camisas",
             "title": "Camisas",
-            "link": "",
+            "link": "/camisas",
             "items": [
                 {
                     "key": "camisas-lisas",
@@ -86,19 +86,19 @@
         {
             "key": "zapatos",
             "title": "Zapatos",
-            "link": "",
+            "link": "/zapatos",
             "items": []
         },
         {
             "key": "corbatas",
             "title": "Corbatas",
-            "link": "",
+            "link": "/corbatas",
             "items": []
         },
         {
             "key": "accesorios",
             "title": "Accesorios",
-            "link": "",
+            "link": "/accesorios",
             "items": []
         }
     ],
@@ -144,6 +144,29 @@
         }
     ],
     "bestSuits": [
+        {
+            "id": "1",
+            "image": "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_19.jpg",
+            "title": "Traje Gris Acero",
+            "description": "Traje color gris plomo",
+            "price": 70000.00
+        },
+        {
+            "id": "2",
+            "image": "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_22.jpg",
+            "title": "Traje Azulino Pic and Pic",
+            "description": "Traje color Azulino Pic and Pic",
+            "price": 66300.00
+        },
+        {
+            "id": "3",
+            "image": "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_40.jpg",
+            "title": "Traje Gris Cuadrillé",
+            "description": "Traje color gris cuadrillé",
+            "price": 57600.00
+        }
+    ],
+    "trajes":[
         {
             "id": "1",
             "image": "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_19.jpg",

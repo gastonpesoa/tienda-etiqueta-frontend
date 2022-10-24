@@ -2,6 +2,7 @@ import { Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Trajes from "./pages/Trajes";
 import HeaderSearch from "./components/HeaderSearch";
 import MenuHeader from "./components/MenuHeader";
 import './App.less';
@@ -30,8 +31,9 @@ function App() {
                 />
               }
               />
-              <Route path="/login" element={<Login />}/>
-              <Route path="/register" element={<Register />}/>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/trajes" element={<Trajes />} />
             </Routes>
           </div>
         </Content>
