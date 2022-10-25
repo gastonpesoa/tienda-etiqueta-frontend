@@ -1,33 +1,34 @@
 import { Row, Col, Image, Typography, Select, Divider } from 'antd';
 import Price from "./Price";
+import Rating from "./Rating";
 import '../App.less';
 const { Title, Text } = Typography;
 const { Option } = Select;
 
 const ShoppingCartPopoverItem = ({
-    item: { id, nombre, marca, talle, color, precio, puntaje, unidades, imagen },
+    item: { id, name, brand, size, color, price, rating, units, image },
 }) => {
     return (
         <Row>
             <Col span={8}>
-                <Image className='shoppingcartpopoveritem-img' src={imagen} alt={nombre} preview={false} />
+                <Image className='shoppingcartpopoveritem-img' src={image} alt={name} preview={false} />
             </Col>
             <Col span={16}>
                 <Row>
-                    <Col><Title level={4}>{nombre}</Title></Col>
+                    <Col><Title level={4}>{name}</Title></Col>
                 </Row>
                 {
-                    marca &&
+                    brand &&
                     <Row>
                         <Col span={12}><Text type="secondary">Marca:</Text></Col>
-                        <Col span={12}><Text>{marca}</Text></Col>
+                        <Col span={12}><Text>{brand}</Text></Col>
                     </Row>
                 }
                 {
-                    talle &&
+                    size &&
                     <Row>
                         <Col span={12}><Text type="secondary">Talle:</Text></Col>
-                        <Col span={12}><Text>{talle}</Text></Col>
+                        <Col span={12}><Text>{size}</Text></Col>
                     </Row>
                 }
                 {
@@ -38,17 +39,16 @@ const ShoppingCartPopoverItem = ({
                     </Row>
                 }
                 {
-                    puntaje &&
+                    rating &&
                     <Row>
-                        <Col span={12}><Text type="secondary">Puntaje:</Text></Col>
-                        <Col span={12}><Text>{puntaje}</Text></Col>
+                        <Col span={24}><Rating rating={rating} /></Col>
                     </Row>
                 }
                 {
-                    precio &&
+                    price &&
                     <Row>
                         <Col span={12}>
-                            <Price price={precio} level={5} type={"success"} />
+                            <Price price={price} level={5} type={"success"} />
                         </Col>
                         <Col span={12}>
                             <Text type='secondary'>

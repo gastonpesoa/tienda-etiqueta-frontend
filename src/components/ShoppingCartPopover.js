@@ -7,7 +7,7 @@ const { Title } = Typography;
 const ShoppingCartPopover = ({ items }) => {
 
     const subtotal = items.reduce((accumulator, item) => {
-        return accumulator + item.precio;
+        return accumulator + item.price;
     }, 0);
 
     const popoverContent = (

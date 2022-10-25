@@ -2,23 +2,23 @@
     "shoppingCartItems": [
         {
             "id": "1",
-            "nombre": "Camisa Azul Estampada",
-            "marca": "Tascani",
-            "talle": "XS",
-            "precio": 11400.00,
-            "puntaje": 5,
-            "unidades": 1,
-            "imagen": "https://sastreriadetali.com.ar/wp-content/uploads/2022/04/29.jpg"
+            "name": "Camisa Azul Estampada",
+            "brand": "Tascani",
+            "size": "XS",
+            "price": 11400.00,
+            "rating": 4,
+            "units": 1,
+            "image": "https://sastreriadetali.com.ar/wp-content/uploads/2022/04/29.jpg"
         },
         {
             "id": "2",
-            "nombre": "Corbata",
-            "marca": "Macowens",
+            "name": "Corbata",
+            "brand": "Macowens",
             "color": "Rojo",
-            "precio": 1280.00,
-            "puntaje": 5,
-            "unidades": 1,
-            "imagen": "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_59.jpg"
+            "price": 1280.00,
+            "rating": 3,
+            "units": 1,
+            "image": "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_59.jpg"
         }
     ],
     "menu": [
@@ -166,27 +166,33 @@
             "price": 57600.00
         }
     ],
-    "trajes":[
+    "trajes": [
         {
             "id": "1",
             "image": "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_19.jpg",
             "title": "Traje Gris Acero",
             "description": "Traje color gris plomo",
-            "price": 70000.00
+            "price": 70000.00,
+            "brand": "Equus",
+            "rating": 5
         },
         {
             "id": "2",
             "image": "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_22.jpg",
             "title": "Traje Azulino Pic and Pic",
             "description": "Traje color Azulino Pic and Pic",
-            "price": 66300.00
+            "price": 66300.00,
+            "brand": "Farenheite",
+            "rating": 4
         },
         {
             "id": "3",
             "image": "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_40.jpg",
             "title": "Traje Gris Cuadrillé",
             "description": "Traje color gris cuadrillé",
-            "price": 57600.00
+            "price": 57600.00,
+            "brand": "Macowens",
+            "rating": 3
         }
     ]
 }
