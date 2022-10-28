@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
-import { Row, Col, Button, Typography, Badge, Space, Tag } from 'antd';
+import { Row, Col, Button, Typography, Image, Space, Tag, Card } from 'antd';
 import BadgeProductsCount from "../components/BadgeProductsCount";
 import FilterGender from "../components/FilterGender";
 import FilterSize from "../components/FilterSize";
@@ -9,9 +9,11 @@ import FiltersApplied from "../components/FiltersApplied";
 import FilterBrand from "../components/FilterBrand";
 import FilterRating from "../components/FilterRating";
 import FilterPrice from '../components/FilterPrice';
+import Price from "../components/Price";
 import Rating from '../components/Rating';
 import myData from '../data.json';
 import '../App.less';
+import ProductCard from '../components/ProductCard';
 const { Title, Text } = Typography;
 
 const URL = "https://tienda-etiqueta-backend.vercel.app/api/trajes/"
@@ -55,10 +57,14 @@ const Trajes = () => {
                         <FilterPrice />
                     </Space>
                 </Col>
-                <Col span={18} style={{ border: '1px black solid' }}>
-
+                <Col span={18}>
+                    {
+                        trajes.map(traje => (
+                            <ProductCard product={traje} />
+                        ))
+                    }
                 </Col>
-            </Row>
+            </Row>            
         </>
     );
 }

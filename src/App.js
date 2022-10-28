@@ -3,6 +3,8 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Trajes from "./pages/Trajes";
+import ProductDetail from "./pages/ProductDetail";
+import Eror404 from "./pages/Eror404";
 import HeaderSearch from "./components/HeaderSearch";
 import MenuHeader from "./components/MenuHeader";
 import './App.less';
@@ -34,6 +36,8 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/trajes" element={<Trajes />} />
+              <Route path="/trajes/:id" element={<ProductDetail />} />
+              <Route path="*" element={<Eror404 />} />
             </Routes>
           </div>
         </Content>
