@@ -50,8 +50,8 @@ const Trajes = () => {
                         <FilterRating
                             ratings={
                                 trajes.map((item) => ({
-                                    label: <Rating rating={item.rating} color={'#FDBC15'} />,
-                                    value: item.rating
+                                    label: <Rating rating={item.rating_average} color={'#FDBC15'} />,
+                                    value: item.rating_average
                                 }))}
                         />
                         <FilterPrice />

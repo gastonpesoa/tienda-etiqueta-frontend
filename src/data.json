@@ -1,12 +1,12 @@
 {
-    "shoppingCartItems": [
+    "shopping_cart_items": [
         {
             "id": "1",
             "name": "Camisa Azul Estampada",
             "brand": "Tascani",
             "size": "XS",
             "price": 11400.00,
-            "rating": 4,
+            "rating_average": 4,
             "units": 1,
             "image": "https://sastreriadetali.com.ar/wp-content/uploads/2022/04/29.jpg"
         },
@@ -16,48 +16,36 @@
             "brand": "Macowens",
             "color": "Rojo",
             "price": 1280.00,
-            "rating": 3,
+            "rating_average": 3,
             "units": 1,
             "image": "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_59.jpg"
         }
     ],
     "menu": [
         {
-            "key": "ambos",
-            "title": "Ambos",
-            "link": "/ambos",
-            "items": [
-                {
-                    "key": "ambos-slim",
-                    "title": "Slim",
-                    "link": ""
-                },
-                {
-                    "key": "ambos-slim-fit",
-                    "title": "Slim fit",
-                    "link": ""
-                }
-            ]
-        },
-        {
             "key": "trajes",
             "title": "Trajes",
             "link": "/trajes",
             "items": [
                 {
-                    "key": "trajes-negros",
-                    "title": "Trajes Negros",
-                    "link": ""
+                    "key": "trajes-ejecutivos",
+                    "title": "Trajes Ejecutivos",
+                    "link": "trajes-ejecutivos"
                 },
                 {
-                    "key": "trajes-azules",
-                    "title": "Trajes Azules",
-                    "link": ""
+                    "key": "trajes-chaque",
+                    "title": "Trajes Chaqué",
+                    "link": "trajes-chaque"
                 },
                 {
-                    "key": "trajes-blancos",
-                    "title": "Trajes Blancos",
-                    "link": ""
+                    "key": "trajes-novio",
+                    "title": "Trajes de Novio",
+                    "link": "trajes-novio"
+                },
+                {
+                    "key": "esmoquins",
+                    "title": "Esmoquins",
+                    "link": "esmoquins"
                 }
             ]
         },
@@ -69,17 +57,17 @@
                 {
                     "key": "camisas-lisas",
                     "title": "Camisas Lisas",
-                    "link": ""
+                    "link": "camisas-lisas"
                 },
                 {
                     "key": "camisas-rayadas",
                     "title": "Camisas Rayadas",
-                    "link": ""
+                    "link": "camisas-rayadas"
                 },
                 {
                     "key": "camisas-estampadas",
                     "title": "Camisas Estampadas",
-                    "link": ""
+                    "link": "camisas-estampadas"
                 }
             ]
         },
@@ -102,7 +90,7 @@
             "items": []
         }
     ],
-    "carouselSource": [
+    "carousel_source": [
         {
             "src": "https://img.freepik.com/foto-gratis/tienda-ropa-tienda-ropa-perchas-tienda-boutique-moderna_1150-8886.jpg?w=996&t=st=1666222193~exp=1666222793~hmac=75f6335bce583359867e8bc4c9df98d26c3a9598e3aa95df758e10f52d285d0b",
             "alt": "camisas"
@@ -120,7 +108,7 @@
             "alt": "vestido"
         }
     ],
-    "bestSellers": [
+    "best_sellers": [
         {
             "id": "4",
             "image": "https://sastreriadetali.com.ar/wp-content/uploads/2022/04/26.jpg",
@@ -143,7 +131,7 @@
             "price": 26880.00
         }
     ],
-    "bestSuits": [
+    "best_suits": [
         {
             "id": "1",
             "image": "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_19.jpg",
@@ -175,12 +163,27 @@
                 "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_20.jpg"
             ],
             "title": "Traje Gris Acero",
+            "category": "Trajes Ejecutivos",
             "description": "Traje color gris plomo",
             "price": 70000.00,
             "brand": "Equus",
-            "rating": 5,
+            "rating_average": 5,
             "stock": 23,
-            "cut": "Slim Fit"
+            "cut": "Slim Fit",
+            "reviews": [
+                {
+                    "rating": 3,
+                    "review": "medio apretado pero lindo"
+                },
+                {
+                    "rating": 5,
+                    "review": "me quedó bien"
+                },
+                {
+                    "rating": 4,
+                    "review": "todo okey"
+                }
+            ]
         },
         {
             "id": "2",
@@ -190,12 +193,27 @@
                 "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_21.jpg"
             ],
             "title": "Traje Azulino Pic and Pic",
+            "category": "Trajes Ejecutivos",
             "description": "Traje color Azulino Pic and Pic",
             "price": 66300.00,
             "brand": "Farenheite",
-            "rating": 4,
+            "rating_average": 4,
             "stock": 20,
-            "cut": "Slim Fit"
+            "cut": "Slim Fit",
+            "reviews": [
+                {
+                    "rating": 3,
+                    "review": "medio apretado pero lindo"
+                },
+                {
+                    "rating": 5,
+                    "review": "me quedó bien"
+                },
+                {
+                    "rating": 4,
+                    "review": "todo okey"
+                }
+            ]
         },
         {
             "id": "3",
@@ -205,12 +223,27 @@
                 "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_39.jpg"
             ],
             "title": "Traje Gris Cuadrillé",
+            "category": "Trajes Ejecutivos",
             "description": "Traje color gris cuadrillé",
             "price": 57600.00,
             "brand": "Macowens",
-            "rating": 3,
+            "rating_average": 3,
             "stock": 15,
-            "cut": "Slim Fit"
+            "cut": "Slim Fit",
+            "reviews": [
+                {
+                    "rating": 3,
+                    "review": "medio apretado pero lindo"
+                },
+                {
+                    "rating": 5,
+                    "review": "me quedó bien"
+                },
+                {
+                    "rating": 4,
+                    "review": "todo okey"
+                }
+            ]
         }
     ]
 }

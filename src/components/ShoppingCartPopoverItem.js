@@ -6,8 +6,9 @@ const { Title, Text } = Typography;
 const { Option } = Select;
 
 const ShoppingCartPopoverItem = ({
-    item: { id, name, brand, size, color, price, rating, units, image },
+    item: { id, name, brand, size, color, price, rating_average, units, image },
 }) => {
+    console.log("rating_average", rating_average)
     return (
         <Row>
             <Col span={8}>
@@ -39,9 +40,9 @@ const ShoppingCartPopoverItem = ({
                     </Row>
                 }
                 {
-                    rating &&
+                    rating_average &&
                     <Row>
-                        <Col span={24}><Rating rating={rating} /></Col>
+                        <Col span={24}><Rating rating={rating_average} /></Col>
                     </Row>
                 }
                 {

@@ -13,12 +13,12 @@ import myData from './data.json';
 const { Header, Footer, Content } = Layout;
 
 function App() {
-  const { shoppingCartItems, menu, carouselSource, bestSellers, bestSuits } = myData;
+  const { shopping_cart_items, menu, carousel_source, best_sellers, best_suits } = myData;
   return (
     <>
       <Layout id="page-container" className="layout">
         <div className="logo" />
-        <HeaderSearch shoppingCartItems={shoppingCartItems}></HeaderSearch>
+        <HeaderSearch shoppingCartItems={shopping_cart_items}></HeaderSearch>
         <Header>
           <MenuHeader menu={menu} />
         </Header>
@@ -27,9 +27,9 @@ function App() {
             <Routes>
               <Route path="/" element={
                 <Home
-                  carouselSource={carouselSource}
-                  bestSellers={bestSellers}
-                  bestSuits={bestSuits}
+                  carouselSource={carousel_source}
+                  bestSellers={best_sellers}
+                  bestSuits={best_suits}
                 />
               }
               />
