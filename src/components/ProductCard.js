@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom'
 import { Button, Card, Row, Col, Image, Typography, Space } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import Price from "./Price";
 import Rating from './Rating';
-import { PlusOutlined } from '@ant-design/icons';
 const { Meta } = Card;
 const { Title, Text } = Typography;
 
