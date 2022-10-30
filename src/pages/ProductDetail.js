@@ -91,7 +91,13 @@ const ProductDetail = () => {
                             }
                         </Col>
                         <Col span={12}>
-                            
+
+                            {
+                                product.sizes &&
+                                <Row>
+                                    <Col span={24}><Text type="secondary">Talle:</Text></Col>
+                                </Row>
+                            }
                         </Col>
                     </Row>
                 </Col>

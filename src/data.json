@@ -170,6 +170,11 @@
             "rating_average": 5,
             "stock": 23,
             "cut": "Slim Fit",
+            "sizes": [
+                "S",
+                "L",
+                "XL"
+            ],
             "reviews": [
                 {
                     "rating": 3,
@@ -200,6 +205,11 @@
             "rating_average": 4,
             "stock": 20,
             "cut": "Slim Fit",
+            "sizes": [
+                "S",
+                "L",
+                "XL"
+            ],
             "reviews": [
                 {
                     "rating": 3,
@@ -230,6 +240,11 @@
             "rating_average": 3,
             "stock": 15,
             "cut": "Slim Fit",
+            "sizes": [
+                "S",
+                "L",
+                "XL"
+            ],
             "reviews": [
                 {
                     "rating": 3,
