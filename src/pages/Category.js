@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { Row, Col, Button, Typography, Image, Space, Tag, Card } from 'antd';
 import BadgeProductsCount from "../components/BadgeProductsCount";
 import FilterGender from "../components/FilterGender";
@@ -18,12 +18,15 @@ const { Title, Text } = Typography;
 
 const URL = "https://tienda-etiqueta-backend.vercel.app/api/trajes/"
 
-const Trajes = () => {
+const Category = () => {
+
+    const { idCategory } = useParams();
     const { trajes } = myData;
+
     return (
         <>
             <Row>
-                <Col span={12}><Title level={2}>Trajes</Title></Col>
+                <Col span={12}><Title level={2}>{idCategory}</Title></Col>
                 <Col span={12} style={{ textAlign: 'right' }}>
                     <Space>
                         <BadgeProductsCount count={trajes.length} />
@@ -64,9 +67,9 @@ const Trajes = () => {
                         ))
                     }
                 </Col>
-            </Row>            
+            </Row>
         </>
     );
 }
 
-export default Trajes;
+export default Category;

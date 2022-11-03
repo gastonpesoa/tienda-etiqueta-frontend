@@ -25,68 +25,68 @@
         {
             "key": "trajes",
             "title": "Trajes",
-            "link": "/trajes",
+            "link": "/category/trajes",
             "items": [
                 {
                     "key": "trajes-ejecutivos",
                     "title": "Trajes Ejecutivos",
-                    "link": "trajes-ejecutivos"
+                    "link": "/category/trajes-ejecutivos"
                 },
                 {
                     "key": "trajes-chaque",
                     "title": "Trajes Chaqué",
-                    "link": "trajes-chaque"
+                    "link": "/category/trajes-chaque"
                 },
                 {
                     "key": "trajes-novio",
                     "title": "Trajes de Novio",
-                    "link": "trajes-novio"
+                    "link": "/category/trajes-novio"
                 },
                 {
                     "key": "esmoquins",
                     "title": "Esmoquins",
-                    "link": "esmoquins"
+                    "link": "/category/esmoquins"
                 }
             ]
         },
         {
             "key": "camisas",
             "title": "Camisas",
-            "link": "/camisas",
+            "link": "/category/camisas",
             "items": [
                 {
                     "key": "camisas-lisas",
                     "title": "Camisas Lisas",
-                    "link": "camisas-lisas"
+                    "link": "/category/camisas-lisas"
                 },
                 {
                     "key": "camisas-rayadas",
                     "title": "Camisas Rayadas",
-                    "link": "camisas-rayadas"
+                    "link": "/category/camisas-rayadas"
                 },
                 {
                     "key": "camisas-estampadas",
                     "title": "Camisas Estampadas",
-                    "link": "camisas-estampadas"
+                    "link": "/category/camisas-estampadas"
                 }
             ]
         },
         {
             "key": "zapatos",
             "title": "Zapatos",
-            "link": "/zapatos",
+            "link": "/category/zapatos",
             "items": []
         },
         {
             "key": "corbatas",
             "title": "Corbatas",
-            "link": "/corbatas",
+            "link": "/category/corbatas",
             "items": []
         },
         {
             "key": "accesorios",
             "title": "Accesorios",
-            "link": "/accesorios",
+            "link": "/category/accesorios",
             "items": []
         }
     ],
@@ -292,6 +292,20 @@
             "size": "XXL",
             "chest": "60 a 61 cm",
             "waist": "58 a 59 cm"
+        }
+    ],
+    "current_promotions": [
+        {
+            "bank": "Banco Santander",
+            "percentage": 10
+        },
+        {
+            "bank": "Banco Galicia",
+            "percentage": 15
+        },
+        {
+            "bank": "Banco Nación",
+            "percentage": 20
         }
     ]
 }

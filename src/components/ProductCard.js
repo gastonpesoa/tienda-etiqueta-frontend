@@ -11,7 +11,7 @@ const ProductCard = ({ product }) => {
 
     return (
         <>
-            <Link to={product.id}>
+            <Link to={`../product-detail/${product.id}`}>
                 <Card hoverable style={{ marginBottom: '32px' }}>
                     <Row gutter={16}>
                         <Col span={7}>

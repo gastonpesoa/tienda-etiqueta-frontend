@@ -9,22 +9,24 @@ function MenuHeader({ menu }) {
             {
                 menu.map(item => (
                     item.items.length
-                        ? (
+                        ?
+                        (
                             <Menu.SubMenu
                                 key={item.key}
                                 title={item.title}
                                 onTitleClick={() => { navigate(item.link) }}>
                                 {
                                     item.items.map(subItem => (
-                                        <Menu.Item key={subItem.key} >
+                                        <Menu.Item key={subItem.key} onClick={() => { navigate(subItem.link) }}>
                                             {subItem.title}
                                         </Menu.Item>
                                     ))
                                 }
                             </Menu.SubMenu>
                         )
-                        : (
-                            <Menu.Item key={item.key}>
+                        :
+                        (
+                            <Menu.Item key={item.key} onClick={() => { navigate(item.link) }}>
                                 {item.title}
                             </Menu.Item>
                         )

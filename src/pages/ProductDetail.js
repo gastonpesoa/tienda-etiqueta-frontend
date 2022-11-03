@@ -11,12 +11,13 @@ const { Title, Text, Paragraph } = Typography;
 
 const ProductDetail = () => {
 
-    const { id } = useParams();
+    const { idProduct } = useParams();
+    const { trajes, sizes_list } = myData;
+    const product = trajes[idProduct - 1];
+
     const navigate = useNavigate();
     const [unit, setUnit] = useState(1);
-
-    const { trajes, sizes_list } = myData;
-    const product = trajes[id - 1];
+    const [size, setSize] = useState(product.sizes[0]);
 
     const onSizeChange = (e) => {
         console.log('radio checked', e.target.value);
@@ -166,7 +167,7 @@ const ProductDetail = () => {
                                     </Row>
                                     <Row>
                                         <Col span={24}>
-                                            <Radio.Group onChange={onSizeChange}>
+                                            <Radio.Group onChange={onSizeChange} value={size}>
                                                 {
                                                     product.sizes.map(size => (
                                                         <Radio value={size}>{size}</Radio>

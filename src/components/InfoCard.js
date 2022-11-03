@@ -1,9 +1,9 @@
-import { Card, Typography, Button } from 'antd';
+import { Card, Typography, Button, Popover } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
 import '../App.less';
 const { Title, Text } = Typography;
 
-const InfoCard = ({ title, subTitle, buttonText, backgroundImage }) => {
+const InfoCard = ({ title, subTitle, buttonText, backgroundImage, popoverContent }) => {
     return (
         <Card className='card-container'
             style={{
@@ -16,15 +16,19 @@ const InfoCard = ({ title, subTitle, buttonText, backgroundImage }) => {
                 backgroundColor: '#C8DEB3'
             }}
         >
-            <Title level={5} style={{color:'#fff'}}>{subTitle}</Title>
+            <Title level={5} style={{ color: '#fff' }}>{subTitle}</Title>
             <Title level={3}>{title}</Title>
-            <Button
-                size='large'
-                icon={<RightOutlined />}
-                style={{ marginTop: '100px' }}
-            >
-                {buttonText}
-            </Button>
+
+            <Popover content={popoverContent} title={subTitle} trigger="click" placement='bottom'>
+                <Button
+                    size='large'
+                    icon={<RightOutlined />}
+                    style={{ marginTop: '100px' }}
+                >
+                    {buttonText}
+                </Button>
+            </Popover>
+
         </Card>
     );
 }

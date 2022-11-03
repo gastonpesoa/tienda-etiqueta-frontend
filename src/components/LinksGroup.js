@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Space, Typography, Button } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
 const { Title } = Typography;
@@ -8,7 +9,9 @@ const LinksGroup = ({ title, items, buttonText }) => {
             <Title level={4}>{title}</Title>
             {
                 items.map(item => (
-                    <Button type='link' style={{ padding: '0' }}>{item.title}</Button>
+                    <Link to={item.link}>
+                        <Button type='link' style={{ padding: '0' }}>{item.title}</Button>
+                    </Link>
                 ))
             }
             {

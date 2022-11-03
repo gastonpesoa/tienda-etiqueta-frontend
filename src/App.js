@@ -2,7 +2,7 @@ import { Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Trajes from "./pages/Trajes";
+import Category from "./pages/Category";
 import ProductDetail from "./pages/ProductDetail";
 import Eror404 from "./pages/Eror404";
 import Checkout from "./pages/Checkout";
@@ -14,7 +14,7 @@ import myData from './data.json';
 const { Header, Footer, Content } = Layout;
 
 function App() {
-  const { shopping_cart_items, menu, carousel_source, best_sellers, best_suits } = myData;
+  const { shopping_cart_items, menu, carousel_source, best_sellers, best_suits, current_promotions } = myData;
   return (
     <>
       <Layout id="page-container" className="layout">
@@ -31,13 +31,15 @@ function App() {
                   carouselSource={carousel_source}
                   bestSellers={best_sellers}
                   bestSuits={best_suits}
+                  menu={menu}
+                  currentPromotions={current_promotions}
                 />
               }
               />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/trajes" element={<Trajes />} />
-              <Route path="/trajes/:id" element={<ProductDetail />} />
+              <Route path="/category/:idCategory" element={<Category />} />
+              <Route path="/product-detail/:idProduct" element={<ProductDetail />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="*" element={<Eror404 />} />
             </Routes>
