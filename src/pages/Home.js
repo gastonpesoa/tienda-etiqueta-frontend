@@ -79,13 +79,9 @@ const Home = ({ carouselSource, bestSellers, bestSuits, menu, currentPromotions 
                     <Col sm={24} lg={6} >
                         <LinksGroup
                             title="Productos más vendidos"
-                            items={[
-                                { title: "Ambos Azul Entallado" },
-                                { title: "Camisa Blanca Lila a Raya" },
-                                { title: "Moño Lunares Rojos" },
-                                { title: "Traje Dorado Militar" },
-                                { title: "Zapatos Ellington" },
-                            ]}
+                            items={bestSellers.map((item, i) => {
+                                return { title: item.title, link: `/product-detail/${item.id}` }
+                            })}
                         />
                     </Col>
                     {
@@ -100,13 +96,9 @@ const Home = ({ carouselSource, bestSellers, bestSuits, menu, currentPromotions 
                     <Col sm={24} lg={6} >
                         <LinksGroup
                             title="Mejores en Trajes"
-                            items={[
-                                { title: "Trajes Dorados" },
-                                { title: "Trajes Negros" },
-                                { title: "Trajes Azules" },
-                                { title: "Trajes Bordos" },
-                                { title: "Trajes Blancos" },
-                            ]}
+                            items={bestSuits.map((item, i) => {
+                                return { title: item.title, link: `/product-detail/${item.id}` }
+                            })}
                         />
                     </Col>
                     {
