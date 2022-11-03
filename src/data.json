@@ -261,5 +261,37 @@
                 }
             ]
         }
+    ],
+    "sizes_list": [
+        {
+            "size": "XS",
+            "chest": "48 a 49 cm",
+            "waist": "46 a 47 cm"
+        },
+        {
+            "size": "S",
+            "chest": "51 a 52 cm",
+            "waist": "46 a 47 cm"
+        },
+        {
+            "size": "M",
+            "chest": "51 a 52 cm",
+            "waist": "48 a 49 cm"
+        },
+        {
+            "size": "L",
+            "chest": "54 a 55 cm",
+            "waist": "51 a 52 cm"
+        },
+        {
+            "size": "XL",
+            "chest": "57 a 58 cm",
+            "waist": "57 a 58 cm"
+        },
+        {
+            "size": "XXL",
+            "chest": "60 a 61 cm",
+            "waist": "58 a 59 cm"
+        }
     ]
 }

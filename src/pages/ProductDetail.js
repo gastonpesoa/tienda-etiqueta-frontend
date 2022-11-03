@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useParams } from 'react-router'
 import { useNavigate } from 'react-router-dom'
-import { Col, Row, Typography, Image, Space, Radio, Card, Button, Tabs, Badge } from 'antd';
+import { Col, Row, Typography, Image, Space, Radio, Card, Button, Tabs, Badge, Table, Divider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import Price from "../components/Price";
 import UnitsSelect from "../components/UnitsSelect";
@@ -15,12 +15,30 @@ const ProductDetail = () => {
     const navigate = useNavigate();
     const [unit, setUnit] = useState(1);
 
-    const { trajes } = myData;
+    const { trajes, sizes_list } = myData;
     const product = trajes[id - 1];
 
     const onSizeChange = (e) => {
         console.log('radio checked', e.target.value);
     };
+
+    const columns = [
+        {
+            title: 'Talle',
+            dataIndex: 'size',
+            key: 'size',
+        },
+        {
+            title: 'Pecho',
+            dataIndex: 'chest',
+            key: 'chest',
+        },
+        {
+            title: 'Cintura',
+            dataIndex: 'waist',
+            key: 'waist',
+        },
+    ];
 
     const tabs = [
         {
@@ -28,10 +46,12 @@ const ProductDetail = () => {
             key: 'item-1',
             children:
                 <>
-                    <Title level={5}>Detalle</Title>
+                    <Title level={5} style={{ marginTop: '40px', marginBottom: '20px' }}>Detalle</Title>
                     <Paragraph>
                         {product.detail}
                     </Paragraph>
+                    <Title level={5} style={{ marginTop: '40px', marginBottom: '20px' }}>Listado de talles</Title>
+                    <Table dataSource={sizes_list} columns={columns} pagination={false} />
                 </>
         },
         {
@@ -43,6 +63,18 @@ const ProductDetail = () => {
             key: 'item-2',
             children:
                 <>
+                    <Title level={5} style={{ marginTop: '40px', marginBottom: '20px' }}>Opiniones del producto</Title>
+                    {
+                        product.reviews.map(review => (
+                            <div style={{ marginTop: '50px' }} >
+                                <Rating rating={review.rating} />
+                                <Paragraph>
+                                    {review.review}
+                                </Paragraph>
+                                <Divider />
+                            </div>
+                        ))
+                    }
                 </>
         },
     ];
