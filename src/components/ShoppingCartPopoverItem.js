@@ -22,21 +22,7 @@ const ShoppingCartPopoverItem = ({ item }) => {
             'UPDATE_ITEM',
             {
                 itemToUpdate: item,
-                itemUpdated: {
-                    ...item,
-                    unit: quantity,
-
-                    // id: id,
-                    // title: title,
-                    // brand: brand,
-                    // size: size,
-                    // color: color,
-                    // price: price,
-                    // rating_average: rating_average,
-                    // unit: quantity,
-                    // units: units,
-                    // image,
-                }
+                itemUpdated: { ...item, unit: quantity }
             });
     }
 
