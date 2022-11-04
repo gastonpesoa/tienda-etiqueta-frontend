@@ -4,17 +4,19 @@ import { RightOutlined } from '@ant-design/icons';
 const { Option } = Select;
 const { Title, Text } = Typography;
 
-const UnitsSelect = ({ units, setUnit, size }) => {
+const UnitsSelect = ({ units, unit, setUnit, size }) => {
 
-    const [items, setItems] = useState([1]);
+    const [items, setItems] = useState([]);
     const [newUnit, setNewUnit] = useState();
-    const selectRef = useRef(null);
 
     useEffect(() => {
         var updatedItems = []
         updatedItems.push(1)
         for (let index = 1; index < 6; index++) {
             updatedItems.push(index + 1)
+        }
+        if(unit > 6){
+            updatedItems.push(unit)
         }
         setItems(updatedItems);
     }, [])
@@ -43,8 +45,8 @@ const UnitsSelect = ({ units, setUnit, size }) => {
                     ?
                     (
                         <Select
-                            ref={selectRef}
-                            defaultValue={'1 unidad'}
+                            defaultValue={"1"}
+                            value={unit}
                             style={{ width: 135 }}
                             size={size}
                             onChange={handleSelectionChange}
@@ -84,8 +86,8 @@ const UnitsSelect = ({ units, setUnit, size }) => {
                     :
                     (
                         <Select
-                            ref={selectRef}
                             defaultValue={'1 unidad'}
+                            value={unit}
                             style={{ width: 135 }}
                             size={size}
                             onChange={handleSelectionChange}>

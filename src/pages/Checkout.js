@@ -33,7 +33,7 @@ const PROVINCES = [
     { value: 'Tucumán' }
 ];
 
-function Checkout() {
+function Checkout({ shoppingCart, setShoppingCart }) {
 
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -127,7 +127,7 @@ function Checkout() {
                                         },
                                     ]}
                                 >
-                                    <Select 
+                                    <Select
                                         defaultValue=""
                                         options={PROVINCES}
                                         placeholder="Elija una provincia"
@@ -203,14 +203,14 @@ function Checkout() {
                         <Row>
                             <Col span={24}>
                                 <Radio.Group onChange={onChangeDeliveryMethod} value={deliveryMethod}>
-                                <Space direction="vertical">
-                                    <Radio value={'Retiro en local'}>Retiro en local</Radio>
-                                    <Radio value={'Envío a domicilio'}>
-                                    Envío a domicilio
-                                        
-                                    </Radio>
-                                    
-                                </Space>
+                                    <Space direction="vertical">
+                                        <Radio value={'Retiro en local'}>Retiro en local</Radio>
+                                        <Radio value={'Envío a domicilio'}>
+                                            Envío a domicilio
+
+                                        </Radio>
+
+                                    </Space>
                                 </Radio.Group>
                             </Col>
                         </Row>
@@ -226,18 +226,18 @@ function Checkout() {
                         <Row>
                             <Col span={24}>
                                 <Radio.Group onChange={onChangePaymentMethod} value={paymentMethod}>
-                                <Space direction="vertical">
-                                    <Radio value={'Pago en el local'}>Pago en el local</Radio>
-                                    <Radio value={'Tarjeta de crédito'}>
-                                        Tarjeta de crédito
-                                        
-                                    </Radio>
-                                    
-                                </Space>
+                                    <Space direction="vertical">
+                                        <Radio value={'Pago en el local'}>Pago en el local</Radio>
+                                        <Radio value={'Tarjeta de crédito'}>
+                                            Tarjeta de crédito
+
+                                        </Radio>
+
+                                    </Space>
                                 </Radio.Group>
                             </Col>
                             <Col span={24}>
-                                { paymentMethod === 'Tarjeta de crédito' ? 
+                                {paymentMethod === 'Tarjeta de crédito' ?
                                     <>
                                         <Row>
                                             <Col span={24}>
@@ -255,7 +255,7 @@ function Checkout() {
                                                     ]}
                                                 >
                                                     <Input placeholder="Número de la tarjeta" />
-                                                </Form.Item> 
+                                                </Form.Item>
                                             </Col>
                                         </Row>
                                         <Row>
@@ -272,7 +272,7 @@ function Checkout() {
                                                     ]}
                                                 >
                                                     <Input placeholder="Titular" />
-                                                </Form.Item> 
+                                                </Form.Item>
                                             </Col>
                                             <Col span={5}>
                                                 <Form.Item
@@ -287,7 +287,7 @@ function Checkout() {
                                                     ]}
                                                 >
                                                     <Input placeholder="DD/MM/YY" />
-                                                </Form.Item> 
+                                                </Form.Item>
                                             </Col>
                                             <Col span={5}>
                                                 <Form.Item
@@ -302,7 +302,7 @@ function Checkout() {
                                                     ]}
                                                 >
                                                     <Input placeholder="CVC" />
-                                                </Form.Item> 
+                                                </Form.Item>
                                             </Col>
                                         </Row>
                                     </>
@@ -367,9 +367,9 @@ function Checkout() {
                             </Col>
                         </Row>
                         {
-                            discount !== 0 && 
+                            discount !== 0 &&
                             <Row>
-                                <Col span={12}><Title level={5} style={{ textAlign: 'left'}}>Descuento</Title></Col>
+                                <Col span={12}><Title level={5} style={{ textAlign: 'left' }}>Descuento</Title></Col>
                                 <Col span={12} style={{ textAlign: 'right' }}>
                                     <Price price={discount} level={5} style={{ color: '#FF0000' }} type={"default"} />
                                 </Col>
@@ -383,7 +383,7 @@ function Checkout() {
                         </Row>
                     </Card>
                 </Col>
-            </Row>          
+            </Row>
         </>
     );
 }

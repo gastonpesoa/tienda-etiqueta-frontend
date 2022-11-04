@@ -8,13 +8,17 @@ const { Title } = Typography;
 const URL = "https://tienda-etiqueta-backend.vercel.app/api/users/"
 
 const Register = () => {
+
     const navigate = useNavigate()
+
     const onFinish = (values) => {
         registerUser(values)
     };
+
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
+
     const registerUser = (value) => {
         fetch(URL, {
             method: "POST",
@@ -30,6 +34,7 @@ const Register = () => {
                 }
             })
     }
+    
     return (
         <Row>
             <Col span={8}></Col>

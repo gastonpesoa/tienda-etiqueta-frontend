@@ -1,14 +1,19 @@
-import { Badge, Popover, Col, Row, Space, Button, Typography } from 'antd';
+import { useState, useContext } from 'react';
+import { Badge, Popover, Col, Row, Space, Button, Typography, Empty } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
+import { ShoppingCartContext } from "../ShoppingCartContext";
 import ShoppingCartPopoverItem from "./ShoppingCartPopoverItem";
 import Price from "./Price";
 const { Title } = Typography;
 
-const ShoppingCartPopover = ({ items }) => {
+const ShoppingCartPopover = () => {
 
-    const subtotal = items.reduce((accumulator, item) => {
-        return accumulator + item.price;
-    }, 0);
+    const { shoppingCart } = useContext(ShoppingCartContext);
+    const [subtotal, setSubtotal] = useState(0)
+
+    // const subtotal = items.reduce((accumulator, item) => {
+    //     return accumulator + item.price;
+    // }, 0);
 
     const popoverContent = (
         <>
@@ -17,17 +22,26 @@ const ShoppingCartPopover = ({ items }) => {
             </Row>
             <Space direction='vertical'>
                 {
-                    items.length
-                        ? (items.map(item => (
+                    shoppingCart.length
+                        ?
+                        (shoppingCart.map((item) => (
                             <ShoppingCartPopoverItem
                                 key={item.id}
                                 item={item}
-                            />)))
-                        : <Row><Col span={24}><Title level={4}>Tu carrito está vacío</Title></Col></Row>
+                            />
+                        )))
+                        :
+                        <Empty
+                            description={
+                                <Title level={5}>
+                                    Tu carrito está vacío
+                                </Title>
+                            }
+                        />
                 }
             </Space>
             {
-                items.length > 0 &&
+                shoppingCart.length > 0 &&
                 <>
                     <Row>
                         <Col span={12}><Title level={5}>Subtotal</Title></Col>
@@ -49,7 +63,7 @@ const ShoppingCartPopover = ({ items }) => {
 
     return (
         <Popover content={popoverContent} placement='bottomRight'>
-            <Badge count={items.length}>
+            <Badge count={shoppingCart.length}>
                 <ShoppingCartOutlined style={{ fontSize: '24px' }} />
             </Badge>
         </Popover>

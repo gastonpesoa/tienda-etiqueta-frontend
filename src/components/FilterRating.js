@@ -7,7 +7,7 @@ const FilterRating = ({ ratings }) => {
         console.log('checked = ', checkedValues);
     };
     return (
-        <Space direction='vertical'>
+        <Space key={ratings.id} direction='vertical'>
             <Title level={4}>Valoraciones</Title>
             <Checkbox.Group options={ratings} onChange={onChangeRating} />
         </Space>

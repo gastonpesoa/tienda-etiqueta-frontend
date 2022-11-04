@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useParams } from 'react-router'
 import { useNavigate } from 'react-router-dom'
-import { Col, Row, Typography, Image, Space, Radio, Card, Button, Tabs, Badge, Table, Divider } from 'antd';
+import { Col, Row, Typography, Image, Space, Radio, Card, Button, Tabs, Badge, Table, Divider, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import { ShoppingCartContext } from "../ShoppingCartContext";
 import Price from "../components/Price";
 import UnitsSelect from "../components/UnitsSelect";
 import Rating from '../components/Rating';
@@ -12,16 +13,38 @@ const { Title, Text, Paragraph } = Typography;
 const ProductDetail = () => {
 
     const { idProduct } = useParams();
+    const { dispatchShoppingCartEvent } = useContext(ShoppingCartContext);
+
     const { trajes, sizes_list } = myData;
     const product = trajes[idProduct - 1];
 
     const navigate = useNavigate();
-    const [unit, setUnit] = useState(1);
+    const [unit, setUnit] = useState("1");
     const [size, setSize] = useState(product.sizes[0]);
 
+    const changeUnitsState = (value) => {
+        setUnit(value)
+    }
+
     const onSizeChange = (e) => {
-        console.log('radio checked', e.target.value);
+        setSize(e.target.value);
     };
+
+    const handleClickAddToShoppingCart = () => {
+        let productToAdd = {
+            id: product.id,
+            title: product.title,
+            brand: product.brand,
+            size: size,
+            color: product.color,
+            price: product.price,
+            rating_average: product.rating_average,
+            unit: unit,
+            units: product.stock,
+            image: product.images[0]
+        }
+        dispatchShoppingCartEvent('ADD_ITEM', { newItem: productToAdd });
+    }
 
     const columns = [
         {
@@ -66,8 +89,8 @@ const ProductDetail = () => {
                 <>
                     <Title level={5} style={{ marginTop: '40px', marginBottom: '20px' }}>Opiniones del producto</Title>
                     {
-                        product.reviews.map(review => (
-                            <div style={{ marginTop: '50px' }} >
+                        product.reviews.map((review, i) => (
+                            <div key={i} style={{ marginTop: '50px' }} >
                                 <Rating rating={review.rating} />
                                 <Paragraph>
                                     {review.review}
@@ -85,8 +108,8 @@ const ProductDetail = () => {
             <Row gutter={16}>
                 <Col span={12}>
                     {
-                        product.images.map(image => (
-                            <Row style={{ marginBottom: '30px' }}>
+                        product.images.map((image, i) => (
+                            <Row key={i} style={{ marginBottom: '30px' }}>
                                 <Col span={24}>
                                     <Image src={image} />
                                 </Col>
@@ -169,8 +192,8 @@ const ProductDetail = () => {
                                         <Col span={24}>
                                             <Radio.Group onChange={onSizeChange} value={size}>
                                                 {
-                                                    product.sizes.map(size => (
-                                                        <Radio value={size}>{size}</Radio>
+                                                    product.sizes.map((size, i) => (
+                                                        <Radio key={i} value={size}>{size}</Radio>
                                                     ))
                                                 }
                                             </Radio.Group>
@@ -188,13 +211,14 @@ const ProductDetail = () => {
                                         <Price price={product.price} level={3} type={"success"} />
                                     </Col>
                                     <Col span={8}>
-                                        <UnitsSelect units={product.stock} setUnit={setUnit} size={'large'} />
+                                        <UnitsSelect units={product.stock} unit={unit} setUnit={changeUnitsState} size={'large'} />
                                     </Col>
                                     <Col span={8}>
                                         <Button
                                             type="primary"
                                             size='large'
                                             icon={<PlusOutlined />}
+                                            onClick={handleClickAddToShoppingCart}
                                         >Agregar al carrito</Button>
                                     </Col>
                                 </Row>

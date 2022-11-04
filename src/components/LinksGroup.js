@@ -8,8 +8,8 @@ const LinksGroup = ({ title, items, buttonText }) => {
         <Space direction='vertical' >
             <Title level={4}>{title}</Title>
             {
-                items.map(item => (
-                    <Link to={item.link}>
+                items.map((item, i) => (
+                    <Link key={i} to={item.link}>
                         <Button type='link' style={{ padding: '0' }}>{item.title}</Button>
                     </Link>
                 ))

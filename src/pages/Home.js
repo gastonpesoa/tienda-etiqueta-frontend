@@ -13,8 +13,8 @@ const Home = ({ carouselSource, bestSellers, bestSuits, menu, currentPromotions 
             <div className='carousel-container-style'>
                 <Carousel autoplay>
                     {
-                        carouselSource.map(img => (
-                            <Image src={img.src} alt={img.alt} className='carousel-img' preview={false} />
+                        carouselSource.map((img, i)=> (
+                            <Image key={i} src={img.src} alt={img.alt} className='carousel-img' preview={false} />
                         ))
                     }
                 </Carousel>

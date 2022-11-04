@@ -114,6 +114,7 @@
             "image": "https://sastreriadetali.com.ar/wp-content/uploads/2022/04/26.jpg",
             "title": "Camisa Verde",
             "description": "Camisas de algodón / polyester / spandex",
+            "brand": "Equus",
             "price": 12480.00
         },
         {
@@ -121,6 +122,7 @@
             "image": "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/corbatas.jpg",
             "title": "Corbatas",
             "description": "Corbatas para toda ocación",
+            "brand": "Farenheite",
             "price": 1280.00
         },
         {
@@ -128,6 +130,7 @@
             "image": "https://sastreriadetali.com.ar/wp-content/uploads/2022/01/habano.jpg",
             "title": "Zapatos Havana",
             "description": "Zapatos combinados, cuero y jean, suela natural",
+            "brand": "Briganti",
             "price": 26880.00
         }
     ],
@@ -168,6 +171,7 @@
             "detail": "Traje ejecutivo, corte slim fit de tejido fluído, entallado en pecho y cintura, solapas con muesca, bolsillo en el pecho, dos bolsillos de solapa en la parte frontal, manga larga, puños abotonados, cierre de botones, forro interior tafetán acetato, bolsillos interiores",
             "price": 70000.00,
             "brand": "Equus",
+            "color": "Gris plomo",
             "rating_average": 5,
             "stock": 23,
             "cut": "Slim Fit",
@@ -175,7 +179,7 @@
                 "S",
                 "L",
                 "XL"
-            ],
+            ],            
             "reviews": [
                 {
                     "rating": 3,
@@ -203,6 +207,7 @@
             "description": "Traje color Azulino Pic and Pic",
             "price": 66300.00,
             "brand": "Farenheite",
+            "color": "Azulino",
             "rating_average": 4,
             "stock": 20,
             "cut": "Slim Fit",
@@ -238,6 +243,7 @@
             "description": "Traje color gris cuadrillé",
             "price": 57600.00,
             "brand": "Macowens",
+            "color": "Gris cuadrillé",
             "rating_average": 3,
             "stock": 15,
             "cut": "Slim Fit",
@@ -264,31 +270,37 @@
     ],
     "sizes_list": [
         {
+            "key": "1",
             "size": "XS",
             "chest": "48 a 49 cm",
             "waist": "46 a 47 cm"
         },
         {
+            "key": "2",
             "size": "S",
             "chest": "51 a 52 cm",
             "waist": "46 a 47 cm"
         },
         {
+            "key": "3",
             "size": "M",
             "chest": "51 a 52 cm",
             "waist": "48 a 49 cm"
         },
         {
+            "key": "4",
             "size": "L",
             "chest": "54 a 55 cm",
             "waist": "51 a 52 cm"
         },
         {
+            "key": "5",
             "size": "XL",
             "chest": "57 a 58 cm",
             "waist": "57 a 58 cm"
         },
         {
+            "key": "6",
             "size": "XXL",
             "chest": "60 a 61 cm",
             "waist": "58 a 59 cm"

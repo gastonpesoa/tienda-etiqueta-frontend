@@ -1,4 +1,7 @@
-import { Row, Col, Image, Typography, Select, Divider } from 'antd';
+import { useEffect, useState, useContext } from 'react';
+import { Row, Col, Image, Typography, Select, Divider, Button } from 'antd';
+import { CloseOutlined } from '@ant-design/icons';
+import { ShoppingCartContext } from "../ShoppingCartContext";
 import Price from "./Price";
 import Rating from "./Rating";
 import UnitsSelect from "./UnitsSelect";
@@ -6,60 +9,88 @@ import '../App.less';
 const { Title, Text } = Typography;
 const { Option } = Select;
 
-const ShoppingCartPopoverItem = ({
-    item: { id, name, brand, size, color, price, rating_average, units, image },
-}) => {
+const ShoppingCartPopoverItem = ({ item }) => {
+
+    const { dispatchShoppingCartEvent } = useContext(ShoppingCartContext);
+
+    const handleRemoveItem = () => {
+        dispatchShoppingCartEvent('REMOVE_ITEM', { itemId: item.id });
+    }
+
+    const handleUpdateItem = (quantity) => {
+        dispatchShoppingCartEvent(
+            'UPDATE_ITEM',
+            {
+                itemToUpdate: item,
+                itemUpdated: {
+                    ...item,
+                    unit: quantity,
+
+                    // id: id,
+                    // title: title,
+                    // brand: brand,
+                    // size: size,
+                    // color: color,
+                    // price: price,
+                    // rating_average: rating_average,
+                    // unit: quantity,
+                    // units: units,
+                    // image,
+                }
+            });
+    }
+
     return (
         <Row>
             <Col span={8}>
-                <Image className='shoppingcartpopoveritem-img' src={image} alt={name} preview={false} />
+                <Image className='shoppingcartpopoveritem-img' src={item.image} alt={item.title} preview={false} />
+                <Button
+                    icon={<CloseOutlined />}
+                    style={{ marginTop: '25px' }}
+                    onClick={handleRemoveItem}
+                >
+                    Remover
+                </Button>
             </Col>
             <Col span={16}>
                 <Row>
-                    <Col><Title level={4}>{name}</Title></Col>
+                    <Col><Title level={4}>{item.title}</Title></Col>
                 </Row>
                 {
-                    brand &&
+                    item.brand &&
                     <Row>
                         <Col span={12}><Text type="secondary">Marca:</Text></Col>
-                        <Col span={12}><Text>{brand}</Text></Col>
+                        <Col span={12}><Text>{item.brand}</Text></Col>
                     </Row>
                 }
                 {
-                    size &&
+                    item.size &&
                     <Row>
                         <Col span={12}><Text type="secondary">Talle:</Text></Col>
-                        <Col span={12}><Text>{size}</Text></Col>
+                        <Col span={12}><Text>{item.size}</Text></Col>
                     </Row>
                 }
                 {
-                    color &&
+                    item.color &&
                     <Row>
                         <Col span={12}><Text type="secondary">Color:</Text></Col>
-                        <Col span={12}><Text>{color}</Text></Col>
+                        <Col span={12}><Text>{item.color}</Text></Col>
                     </Row>
                 }
                 {
-                    rating_average &&
+                    item.rating_average &&
                     <Row>
-                        <Col span={24}><Rating rating={rating_average} /></Col>
+                        <Col span={24}><Rating rating={item.rating_average} /></Col>
                     </Row>
-                }                
-                <Row>                        
+                }
+                <Row>
                     <Col span={12}>
-                        <Price price={price} level={5} type={"success"} />
+                        <Price price={item.price} level={5} type={"success"} />
                     </Col>
                     <Col span={12}>
-                        <Select defaultValue="1" style={{ width: 100 }}>
-                            <Option value="1">1 unidad</Option>
-                            <Option value="2">2 unidades</Option>
-                            <Option value="3">3 unidades</Option>
-                            <Option value="4">4 unidades</Option>
-                            <Option value="5">5 unidades</Option>
-                            <Option value="6">6 unidades</Option>
-                        </Select>
+                        <UnitsSelect units={item.units} unit={item.unit} setUnit={handleUpdateItem} size={'medium'} />
                     </Col>
-                </Row>                
+                </Row>
             </Col>
             <Divider plain></Divider>
         </Row>

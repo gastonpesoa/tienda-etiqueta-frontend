@@ -55,12 +55,7 @@ const ProductCard = ({ product }) => {
                             }
                         </Col>
                         <Col span={7} style={{ textAlign: 'right' }}>
-                            <Price price={product.price} type={'default'} level={4} style={{ marginBottom: '170px' }} />
-                            <Button
-                                type="primary"
-                                size='large'
-                                icon={<PlusOutlined />}
-                            >Agregar al carrito</Button>
+                            <Price price={product.price} type={'default'} level={4} style={{ marginBottom: '170px' }} />                           
                         </Col>
                     </Row>
                 </Card>

@@ -7,13 +7,17 @@ const { Title } = Typography;
 const URL = "https://tienda-etiqueta-backend.vercel.app/api/login/"
 
 const Login = () => {
+
     const navigate = useNavigate()
+
     const onFinish = (values) => {
         login(values)
     };
+
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
+
     const login = (value) => {
         fetch(URL, {
             method: "POST",
@@ -30,6 +34,7 @@ const Login = () => {
                 }
             })
     }
+    
     return (
         <Form
             layout="vertical"

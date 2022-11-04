@@ -4,7 +4,7 @@ import ShoppingCartPopover from "./ShoppingCartPopover";
 import { UserOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom'
 
-const HeaderSearch = ({ shoppingCartItems }) => {
+const HeaderSearch = () => {
     const navigate = useNavigate()
     const handleGoHome = () => {
         navigate('/')
@@ -36,7 +36,7 @@ const HeaderSearch = ({ shoppingCartItems }) => {
                 />
             </Col>
             <Col className='header-col-container' span={1}>
-                <ShoppingCartPopover items={shoppingCartItems} />
+                <ShoppingCartPopover />
             </Col>
         </Row>
     )

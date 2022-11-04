@@ -49,10 +49,11 @@ const Category = () => {
             <Row>
                 <Col span={6}>
                     <Space direction='vertical' size='large'>
-                        <FilterBrand brands={trajes.map((item) => ({ label: item.brand, value: item.brand }))} />
+                        <FilterBrand brands={trajes.map((item, i) => ({ id: i, label: item.brand, value: item.brand }))} />
                         <FilterRating
                             ratings={
-                                trajes.map((item) => ({
+                                trajes.map((item, i) => ({
+                                    id: i,
                                     label: <Rating rating={item.rating_average} color={'#FDBC15'} />,
                                     value: item.rating_average
                                 }))}
@@ -62,8 +63,8 @@ const Category = () => {
                 </Col>
                 <Col span={18}>
                     {
-                        trajes.map(traje => (
-                            <ProductCard product={traje} />
+                        trajes.map((traje, i) => (
+                            <ProductCard key={i} product={traje} />
                         ))
                     }
                 </Col>

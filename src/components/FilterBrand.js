@@ -7,7 +7,7 @@ const FilterBrand = ({ brands }) => {
         console.log('checked = ', checkedValues);
     };
     return (
-        <Space direction='vertical'>
+        <Space key={brands.id} direction='vertical'>
             <Title level={4}>Marcas</Title>
             <Checkbox.Group options={brands} onChange={onChangeBrand} />
         </Space>
