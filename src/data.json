@@ -158,8 +158,7 @@
         }
     ],
     "trajes": [
-        {
-            "id": "1",
+        {           
             "images": [
                 "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_19.jpg",
                 "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_18.jpg",
@@ -195,8 +194,7 @@
                 }
             ]
         },
-        {
-            "id": "2",
+        {            
             "images": [
                 "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_22.jpg",
                 "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_23.jpg",
@@ -231,8 +229,7 @@
                 }
             ]
         },
-        {
-            "id": "3",
+        {           
             "images": [
                 "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_40.jpg",
                 "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_41.jpg",

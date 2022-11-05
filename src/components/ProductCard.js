@@ -29,7 +29,7 @@ const ProductCard = ({ product }) => {
                             </Row>
                             <Row style={{ marginBottom: '30px' }} >
                                 <Col span={24}>
-                                    <Rating rating={product.rating} />
+                                    <Rating rating={product.rating_average} />
                                 </Col>
                             </Row>
                             {

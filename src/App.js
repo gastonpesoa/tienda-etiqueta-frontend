@@ -80,7 +80,7 @@ function App() {
                 />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/category/:idCategory" element={
+                <Route path="/category/:category" element={
                   <Category />
                 } />
                 <Route
