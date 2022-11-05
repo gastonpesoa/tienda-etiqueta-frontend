@@ -1,9 +1,8 @@
 import { useState, useContext } from 'react';
 import { useParams } from 'react-router'
-import { useNavigate } from 'react-router-dom'
-import { Col, Row, Typography, Image, Space, Radio, Card, Button, Tabs, Badge, Table, Divider, message } from 'antd';
+import { Col, Row, Typography, Image, Space, Radio, Card, Button, Tabs, Badge, Table, Divider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { ShoppingCartContext } from "../ShoppingCartContext";
+import { AppContext } from "../AppContext";
 import Price from "../components/Price";
 import UnitsSelect from "../components/UnitsSelect";
 import Rating from '../components/Rating';
@@ -13,12 +12,11 @@ const { Title, Text, Paragraph } = Typography;
 const ProductDetail = () => {
 
     const { idProduct } = useParams();
-    const { dispatchShoppingCartEvent } = useContext(ShoppingCartContext);
+    const { dispatchShoppingCartEvent } = useContext(AppContext);
 
     const { trajes, sizes_list } = myData;
     const product = trajes[idProduct - 1];
 
-    const navigate = useNavigate();
     const [unit, setUnit] = useState("1");
     const [size, setSize] = useState(product.sizes[0]);
 

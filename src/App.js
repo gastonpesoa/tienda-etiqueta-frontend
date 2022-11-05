@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import { Routes, Route, Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { Routes, Route } from "react-router-dom";
+import { Layout, message } from 'antd';
+import { AppContext } from "./AppContext";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -10,8 +12,6 @@ import Checkout from "./pages/Checkout";
 import HeaderSearch from "./components/HeaderSearch";
 import MenuHeader from "./components/MenuHeader";
 import './App.less';
-import { ShoppingCartContext } from "./ShoppingCartContext";
-import { Breadcrumb, Layout, Menu, message } from 'antd';
 import myData from './data.json';
 const { Header, Footer, Content } = Layout;
 
@@ -20,12 +20,20 @@ function App() {
   const { menu, carousel_source, best_sellers, best_suits, current_promotions } = myData;
 
   const [shoppingCart, setShoppingCart] = useState([]);
+  const [subtotal, setSubtotal] = useState(0);
+
+  useEffect(() => {
+    const result = shoppingCart.reduce((accumulator, item) => {
+      return accumulator + (item.price * parseInt(item.unit));
+    }, 0)
+    setSubtotal(result)
+  }, [shoppingCart])
 
   const dispatchShoppingCartEvent = (actionType, payload) => {
     switch (actionType) {
       case 'ADD_ITEM':
         for (var i = 0; i < shoppingCart.length; i++) {
-          if (shoppingCart[i].id == payload.newItem.id) {
+          if (shoppingCart[i].id === payload.newItem.id) {
             message.error(`Ya agregaste ${payload.newItem.title} al carrito`)
             return;
           }
@@ -52,7 +60,7 @@ function App() {
     <>
       <Layout id="page-container" className="layout">
         <div className="logo" />
-        <ShoppingCartContext.Provider value={{ shoppingCart, dispatchShoppingCartEvent }}>
+        <AppContext.Provider value={{ shoppingCart, subtotal, dispatchShoppingCartEvent }}>
           <HeaderSearch />
           <Header>
             <MenuHeader menu={menu} />
@@ -88,7 +96,7 @@ function App() {
 
             </div>
           </Content>
-        </ShoppingCartContext.Provider>
+        </AppContext.Provider>
         <Footer id="footer">
           Copyright © 2022 | Tienda Etiqueta
         </Footer>

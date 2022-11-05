@@ -1,19 +1,14 @@
 import { useState, useContext } from 'react';
 import { Badge, Popover, Col, Row, Space, Button, Typography, Empty } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
-import { ShoppingCartContext } from "../ShoppingCartContext";
+import { AppContext } from "../AppContext";
 import ShoppingCartPopoverItem from "./ShoppingCartPopoverItem";
 import Price from "./Price";
 const { Title } = Typography;
 
 const ShoppingCartPopover = () => {
 
-    const { shoppingCart } = useContext(ShoppingCartContext);
-    const [subtotal, setSubtotal] = useState(0)
-
-    // const subtotal = items.reduce((accumulator, item) => {
-    //     return accumulator + item.price;
-    // }, 0);
+    const { shoppingCart, subtotal } = useContext(AppContext);    
 
     const popoverContent = (
         <>

@@ -1,17 +1,16 @@
-import { useEffect, useState, useContext } from 'react';
-import { Row, Col, Image, Typography, Select, Divider, Button } from 'antd';
+import { useContext } from 'react';
+import { Row, Col, Image, Typography, Divider, Button } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
-import { ShoppingCartContext } from "../ShoppingCartContext";
+import { AppContext } from "../AppContext";
 import Price from "./Price";
 import Rating from "./Rating";
 import UnitsSelect from "./UnitsSelect";
 import '../App.less';
 const { Title, Text } = Typography;
-const { Option } = Select;
 
 const ShoppingCartPopoverItem = ({ item }) => {
 
-    const { dispatchShoppingCartEvent } = useContext(ShoppingCartContext);
+    const { dispatchShoppingCartEvent } = useContext(AppContext);
 
     const handleRemoveItem = () => {
         dispatchShoppingCartEvent('REMOVE_ITEM', { itemId: item.id });
