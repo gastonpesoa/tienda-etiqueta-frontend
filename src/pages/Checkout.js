@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Row, Col, Button, Typography, Image, Space, Tag, Card, Input, Form, Select, Radio, Empty } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import { AppContext } from "../AppContext";
@@ -35,7 +35,13 @@ const PROVINCES = [
 
 const Checkout = () => {
 
+    
     const { shoppingCart, subtotal } = useContext(AppContext);
+    
+    useEffect(() => {
+        const result = subtotal + shippingCost - discount
+        setTotal(result)
+    }, [subtotal])
 
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -54,7 +60,7 @@ const Checkout = () => {
     const [total, setTotal] = useState(1050);
     const [shippingCost, setShippingCost] = useState(50);
     const [discountCode, setDiscountCode] = useState('');
-    const [discount, setDiscount] = useState(-500);
+    const [discount, setDiscount] = useState(500);
 
     const onChangePaymentMethod = (e) => {
         setPaymentMethod(e.target.value);
