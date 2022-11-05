@@ -89,7 +89,7 @@ function App() {
                 />
                 <Route
                   path="/checkout"
-                  element={<Checkout shoppingCart={shoppingCart} setShoppingCart={setShoppingCart} />}
+                  element={<Checkout />}
                 />
                 <Route path="*" element={<Eror404 />} />
               </Routes>

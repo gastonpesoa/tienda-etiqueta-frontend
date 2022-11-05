@@ -1,9 +1,9 @@
-import { Row, Col, Button, Typography, Image, Space, Tag, Card, Input, Form, Select, Radio } from 'antd';
+import { useState, useContext } from 'react';
+import { Row, Col, Button, Typography, Image, Space, Tag, Card, Input, Form, Select, Radio, Empty } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
-import { useState } from 'react';
-import Price from '../components/Price';
-import ShoppingCartPopover from '../components/ShoppingCartPopover';
+import { AppContext } from "../AppContext";
 import ShoppingCartPopoverItem from '../components/ShoppingCartPopoverItem';
+import Price from '../components/Price';
 const { Title, Text } = Typography;
 
 const PROVINCES = [
@@ -33,7 +33,9 @@ const PROVINCES = [
     { value: 'Tucumán' }
 ];
 
-function Checkout({ shoppingCart, setShoppingCart }) {
+const Checkout = () => {
+
+    const { shoppingCart, subtotal } = useContext(AppContext);
 
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -49,8 +51,6 @@ function Checkout({ shoppingCart, setShoppingCart }) {
     const [titular, setTitular] = useState('');
     const [dueDate, setDueDate] = useState('');
     const [cvc, setCvc] = useState('');
-    const [items, setItems] = useState([]);
-    const [subtotal, setSubtotal] = useState(1500);
     const [total, setTotal] = useState(1050);
     const [shippingCost, setShippingCost] = useState(50);
     const [discountCode, setDiscountCode] = useState('');
@@ -207,9 +207,7 @@ function Checkout({ shoppingCart, setShoppingCart }) {
                                         <Radio value={'Retiro en local'}>Retiro en local</Radio>
                                         <Radio value={'Envío a domicilio'}>
                                             Envío a domicilio
-
                                         </Radio>
-
                                     </Space>
                                 </Radio.Group>
                             </Col>
@@ -339,48 +337,63 @@ function Checkout({ shoppingCart, setShoppingCart }) {
                 </Col>
                 <Col span={10} style={{ textAlign: 'right' }}>
                     <Card style={{ marginLeft: 30 }}>
-                        <Row>
-                            <Col span={24}><Title level={3} style={{ textAlign: 'left' }}>Resumen pedido</Title></Col>
-                            <Col span={24} style={{ textAlign: 'left' }}><Text>El precio puede variar según el método de entrega.</Text></Col>
-                        </Row>
-                        <Space direction='vertical' size='20' align='center'>
-                            {
-                                items.length
-                                    ? (items.map(item => (
-                                        <ShoppingCartPopoverItem
-                                            key={item.id}
-                                            item={item}
-                                        />)))
-                                    : <Row><Col span={24}><Title level={4}>Tu carrito está vacío</Title></Col></Row>
-                            }
-                        </Space>
-                        <Row>
-                            <Col span={12}><Title level={5} style={{ textAlign: 'left' }}>Subtotal</Title></Col>
-                            <Col span={12} style={{ textAlign: 'right' }}>
-                                <Price price={subtotal} level={5} type={"default"} />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col span={12}><Title level={5} style={{ textAlign: 'left' }}>Envío</Title></Col>
-                            <Col span={12} style={{ textAlign: 'right' }}>
-                                <Price price={shippingCost} level={5} type={"default"} />
-                            </Col>
-                        </Row>
                         {
-                            discount !== 0 &&
-                            <Row>
-                                <Col span={12}><Title level={5} style={{ textAlign: 'left' }}>Descuento</Title></Col>
-                                <Col span={12} style={{ textAlign: 'right' }}>
-                                    <Price price={discount} level={5} style={{ color: '#FF0000' }} type={"default"} />
-                                </Col>
-                            </Row>
+                            shoppingCart.length
+                                ?
+                                <>
+
+                                    <Row>
+                                        <Col span={24}><Title level={3} style={{ textAlign: 'left' }}>Resumen pedido</Title></Col>
+                                        <Col span={24} style={{ textAlign: 'left' }}><Text>El precio puede variar según el método de entrega.</Text></Col>
+                                    </Row>
+                                    <Space direction='vertical' size='20' align='center'>
+                                        {
+                                            shoppingCart.map(item => (
+                                                <ShoppingCartPopoverItem
+                                                    key={item.id}
+                                                    item={item}
+                                                />))
+
+                                        }
+                                    </Space>
+                                    <Row>
+                                        <Col span={12}><Title level={5} style={{ textAlign: 'left' }}>Subtotal</Title></Col>
+                                        <Col span={12} style={{ textAlign: 'right' }}>
+                                            <Price price={subtotal} level={5} type={"default"} />
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col span={12}><Title level={5} style={{ textAlign: 'left' }}>Envío</Title></Col>
+                                        <Col span={12} style={{ textAlign: 'right' }}>
+                                            <Price price={shippingCost} level={5} type={"default"} />
+                                        </Col>
+                                    </Row>
+                                    {
+                                        discount !== 0 &&
+                                        <Row>
+                                            <Col span={12}><Title level={5} style={{ textAlign: 'left' }}>Descuento</Title></Col>
+                                            <Col span={12} style={{ textAlign: 'right' }}>
+                                                <Price price={discount} level={5} style={{ color: '#FF0000' }} type={"default"} />
+                                            </Col>
+                                        </Row>
+                                    }
+                                    <Row>
+                                        <Col span={12}><Title level={5} style={{ textAlign: 'left' }}>Total del pedido</Title></Col>
+                                        <Col span={12} style={{ textAlign: 'right' }}>
+                                            <Price price={total} level={2} style={{ color: '#00BB00' }} type={"default"} />
+                                        </Col>
+                                    </Row>
+                                </>
+                                :
+                                <Empty style={{ justifyContent: 'center' }}
+                                    description={
+                                        <Title level={5}>
+                                            Tu carrito está vacío
+                                        </Title>
+                                    }
+                                />
                         }
-                        <Row>
-                            <Col span={12}><Title level={5} style={{ textAlign: 'left' }}>Total del pedido</Title></Col>
-                            <Col span={12} style={{ textAlign: 'right' }}>
-                                <Price price={total} level={2} style={{ color: '#00BB00' }} type={"default"} />
-                            </Col>
-                        </Row>
+
                     </Card>
                 </Col>
             </Row>

@@ -1,4 +1,5 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
+import { Link } from "react-router-dom";
 import { Badge, Popover, Col, Row, Space, Button, Typography, Empty } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import { AppContext } from "../AppContext";
@@ -47,7 +48,9 @@ const ShoppingCartPopover = () => {
                     <Row>
                         <Col span={24} style={{ textAlign: 'right' }}>
                             <Space align='center'>
-                                <Button type="primary" size='large'>Ir a pagar</Button>
+                                <Link to={"/checkout"}>
+                                    <Button type="primary" size='large'>Ir a pagar</Button>
+                                </Link>
                             </Space>
                         </Col>
                     </Row>
