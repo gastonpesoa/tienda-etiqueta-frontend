@@ -15,9 +15,9 @@ const { Title } = Typography;
 
 const URL = "http://localhost:8080/api/products"
 
-const Category = () => {
+const Products = () => {
 
-    const { category } = useParams();
+    const { category, subcategory } = useParams();
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -25,21 +25,18 @@ const Category = () => {
         const getProducts = async (url) => {
             setLoading(true);
             try {
-                const res = await fetch(`${url}`)
+                const res = await fetch(url)
                 const data = await res.json();
-                console.log("products: ", data);
-                setTimeout(() => {
-                    
-                    setProducts(data.data);
-                    setLoading(false);
-                }, 3000);
-                //const res = await fetch(`${url}/${category}`)
+                setProducts(data.data);
+                setLoading(false);
             } catch (error) {
                 alert(error)
             }
         }
-        getProducts(URL)
-    }, [])
+        const urlBase = `${URL}/category/${category}`;
+        const urlGet = `${urlBase}${subcategory ? '/subcategory/'.concat(subcategory) : ''}`
+        getProducts(urlGet)
+    }, [category, subcategory])
 
     const handleFilterRatingChange = (checkedValues) => {
         console.log('checked = ', checkedValues);
@@ -50,7 +47,7 @@ const Category = () => {
         <>
             {
                 loading
-                    ? (<Skeleton active/>)
+                    ? (<Skeleton active />)
                     : (<>
                         <Row>
                             <Col span={12}><Title level={2}>{category}</Title></Col>
@@ -103,4 +100,4 @@ const Category = () => {
     );
 }
 
-export default Category;
+export default Products;

@@ -25,68 +25,68 @@
         {
             "key": "trajes",
             "title": "Trajes",
-            "link": "/category/trajes",
+            "link": "/products/trajes",
             "items": [
                 {
                     "key": "trajes-ejecutivos",
                     "title": "Trajes Ejecutivos",
-                    "link": "/category/trajes-ejecutivos"
+                    "link": "/products/trajes/trajes-ejecutivos"
                 },
                 {
                     "key": "trajes-chaque",
                     "title": "Trajes Chaqué",
-                    "link": "/category/trajes-chaque"
+                    "link": "/products/trajes/trajes-chaque"
                 },
                 {
                     "key": "trajes-novio",
                     "title": "Trajes de Novio",
-                    "link": "/category/trajes-novio"
+                    "link": "/products/trajes/trajes-novio"
                 },
                 {
                     "key": "esmoquins",
                     "title": "Esmoquins",
-                    "link": "/category/esmoquins"
+                    "link": "/products/trajes/esmoquins"
                 }
             ]
         },
         {
             "key": "camisas",
             "title": "Camisas",
-            "link": "/category/camisas",
+            "link": "/products/camisas",
             "items": [
                 {
                     "key": "camisas-lisas",
                     "title": "Camisas Lisas",
-                    "link": "/category/camisas-lisas"
+                    "link": "/products/camisas/camisas-lisas"
                 },
                 {
                     "key": "camisas-rayadas",
                     "title": "Camisas Rayadas",
-                    "link": "/category/camisas-rayadas"
+                    "link": "/products/camisas/camisas-rayadas"
                 },
                 {
                     "key": "camisas-estampadas",
                     "title": "Camisas Estampadas",
-                    "link": "/category/camisas-estampadas"
+                    "link": "/products/camisas/camisas-estampadas"
                 }
             ]
         },
         {
             "key": "zapatos",
             "title": "Zapatos",
-            "link": "/category/zapatos",
+            "link": "/products/zapatos",
             "items": []
         },
         {
             "key": "corbatas",
             "title": "Corbatas",
-            "link": "/category/corbatas",
+            "link": "/products/corbatas",
             "items": []
         },
         {
             "key": "accesorios",
             "title": "Accesorios",
-            "link": "/category/accesorios",
+            "link": "/products/accesorios",
             "items": []
         }
     ],
@@ -158,14 +158,21 @@
         }
     ],
     "trajes": [
-        {           
+        {
             "images": [
                 "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_19.jpg",
                 "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_18.jpg",
                 "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_20.jpg"
             ],
             "title": "Traje Gris Acero",
-            "category": "Trajes Ejecutivos",
+            "category": {
+                "name": "Trajes",
+                "url": "trajes"
+            },
+            "subcategory": {
+                "name": "Trajes Ejecutivos",
+                "url": "trajes-ejecutivos"
+            },
             "description": "Traje color gris plomo",
             "detail": "Traje ejecutivo, corte slim fit de tejido fluído, entallado en pecho y cintura, solapas con muesca, bolsillo en el pecho, dos bolsillos de solapa en la parte frontal, manga larga, puños abotonados, cierre de botones, forro interior tafetán acetato, bolsillos interiores",
             "price": 70000.00,
@@ -178,7 +185,7 @@
                 "S",
                 "L",
                 "XL"
-            ],            
+            ],
             "reviews": [
                 {
                     "rating": 3,
@@ -194,14 +201,21 @@
                 }
             ]
         },
-        {            
+        {
             "images": [
                 "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_22.jpg",
                 "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_23.jpg",
                 "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_21.jpg"
             ],
             "title": "Traje Azulino Pic and Pic",
-            "category": "Trajes Ejecutivos",
+            "category": {
+                "name": "Trajes",
+                "url": "trajes"
+            },
+            "subcategory": {
+                "name": "Trajes Ejecutivos",
+                "url": "trajes-ejecutivos"
+            },
             "description": "Traje color Azulino Pic and Pic",
             "price": 66300.00,
             "brand": "Farenheite",
@@ -229,14 +243,21 @@
                 }
             ]
         },
-        {           
+        {
             "images": [
                 "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_40.jpg",
                 "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_41.jpg",
                 "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_39.jpg"
             ],
             "title": "Traje Gris Cuadrillé",
-            "category": "Trajes Ejecutivos",
+            "category": {
+                "name": "Trajes",
+                "url": "trajes"
+            },
+            "subcategory": {
+                "name": "Trajes Ejecutivos",
+                "url": "trajes-ejecutivos"
+            },
             "description": "Traje color gris cuadrillé",
             "price": 57600.00,
             "brand": "Macowens",

@@ -1,6 +1,6 @@
-import { useState, useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router'
-import { Col, Row, Typography, Image, Space, Radio, Card, Button, Tabs, Badge, Table, Divider } from 'antd';
+import { Col, Row, Typography, Image, Space, Radio, Card, Button, Tabs, Badge, Table, Divider, Skeleton } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { AppContext } from "../AppContext";
 import Price from "../components/Price";
@@ -9,16 +9,77 @@ import Rating from '../components/Rating';
 import myData from '../data.json';
 const { Title, Text, Paragraph } = Typography;
 
+const URL = "http://localhost:8080/api/products"
+
 const ProductDetail = () => {
 
-    const { idProduct } = useParams();
+    const { productId } = useParams();
     const { dispatchShoppingCartEvent } = useContext(AppContext);
-
-    const { trajes, sizes_list } = myData;
-    const product = trajes[idProduct - 1];
-
+    const [product, setProduct] = useState({});
+    const { id, category, title, description, detail, images,
+        brand, sizes, color, cut, price,
+        rating_average, stock, reviews
+    } = product;
+    const [loading, setLoading] = useState(true);
     const [unit, setUnit] = useState("1");
-    const [size, setSize] = useState(product.sizes[0]);
+    const [size, setSize] = useState([]);
+    const [tabs, setTabs] = useState([]);
+    const { sizes_list } = myData;
+
+    useEffect(() => {
+        console.log("getProductById")
+        const getProductById = async (url) => {
+            setLoading(true);
+            try {
+                const res = await fetch(url)
+                const data = await res.json();
+                setProduct(data.data);
+                setSize(data.data.sizes[0])
+                setTabs([
+                    {
+                        label: <Text>Descripción</Text>,
+                        key: 'description',
+                        children:
+                            <>
+                                <Title level={5} style={{ marginTop: '40px', marginBottom: '20px' }}>Detalle</Title>
+                                <Paragraph>
+                                    {detail}
+                                </Paragraph>
+                                <Title level={5} style={{ marginTop: '40px', marginBottom: '20px' }}>Listado de talles</Title>
+                                <Table dataSource={sizes_list} columns={columns} pagination={false} />
+                            </>
+                    },
+                    {
+                        label:
+                            <Space>
+                                <Text>Opiniones</Text>
+                                <Badge style={{ color: '#6A983C', backgroundColor: '#F4F8EC' }} count={data.data.reviews.length} />
+                            </Space>,
+                        key: 'reviews',
+                        children:
+                            <>
+                                <Title level={5} style={{ marginTop: '40px', marginBottom: '20px' }}>Opiniones del producto</Title>
+                                {
+                                    data.data.reviews.map((review, i) => (
+                                        <div key={i} style={{ marginTop: '50px' }} >
+                                            <Rating rating={review.rating} />
+                                            <Paragraph>
+                                                {review.review}
+                                            </Paragraph>
+                                            <Divider />
+                                        </div>
+                                    ))
+                                }
+                            </>
+                    },
+                ])
+                setLoading(false);
+            } catch (error) {
+                alert(error)
+            }
+        }
+        getProductById(`${URL}/id/${productId}`)
+    }, [productId])
 
     const changeUnitsState = (value) => {
         setUnit(value)
@@ -30,16 +91,16 @@ const ProductDetail = () => {
 
     const handleClickAddToShoppingCart = () => {
         let productToAdd = {
-            id: product.id,
-            title: product.title,
-            brand: product.brand,
+            id: id,
+            title: title,
+            brand: brand,
             size: size,
-            color: product.color,
-            price: product.price,
-            rating_average: product.rating_average,
+            color: color,
+            price: price,
+            rating_average: rating_average,
             unit: unit,
-            units: product.stock,
-            image: product.images[0]
+            units: stock,
+            image: images[0]
         }
         dispatchShoppingCartEvent('ADD_ITEM', { newItem: productToAdd });
     }
@@ -62,174 +123,139 @@ const ProductDetail = () => {
         },
     ];
 
-    const tabs = [
-        {
-            label: <Text>Descripción</Text>,
-            key: 'item-1',
-            children:
-                <>
-                    <Title level={5} style={{ marginTop: '40px', marginBottom: '20px' }}>Detalle</Title>
-                    <Paragraph>
-                        {product.detail}
-                    </Paragraph>
-                    <Title level={5} style={{ marginTop: '40px', marginBottom: '20px' }}>Listado de talles</Title>
-                    <Table dataSource={sizes_list} columns={columns} pagination={false} />
-                </>
-        },
-        {
-            label:
-                <Space>
-                    <Text>Opiniones</Text>
-                    <Badge style={{ color: '#6A983C', backgroundColor: '#F4F8EC' }} count={product.reviews.length} />
-                </Space>,
-            key: 'item-2',
-            children:
-                <>
-                    <Title level={5} style={{ marginTop: '40px', marginBottom: '20px' }}>Opiniones del producto</Title>
-                    {
-                        product.reviews.map((review, i) => (
-                            <div key={i} style={{ marginTop: '50px' }} >
-                                <Rating rating={review.rating} />
-                                <Paragraph>
-                                    {review.review}
-                                </Paragraph>
-                                <Divider />
-                            </div>
-                        ))
-                    }
-                </>
-        },
-    ];
-
     return (
         <>
-            <Row gutter={16}>
-                <Col span={12}>
-                    {
-                        product.images.map((image, i) => (
-                            <Row key={i} style={{ marginBottom: '30px' }}>
-                                <Col span={24}>
-                                    <Image src={image} />
-                                </Col>
-                            </Row>
-                        ))
-                    }
-                </Col>
-                <Col span={12}>
-                    <Title>{product.title}</Title>
-                    <Row style={{ marginBottom: '30px' }} >
-                        {
-                            product.rating_average &&
-                            <Col span={6}>
-                                <Rating rating={product.rating_average} color={'#FDBC15'} />
-                            </Col>
-                        }
-                        {
-                            product.reviews.length > 0 &&
-                            <Col span={18}>
-                                <Text type="secondary" underline>
-                                    {`${product.reviews.length} opiniones de clientes`}
-                                </Text>
-                            </Col>
-                        }
-                    </Row>
-                    <Row>
-                        <Col span={24}>
-                            <Text level={5}>{product.description}</Text>
-                        </Col>
-                    </Row>
-                    {
-                        product.cut &&
-                        <Row>
-                            <Col span={24}><Text>{product.cut}</Text></Col>
-                        </Row>
-                    }
-                    <Row gutter={16} style={{ margin: '30px 0px' }}>
-                        <Col span={12}>
-                            <Row style={{ marginBottom: '10px' }}>
-                                <Col span={6}><Text type="secondary">SKU:</Text></Col>
-                                <Col span={18}><Text>{product.id}</Text></Col>
-                            </Row>
-                            {
-                                product.category &&
-                                <Row style={{ marginBottom: '10px' }}>
-                                    <Col span={6}><Text type="secondary">Categoría:</Text></Col>
-                                    <Col span={18}><Text>{product.category}</Text></Col>
-                                </Row>
-                            }
-                            {
-                                product.stock &&
-                                <Row style={{ marginBottom: '10px' }}>
-                                    <Col span={6}><Text type="secondary">Stock:</Text></Col>
-                                    <Col span={18}>
-                                        {
-                                            product.stock
-                                            // > 0
-                                            //     ? <Text type="success">En Stock</Text>
-                                            //     : <Text type="danger">Sin Stock</Text>
-                                        }
-                                    </Col>
-                                </Row>
-                            }
-                            {
-                                product.brand &&
-                                <Row>
-                                    <Col span={6}><Text type="secondary">Marca:</Text></Col>
-                                    <Col span={18}><Text>{product.brand}</Text></Col>
-                                </Row>
-                            }
-                        </Col>
+            {
+                loading
+                    ? (<Skeleton active />)
+                    : (<Row gutter={16}>
                         <Col span={12}>
                             {
-                                product.sizes &&
-                                <>
-                                    <Row>
-                                        <Col span={24}><Text type="secondary">Talle:</Text></Col>
-                                    </Row>
-                                    <Row>
+                                product.images.map((image, i) => (
+                                    <Row key={i} style={{ marginBottom: '30px' }}>
                                         <Col span={24}>
-                                            <Radio.Group onChange={onSizeChange} value={size}>
-                                                {
-                                                    product.sizes.map((size, i) => (
-                                                        <Radio key={i} value={size}>{size}</Radio>
-                                                    ))
-                                                }
-                                            </Radio.Group>
+                                            <Image src={image} />
                                         </Col>
                                     </Row>
-                                </>
+                                ))
                             }
                         </Col>
-                    </Row>
-                    <Row style={{ marginBottom: '60px' }}>
-                        <Col span={24}>
-                            <Card>
-                                <Row gutter={16}>
-                                    <Col span={8}>
-                                        <Price price={product.price} level={3} type={"success"} />
+                        <Col span={12}>
+                            <Title>{title}</Title>
+                            <Row style={{ marginBottom: '30px' }} >
+                                {
+                                    rating_average &&
+                                    <Col span={6}>
+                                        <Rating rating={rating_average} color={'#FDBC15'} />
                                     </Col>
-                                    <Col span={8}>
-                                        <UnitsSelect units={product.stock} unit={unit} setUnit={changeUnitsState} size={'large'} />
+                                }
+                                {
+                                    reviews.length > 0 &&
+                                    <Col span={18}>
+                                        <Text type="secondary" underline>
+                                            {`${reviews.length} opiniones de clientes`}
+                                        </Text>
                                     </Col>
-                                    <Col span={8}>
-                                        <Button
-                                            type="primary"
-                                            size='large'
-                                            icon={<PlusOutlined />}
-                                            onClick={handleClickAddToShoppingCart}
-                                        >Agregar al carrito</Button>
-                                    </Col>
+                                }
+                            </Row>
+                            <Row>
+                                <Col span={24}>
+                                    <Text level={5}>{description}</Text>
+                                </Col>
+                            </Row>
+                            {
+                                cut &&
+                                <Row>
+                                    <Col span={24}><Text>{cut}</Text></Col>
                                 </Row>
-                            </Card>
+                            }
+                            <Row gutter={16} style={{ margin: '30px 0px' }}>
+                                <Col span={12}>
+                                    <Row style={{ marginBottom: '10px' }}>
+                                        <Col span={6}><Text type="secondary">SKU:</Text></Col>
+                                        <Col span={18}><Text>{id}</Text></Col>
+                                    </Row>
+                                    {
+                                        category &&
+                                        <Row style={{ marginBottom: '10px' }}>
+                                            <Col span={6}><Text type="secondary">Categoría:</Text></Col>
+                                            <Col span={18}><Text>{category.name}</Text></Col>
+                                        </Row>
+                                    }
+                                    {
+                                        stock &&
+                                        <Row style={{ marginBottom: '10px' }}>
+                                            <Col span={6}><Text type="secondary">Stock:</Text></Col>
+                                            <Col span={18}>
+                                                {
+                                                    stock
+                                                    // > 0
+                                                    //     ? <Text type="success">En Stock</Text>
+                                                    //     : <Text type="danger">Sin Stock</Text>
+                                                }
+                                            </Col>
+                                        </Row>
+                                    }
+                                    {
+                                        brand &&
+                                        <Row>
+                                            <Col span={6}><Text type="secondary">Marca:</Text></Col>
+                                            <Col span={18}><Text>{brand}</Text></Col>
+                                        </Row>
+                                    }
+                                </Col>
+                                <Col span={12}>
+                                    {
+                                        sizes &&
+                                        <>
+                                            <Row>
+                                                <Col span={24}><Text type="secondary">Talle:</Text></Col>
+                                            </Row>
+                                            <Row>
+                                                <Col span={24}>
+                                                    <Radio.Group onChange={onSizeChange} value={size}>
+                                                        {
+                                                            sizes.map((size, i) => (
+                                                                <Radio key={i} value={size}>{size}</Radio>
+                                                            ))
+                                                        }
+                                                    </Radio.Group>
+                                                </Col>
+                                            </Row>
+                                        </>
+                                    }
+                                </Col>
+                            </Row>
+                            <Row style={{ marginBottom: '60px' }}>
+                                <Col span={24}>
+                                    <Card>
+                                        <Row gutter={16}>
+                                            <Col span={8}>
+                                                <Price price={price} level={3} type={"success"} />
+                                            </Col>
+                                            <Col span={8}>
+                                                <UnitsSelect units={stock} unit={unit} setUnit={changeUnitsState} size={'large'} />
+                                            </Col>
+                                            <Col span={8}>
+                                                <Button
+                                                    type="primary"
+                                                    size='large'
+                                                    icon={<PlusOutlined />}
+                                                    onClick={handleClickAddToShoppingCart}
+                                                >Agregar al carrito</Button>
+                                            </Col>
+                                        </Row>
+                                    </Card>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col span={24}>
+                                    <Tabs items={tabs} />
+                                </Col>
+                            </Row>
                         </Col>
-                    </Row>
-                    <Row>
-                        <Col span={24}>
-                            <Tabs items={tabs} />
-                        </Col>
-                    </Row>
-                </Col>
-            </Row>
+                    </Row>)
+            }
         </>
     )
 }

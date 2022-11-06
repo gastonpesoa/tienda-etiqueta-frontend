@@ -5,7 +5,7 @@ import { AppContext } from "./AppContext";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Category from "./pages/Category";
+import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import Eror404 from "./pages/Eror404";
 import Checkout from "./pages/Checkout";
@@ -80,17 +80,10 @@ function App() {
                 />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/category/:category" element={
-                  <Category />
-                } />
-                <Route
-                  path="/product-detail/:idProduct"
-                  element={<ProductDetail />}
-                />
-                <Route
-                  path="/checkout"
-                  element={<Checkout />}
-                />
+                <Route path="/products/:category/" element={<Products />} />
+                <Route path="/products/:category/:subcategory" element={<Products />} />
+                <Route path="/product-detail/:productId" element={<ProductDetail />} />
+                <Route path="/checkout" element={<Checkout />} />
                 <Route path="*" element={<Eror404 />} />
               </Routes>
 
