@@ -9,7 +9,7 @@ import Rating from '../components/Rating';
 import myData from '../data.json';
 const { Title, Text, Paragraph } = Typography;
 
-const URL = "http://tienda-etiqueta-backend.vercel.app/api/products"
+const URL = "https://tienda-etiqueta-backend.vercel.app/api/products"
 
 const ProductDetail = () => {
 

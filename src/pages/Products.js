@@ -13,7 +13,7 @@ import Rating from '../components/Rating';
 import '../App.less';
 const { Title } = Typography;
 
-const URL = "http://tienda-etiqueta-backend.vercel.app/api/products"
+const URL = "https://tienda-etiqueta-backend.vercel.app/api/products"
 
 const Products = () => {
 
