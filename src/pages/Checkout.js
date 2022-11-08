@@ -5,44 +5,39 @@ import { AppContext } from "../AppContext";
 import ShoppingCartPopoverItem from '../components/ShoppingCartPopoverItem';
 import Price from '../components/Price';
 const { Title, Text } = Typography;
+const { Search } = Input;
 
 const PROVINCES = [
-    { value: 'Ciudad Autónoma de Buenos Aires' },
-    { value: 'Buenos aires' },
-    { value: 'Catamarca' },
-    { value: 'Chaco' },
-    { value: 'Chubut' },
-    { value: 'Córdoba' },
-    { value: 'Corrientes' },
-    { value: 'Entre Ríos' },
-    { value: 'Formosa' },
-    { value: 'Jujuy' },
-    { value: 'La Pampa' },
-    { value: 'La Rioja' },
-    { value: 'Mendoza' },
-    { value: 'Misiones' },
-    { value: 'Neuquén' },
-    { value: 'Río Negro' },
-    { value: 'Salta' },
-    { value: 'San Juan' },
-    { value: 'San Luis' },
-    { value: 'Santa Cruz' },
-    { value: 'Santa Fe' },
-    { value: 'Santiago del Estero' },
-    { value: 'Tierra del Fuego' },
-    { value: 'Tucumán' }
+    { value: 'Ciudad Autónoma de Buenos Aires', shippingCost: 100 },
+    { value: 'Buenos aires', shippingCost: 200 },
+    { value: 'Catamarca', shippingCost: 300 },
+    { value: 'Chaco', shippingCost: 300 },
+    { value: 'Chubut', shippingCost: 300 },
+    { value: 'Córdoba', shippingCost: 250 },
+    { value: 'Corrientes', shippingCost: 300 },
+    { value: 'Entre Ríos', shippingCost: 250 },
+    { value: 'Formosa', shippingCost: 300 },
+    { value: 'Jujuy', shippingCost: 300 },
+    { value: 'La Pampa', shippingCost: 250 },
+    { value: 'La Rioja', shippingCost: 300 },
+    { value: 'Mendoza', shippingCost: 300 },
+    { value: 'Misiones', shippingCost: 300 },
+    { value: 'Neuquén', shippingCost: 300 },
+    { value: 'Río Negro', shippingCost: 250 },
+    { value: 'Salta', shippingCost: 300 },
+    { value: 'San Juan', shippingCost: 300 },
+    { value: 'San Luis', shippingCost: 300 },
+    { value: 'Santa Cruz', shippingCost: 300 },
+    { value: 'Santa Fe', shippingCost: 250 },
+    { value: 'Santiago del Estero', shippingCost: 300 },
+    { value: 'Tierra del Fuego', shippingCost: 300 },
+    { value: 'Tucumán', shippingCost: 300 }
 ];
 
 const Checkout = () => {
 
-    
     const { shoppingCart, subtotal } = useContext(AppContext);
     
-    useEffect(() => {
-        const result = subtotal + shippingCost - discount
-        setTotal(result)
-    }, [subtotal])
-
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -57,10 +52,18 @@ const Checkout = () => {
     const [titular, setTitular] = useState('');
     const [dueDate, setDueDate] = useState('');
     const [cvc, setCvc] = useState('');
-    const [total, setTotal] = useState(1050);
-    const [shippingCost, setShippingCost] = useState(50);
-    const [discountCode, setDiscountCode] = useState('');
-    const [discount, setDiscount] = useState(500);
+    const [total, setTotal] = useState(0);
+    const [shippingCost, setShippingCost] = useState(0);
+    const [validatingDiscountCode, setValidatingDiscountCode] = useState(false);
+    const [discount, setDiscount] = useState(0);
+
+    useEffect(() => {
+        let result = subtotal - discount;
+        if (deliveryMethod === 'Envío a domicilio') {
+            result += shippingCost;
+        }
+        setTotal(result);
+    }, [subtotal, shippingCost, discount, deliveryMethod])
 
     const onChangePaymentMethod = (e) => {
         setPaymentMethod(e.target.value);
@@ -68,6 +71,28 @@ const Checkout = () => {
 
     const onChangeDeliveryMethod = (e) => {
         setDeliveryMethod(e.target.value);
+    }
+
+    const onChangeProvinceSelection = (value) => {
+        PROVINCES.find(function (province, index) {
+            if (province.value === value) {
+                setShippingCost(province.shippingCost);
+                return true;
+            }
+
+            return false;
+        });
+    }
+
+    const validateDiscountCode = (value) => {
+        setValidatingDiscountCode(true);
+
+        // Simula validar el código en el backend hasta tener listo en endpoint
+        setTimeout(() => {
+            setValidatingDiscountCode(false);
+            setDiscount(2000);
+        }, 2000);
+        console.log(value);
     }
 
     return (
@@ -137,6 +162,7 @@ const Checkout = () => {
                                         defaultValue=""
                                         options={PROVINCES}
                                         placeholder="Elija una provincia"
+                                        onChange={onChangeProvinceSelection}
 
                                     />
                                 </Form.Item>
@@ -368,12 +394,15 @@ const Checkout = () => {
                                             <Price price={subtotal} level={5} type={"default"} />
                                         </Col>
                                     </Row>
-                                    <Row>
-                                        <Col span={12}><Title level={5} style={{ textAlign: 'left' }}>Envío</Title></Col>
-                                        <Col span={12} style={{ textAlign: 'right' }}>
-                                            <Price price={shippingCost} level={5} type={"default"} />
-                                        </Col>
-                                    </Row>
+                                    {
+                                        shippingCost !== 0 && deliveryMethod === 'Envío a domicilio' &&
+                                        <Row>
+                                            <Col span={12}><Title level={5} style={{ textAlign: 'left' }}>Envío</Title></Col>
+                                            <Col span={12} style={{ textAlign: 'right' }}>
+                                                <Price price={shippingCost} level={5} type={"default"} />
+                                            </Col>
+                                        </Row>
+                                    }
                                     {
                                         discount !== 0 &&
                                         <Row>
@@ -383,6 +412,18 @@ const Checkout = () => {
                                             </Col>
                                         </Row>
                                     }
+                                    <Row>
+                                    {
+                                        !validatingDiscountCode ?
+                                        <Col span={24}>
+                                            <Search placeholder="Aplicar código de descuento" onSearch={validateDiscountCode} enterButton="Aplicar" />
+                                        </Col>
+                                        :
+                                        <Col span={24}>
+                                            <Search placeholder="Aplicar código de descuento" loading enterButton="Aplicar" />
+                                        </Col>
+                                    }
+                                    </Row>
                                     <Row>
                                         <Col span={12}><Title level={5} style={{ textAlign: 'left' }}>Total del pedido</Title></Col>
                                         <Col span={12} style={{ textAlign: 'right' }}>

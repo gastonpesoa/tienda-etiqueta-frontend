@@ -165,8 +165,8 @@ const Register = () => {
                                     placeholder="Seleccione una provincia"
                                     allowClear
                                 >
-                                    <Option value="Buenos Aires">Buenos Aires</Option>
                                     <Option value="Ciudad Autónoma de Buenos Aires">Ciudad Autónoma de Buenos Aires</Option>
+                                    <Option value="Buenos Aires">Buenos Aires</Option>
                                     <Option value="Catamarca">Catamarca</Option>
                                     <Option value="Chaco">Chaco</Option>
                                     <Option value="Chubut">Chubut</Option>
@@ -187,7 +187,7 @@ const Register = () => {
                                     <Option value="Santa Cruz">Santa Cruz</Option>
                                     <Option value="Santa Fe">Santa Fe</Option>
                                     <Option value="Santiago del Estero">Santiago del Estero</Option>
-                                    <Option value="Tierra del Fuego, Antártida e Islas del Atlántico Sur">Tierra del Fuego, Antártida e Islas del Atlántico Sur</Option>
+                                    <Option value="Tierra del Fuego">Tierra del Fuego</Option>
                                     <Option value="Tucumán">Tucumán</Option>
                                 </Select>
                             </Form.Item>
