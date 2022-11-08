@@ -90,7 +90,7 @@ function App() {
             </div>
           </Content>
         </AppContext.Provider>
-        <Footer id="footer">
+        <Footer id="footer" style={{ position: "unset" }}>
           Copyright © 2022 | Tienda Etiqueta
         </Footer>
       </Layout>

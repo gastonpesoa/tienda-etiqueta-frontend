@@ -1,11 +1,13 @@
 import { useState, useEffect, useContext } from 'react';
-import { Row, Col, Button, Typography, Image, Space, Tag, Card, Input, Form, Select, Radio, Empty } from 'antd';
+import { Row, Col, Button, Typography, Image, Space, Tag, Card, Input, Form, Select, Radio, Empty, message } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import { AppContext } from "../AppContext";
 import ShoppingCartPopoverItem from '../components/ShoppingCartPopoverItem';
 import Price from '../components/Price';
 const { Title, Text } = Typography;
 const { Search } = Input;
+
+const URL_VALIDATE_CODE = "https://tienda-etiqueta-backend.vercel.app/api/discountCodes/code/"
 
 const PROVINCES = [
     { value: 'Ciudad Autónoma de Buenos Aires', shippingCost: 100 },
@@ -87,12 +89,32 @@ const Checkout = () => {
     const validateDiscountCode = (value) => {
         setValidatingDiscountCode(true);
 
+        fetch(URL_VALIDATE_CODE + value)
+            .then((res) => res.ok ? res.json() : Promise.reject(res))
+            .then(({data}) => {
+                if (data.length > 0) {
+                    setDiscount(data[0].amount);
+                    message.success("Código de descuento aplicado exitosamente!");
+                } else {
+                    setDiscount(0);
+                    message.error("El código de descuento ingresado es inválido");
+                }
+            })
+            .catch((err) => {
+                console.error(err);
+                message.error("Hubo un error al validar el código de descuento, intente nuevamente más tarde");
+                setDiscount(0);
+            })
+            .finally(() => {
+                setValidatingDiscountCode(false);
+            });
+
         // Simula validar el código en el backend hasta tener listo en endpoint
-        setTimeout(() => {
+        /*setTimeout(() => {
             setValidatingDiscountCode(false);
             setDiscount(2000);
         }, 2000);
-        console.log(value);
+        console.log(value);*/
     }
 
     return (

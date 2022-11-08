@@ -31,7 +31,7 @@ const ShoppingCartPopoverItem = ({ item }) => {
                 <Image className='shoppingcartpopoveritem-img' src={item.image} alt={item.title} preview={false} />
                 <Button
                     icon={<CloseOutlined />}
-                    style={{ marginTop: '25px' }}
+                    style={{ marginTop: '25px', float: 'left' }}
                     onClick={handleRemoveItem}
                 >
                     Remover
