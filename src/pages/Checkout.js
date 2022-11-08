@@ -234,17 +234,29 @@ const Checkout = () => {
                         </Row>
                         <Row>
                             <Col span={24}>
-                                <Radio.Group onChange={onChangeDeliveryMethod} value={deliveryMethod}>
-                                    <Space direction="vertical">
-                                        <Radio value={'Retiro en local'}>Retiro en local</Radio>
-                                        <Radio value={'Envío a domicilio'}>
-                                            Envío a domicilio
-                                        </Radio>
+                                <Radio.Group onChange={onChangeDeliveryMethod} value={deliveryMethod} style={{width: '100%'}}>
+                                    <Space direction="vertical" style={{width: '100%'}}>
+                                        <Card>
+                                            <Radio value={'Retiro en local'}>Retiro en local</Radio>
+                                            <Text style={{ color: 'green', paddingLeft: 18 }} strong>¡Sin costo!</Text>
+                                        </Card>
+                                        <Card>
+                                            <Radio value={'Envío a domicilio'}>Envío a domicilio </Radio>
+                                            {
+                                                shippingCost !== 0 ?
+                                                    <>
+                                                        <Text style={{ color: 'green' }} strong>+$ {shippingCost}</Text>
+                                                        <Text strong> Precio adicional</Text>
+                                                    </>
+                                                :
+                                                    <Text strong>Seleccione una provincia para calcular el costo de envío</Text>
+                                            }
+                                        </Card>
                                     </Space>
                                 </Radio.Group>
                             </Col>
                         </Row>
-                        <Row>
+                        <Row style={{ paddingTop: 25 }}>
                             <Col span={24}><Title level={2}>Medio de pago</Title></Col>
                             <Col span={12}>
                                 <Text>Seleccione un medio de pago</Text>
@@ -255,20 +267,22 @@ const Checkout = () => {
                         </Row>
                         <Row>
                             <Col span={24}>
-                                <Radio.Group onChange={onChangePaymentMethod} value={paymentMethod}>
-                                    <Space direction="vertical">
-                                        <Radio value={'Pago en el local'}>Pago en el local</Radio>
-                                        <Radio value={'Tarjeta de crédito'}>
-                                            Tarjeta de crédito
-
-                                        </Radio>
-
+                                <Radio.Group onChange={onChangePaymentMethod} value={paymentMethod} style={{width: '100%'}}>
+                                    <Space direction="vertical" style={{width: '100%'}}>
+                                        <Card>
+                                            <Radio value={'Pago en el local'}>Pago en el local</Radio>
+                                        </Card>
+                                        <Card>
+                                            <Radio value={'Tarjeta de crédito'}>
+                                                Tarjeta de crédito
+                                            </Radio>
+                                        </Card>
                                     </Space>
                                 </Radio.Group>
                             </Col>
-                            <Col span={24}>
+                            <Col span={24} style={{ paddingTop: 10 }}>
                                 {paymentMethod === 'Tarjeta de crédito' ?
-                                    <>
+                                    <Card>
                                         <Row>
                                             <Col span={24}>
                                                 <Form.Item
@@ -335,12 +349,12 @@ const Checkout = () => {
                                                 </Form.Item>
                                             </Col>
                                         </Row>
-                                    </>
+                                    </Card>
                                     : null
                                 }
                             </Col>
                         </Row>
-                        <Row>
+                        <Row style={{ paddingTop: 25 }}>
                             <Col span={24}><Title level={2}>Información adicional</Title></Col>
                             <Col span={12}>
                                 <Text>¿Necesita algo más? ¡Lo haremos por usted!</Text>
@@ -349,7 +363,7 @@ const Checkout = () => {
                                 <Text>Paso 4/4</Text>
                             </Col>
                         </Row>
-                        <Row>
+                        <Row style={{ paddingTop: 15 }}>
                             <Col span={24}>
                                 <Form.Item
                                     label="Notas de la orden"
