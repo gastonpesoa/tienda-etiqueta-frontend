@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { Button, Typography, Form, Input } from 'antd';
 const { Title } = Typography;
 
-const URL = "https://tienda-etiqueta-backend.vercel.app/api/login/"
+const URL = "http://localhost:8080/api/login/"
 
 const Login = () => {
 

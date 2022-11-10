@@ -7,7 +7,7 @@ import Price from '../components/Price';
 const { Title, Text } = Typography;
 const { Search } = Input;
 
-const URL_VALIDATE_CODE = "https://tienda-etiqueta-backend.vercel.app/api/discountCodes/code/"
+const URL_VALIDATE_CODE = "http://localhost:8080/api/discountCodes/code/"
 
 const PROVINCES = [
     { value: 'Ciudad Autónoma de Buenos Aires', shippingCost: 100 },

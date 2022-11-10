@@ -5,7 +5,7 @@ import { Col, Row, Button, Typography, Form, Input, Select, InputNumber } from '
 const { Option } = Select;
 const { Title } = Typography;
 
-const URL = "https://tienda-etiqueta-backend.vercel.app/api/users/"
+const URL = "http://localhost:8080/api/users/"
 
 const Register = () => {
 
