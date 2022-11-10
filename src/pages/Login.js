@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
+import { AppContext } from "../AppContext";
 import { Button, Typography, Form, Input } from 'antd';
 const { Title } = Typography;
 
@@ -8,6 +9,7 @@ const URL = "http://localhost:8080/api/login/"
 
 const Login = () => {
 
+    const { urlBaseServer } = useContext(AppContext);
     const navigate = useNavigate()
 
     const onFinish = (values) => {
@@ -19,7 +21,7 @@ const Login = () => {
     };
 
     const login = (value) => {
-        fetch(URL, {
+        fetch(`${urlBaseServer}/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(value)

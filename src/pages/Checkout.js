@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom'
 import { Row, Col, Button, Typography, Image, Space, Tag, Card, Input, Form, Select, Radio, Empty, message } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import { AppContext } from "../AppContext";
@@ -36,10 +37,14 @@ const PROVINCES = [
     { value: 'Tucumán', shippingCost: 300 }
 ];
 
+const URL = "https://tienda-etiqueta-backend.vercel.app/api/orders/"
+
 const Checkout = () => {
 
+
     const { shoppingCart, subtotal } = useContext(AppContext);
-    
+    const navigate = useNavigate()
+
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -125,6 +130,8 @@ const Checkout = () => {
                         labelCol={{ span: 22 }}
                         wrapperCol={{ span: 22 }}
                         layout="vertical"
+                        onFinish={onFinish}
+                        onFinishFailed={onFinishFailed}
                     >
                         <Row>
                             <Col span={24}><Title level={2}>Información de facturación</Title></Col>
@@ -395,6 +402,7 @@ const Checkout = () => {
                                 </Form.Item>
                                 <Button
                                     type="primary"
+                                    htmlType="submit"
                                     size='large'
                                 >
                                     Completar orden

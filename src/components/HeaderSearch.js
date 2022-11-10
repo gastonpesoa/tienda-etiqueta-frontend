@@ -31,11 +31,10 @@ const HeaderSearch = () => {
                 <Button
                     onClick={handleActionUser}
                     type='link'
-                    style={{ padding: '0' }}
                     icon={<UserOutlined style={{ fontSize: '24px', color: 'black' }} />}
                 />
             </Col>
-            <Col className='header-col-container' span={1}>
+            <Col className='header-col-container'  span={1}>
                 <ShoppingCartPopover />
             </Col>
         </Row>

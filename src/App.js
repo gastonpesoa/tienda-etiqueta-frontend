@@ -17,10 +17,19 @@ const { Header, Footer, Content } = Layout;
 
 function App() {
 
-  const { menu, carousel_source, best_sellers, best_suits, current_promotions } = myData;
+  const { url_base_server, menu, carousel_source, best_sellers, best_suits, current_promotions } = myData;
 
+  const [urlBaseServer, setUrlBaseServer] = useState('');
   const [shoppingCart, setShoppingCart] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
+
+  useEffect(() => {
+    if (url_base_server.env === 'dev') {
+      setUrlBaseServer(url_base_server.dev)
+    } else {
+      setUrlBaseServer(url_base_server.prod)
+    }
+  }, [])
 
   useEffect(() => {
     const result = shoppingCart.reduce((accumulator, item) => {
@@ -60,7 +69,7 @@ function App() {
     <>
       <Layout id="page-container" className="layout">
         <div className="logo" />
-        <AppContext.Provider value={{ shoppingCart, subtotal, dispatchShoppingCartEvent }}>
+        <AppContext.Provider value={{ urlBaseServer, shoppingCart, subtotal, dispatchShoppingCartEvent }}>
           <HeaderSearch />
           <Header>
             <MenuHeader menu={menu} />

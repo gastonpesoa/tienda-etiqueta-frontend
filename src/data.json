@@ -1,4 +1,9 @@
 {
+    "url_base_server": {
+        "env": "prod",
+        "prod": "https://tienda-etiqueta-backend.vercel.app/api",
+        "dev": "http://localhost:8080/api"
+    },
     "shopping_cart_items": [
         {
             "id": "1",

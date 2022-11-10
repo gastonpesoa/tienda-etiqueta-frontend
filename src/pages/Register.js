@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
 import { Col, Row, Button, Typography, Form, Input, Select, InputNumber } from 'antd';
+import { AppContext } from "../AppContext";
 const { Option } = Select;
 const { Title } = Typography;
 
@@ -9,6 +10,7 @@ const URL = "http://localhost:8080/api/users/"
 
 const Register = () => {
 
+    const { urlBaseServer } = useContext(AppContext);
     const navigate = useNavigate()
 
     const onFinish = (values) => {
@@ -20,7 +22,7 @@ const Register = () => {
     };
 
     const registerUser = (value) => {
-        fetch(URL, {
+        fetch(`${urlBaseServer}/users`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(value)
@@ -34,7 +36,7 @@ const Register = () => {
                 }
             })
     }
-    
+
     return (
         <Row>
             <Col span={8}></Col>

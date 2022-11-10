@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Row, Col, Typography, Space, Skeleton } from 'antd';
+import { AppContext } from "../AppContext";
 import BadgeProductsCount from "../components/BadgeProductsCount";
 import ProductCard from '../components/ProductCard';
 import FiltersApplied from "../components/FiltersApplied";
@@ -17,6 +18,7 @@ const URL = "http://localhost:8080/api/products"
 
 const Products = () => {
 
+    const { urlBaseServer } = useContext(AppContext);
     const { category, subcategory } = useParams();
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -33,7 +35,7 @@ const Products = () => {
                 alert(error)
             }
         }
-        const urlBase = `${URL}/category/${category}`;
+        const urlBase = `${urlBaseServer}/products/category/${category}`;
         const urlGet = `${urlBase}${subcategory ? '/subcategory/'.concat(subcategory) : ''}`
         getProducts(urlGet)
     }, [category, subcategory])

@@ -14,7 +14,7 @@ const URL = "http://localhost:8080/api/products"
 const ProductDetail = () => {
 
     const { productId } = useParams();
-    const { dispatchShoppingCartEvent } = useContext(AppContext);
+    const { urlBaseServer, dispatchShoppingCartEvent } = useContext(AppContext);
     const [product, setProduct] = useState({});
     const { id, category, title, description, detail, images,
         brand, sizes, color, cut, price,
@@ -78,7 +78,7 @@ const ProductDetail = () => {
                 alert(error)
             }
         }
-        getProductById(`${URL}/id/${productId}`)
+        getProductById(`${urlBaseServer}/products/id/${productId}`)
     }, [productId])
 
     const changeUnitsState = (value) => {
