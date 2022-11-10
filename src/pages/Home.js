@@ -4,7 +4,7 @@ import InfoCard from "../components/InfoCard";
 import ProductSmallCard from "../components/ProductSmallCard";
 import '../App.less';
 const { Content } = Layout;
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 const Home = ({ carouselSource, bestSellers, bestSuits, menu, currentPromotions }) => {
 

@@ -8,7 +8,6 @@ import Price from '../components/Price';
 const { Title, Text } = Typography;
 const { Search } = Input;
 
-const URL_VALIDATE_CODE = "http://localhost:8080/api/discountCodes/code/"
 
 const PROVINCES = [
     { value: 'Ciudad Autónoma de Buenos Aires', shippingCost: 100 },
@@ -37,10 +36,7 @@ const PROVINCES = [
     { value: 'Tucumán', shippingCost: 300 }
 ];
 
-const URL = "https://tienda-etiqueta-backend.vercel.app/api/orders/"
-
 const Checkout = () => {
-
 
     const { shoppingCart, subtotal } = useContext(AppContext);
     const navigate = useNavigate()
@@ -94,7 +90,7 @@ const Checkout = () => {
     const validateDiscountCode = (value) => {
         setValidatingDiscountCode(true);
 
-        fetch(URL_VALIDATE_CODE + value)
+        fetch(`${process.env.REACT_APP_API_URL_BASE}/discountCodes/code/${value}`)
             .then((res) => res.ok ? res.json() : Promise.reject(res))
             .then(({data}) => {
                 if (data.length > 0) {
@@ -112,15 +108,17 @@ const Checkout = () => {
             })
             .finally(() => {
                 setValidatingDiscountCode(false);
-            });
-
-        // Simula validar el código en el backend hasta tener listo en endpoint
-        /*setTimeout(() => {
-            setValidatingDiscountCode(false);
-            setDiscount(2000);
-        }, 2000);
-        console.log(value);*/
+            });   
     }
+
+    const onFinish = (values) => {
+        console.log(values)
+    };
+
+    const onFinishFailed = (errorInfo) => {
+        console.log('Failed:', errorInfo);
+    };
+
 
     return (
         <>

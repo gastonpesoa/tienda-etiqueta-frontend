@@ -9,12 +9,10 @@ import Rating from '../components/Rating';
 import myData from '../data.json';
 const { Title, Text, Paragraph } = Typography;
 
-const URL = "http://localhost:8080/api/products"
-
 const ProductDetail = () => {
 
     const { productId } = useParams();
-    const { urlBaseServer, dispatchShoppingCartEvent } = useContext(AppContext);
+    const { dispatchShoppingCartEvent } = useContext(AppContext);
     const [product, setProduct] = useState({});
     const { id, category, title, description, detail, images,
         brand, sizes, color, cut, price,
@@ -27,7 +25,6 @@ const ProductDetail = () => {
     const { sizes_list } = myData;
 
     useEffect(() => {
-        console.log("getProductById")
         const getProductById = async (url) => {
             setLoading(true);
             try {
@@ -78,7 +75,7 @@ const ProductDetail = () => {
                 alert(error)
             }
         }
-        getProductById(`${urlBaseServer}/products/id/${productId}`)
+        getProductById(`${process.env.REACT_APP_API_URL_BASE}/products/id/${productId}`)
     }, [productId])
 
     const changeUnitsState = (value) => {
