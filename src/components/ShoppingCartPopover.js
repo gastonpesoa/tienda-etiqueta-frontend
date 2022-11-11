@@ -1,6 +1,6 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom'
-import { Badge, Popover, Col, Row, Space, Button, Typography, Empty, Alert } from 'antd';
+import { Badge, Popover, Col, Row, Space, Button, Typography, Empty, Alert, message } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import { AppContext } from "../AppContext";
 import ShoppingCartPopoverItem from "./ShoppingCartPopoverItem";
@@ -11,12 +11,11 @@ const ShoppingCartPopover = () => {
 
     const { shoppingCart, subtotal } = useContext(AppContext);
     const navigate = useNavigate()
-    const [showAlert, setShowAlert] = useState(false)
 
     const handleCheckoutClick = () => {
         let token = localStorage.getItem("token")
         if (!token) {
-            setShowAlert(true)
+            message.info("Inicia sesión para continuar")
         } else {
             navigate('/checkout')
         }
@@ -58,19 +57,11 @@ const ShoppingCartPopover = () => {
                     </Row>
                     <Row>
                         <Col span={24} style={{ textAlign: 'right' }}>
-                            <Space align='center' direction='vertical'>
-                                <Button type="primary" size='large' onClick={handleCheckoutClick}>Ir a pagar</Button>
+                            <Space align='center'>
+                                <Button type="primary" size='large' onClick={handleCheckoutClick}>
+                                    Ir a pagar
+                                </Button>
                             </Space>
-                            {
-                                showAlert &&
-                                <Alert
-                                    style={{ marginTop: '10px' }}
-                                    message="Inicia sesión para continuar"
-                                    type="info"
-                                    closable
-                                    onClick={() => { setShowAlert(false) }}
-                                />
-                            }
                         </Col>
                     </Row>
                 </>

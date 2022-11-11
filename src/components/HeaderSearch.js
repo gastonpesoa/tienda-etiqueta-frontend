@@ -5,13 +5,22 @@ import { UserOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom'
 
 const HeaderSearch = () => {
+
     const navigate = useNavigate()
+
     const handleGoHome = () => {
         navigate('/')
     }
+
     const handleActionUser = () => {
-        navigate('/login')
+        let token = localStorage.getItem("token")
+        if (!token) {
+            navigate('/login')
+        } else {
+            navigate('/user-profile')
+        }
     }
+
     return (
         <Row className='header-row-container'>
             <Col className='logo-container' span={2}>
@@ -34,7 +43,7 @@ const HeaderSearch = () => {
                     icon={<UserOutlined style={{ fontSize: '24px', color: 'black' }} />}
                 />
             </Col>
-            <Col className='header-col-container'  span={1}>
+            <Col className='header-col-container' span={1}>
                 <ShoppingCartPopover />
             </Col>
         </Row>

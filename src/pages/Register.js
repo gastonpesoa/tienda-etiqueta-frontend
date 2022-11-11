@@ -1,12 +1,17 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
-import { Col, Row, Button, Typography, Form, Input, Select, InputNumber } from 'antd';
+import { Col, Row, Button, Typography, Form, Input, Select, InputNumber, message } from 'antd';
+import { AppContext } from "../AppContext";
+import myData from '../data.json';
 const { Option } = Select;
 const { Title } = Typography;
 
 const Register = () => {
 
+    const { dispatchUserEvent } = useContext(AppContext);
     const navigate = useNavigate()
+    const { provinces } = myData;
 
     const onFinish = (values) => {
         registerUser(values)
@@ -25,8 +30,11 @@ const Register = () => {
             .then(res => res.json())
             .then(data => {
                 if (data.error) {
-                    alert("La contraseña debe tener 8 caracteres")
+                    message.error(data.message)
+                    console.log(data)
                 } else {
+                    message.success(`Bienvenido ${data.data.user.name}, tu usario ha sido registrado con éxito!`)
+                    dispatchUserEvent(data.data.token, data.data.user);
                     navigate('/')
                 }
             })
@@ -161,32 +169,8 @@ const Register = () => {
                                 <Select
                                     placeholder="Seleccione una provincia"
                                     allowClear
-                                >
-                                    <Option value="Ciudad Autónoma de Buenos Aires">Ciudad Autónoma de Buenos Aires</Option>
-                                    <Option value="Buenos Aires">Buenos Aires</Option>
-                                    <Option value="Catamarca">Catamarca</Option>
-                                    <Option value="Chaco">Chaco</Option>
-                                    <Option value="Chubut">Chubut</Option>
-                                    <Option value="Córdoba">Córdoba</Option>
-                                    <Option value="Corrientes">Corrientes</Option>
-                                    <Option value="Entre Ríos">Entre Ríos</Option>
-                                    <Option value="Formosa">Formosa</Option>
-                                    <Option value="Jujuy">Jujuy</Option>
-                                    <Option value="La Pampa">La Pampa</Option>
-                                    <Option value="La Rioja">La Rioja</Option>
-                                    <Option value="Mendoza">Mendoza</Option>
-                                    <Option value="Misiones">Misiones</Option>
-                                    <Option value="Neuquén">Neuquén</Option>
-                                    <Option value="Río Negro">Río Negro</Option>
-                                    <Option value="Salta">Salta</Option>
-                                    <Option value="San Juan">San Juan</Option>
-                                    <Option value="San Luis">San Luis</Option>
-                                    <Option value="Santa Cruz">Santa Cruz</Option>
-                                    <Option value="Santa Fe">Santa Fe</Option>
-                                    <Option value="Santiago del Estero">Santiago del Estero</Option>
-                                    <Option value="Tierra del Fuego">Tierra del Fuego</Option>
-                                    <Option value="Tucumán">Tucumán</Option>
-                                </Select>
+                                    options={provinces}
+                                />
                             </Form.Item>
                         </Col>
                         <Col span={12}>

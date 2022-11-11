@@ -1,64 +1,58 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom'
-import { Row, Col, Button, Typography, Image, Space, Tag, Card, Input, Form, Select, Radio, Empty, message } from 'antd';
+import { Row, Col, Button, Typography, Image, Space, Tag, Card, Input, Form, Select, Radio, Empty, message, notification } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import { AppContext } from "../AppContext";
 import ShoppingCartPopoverItem from '../components/ShoppingCartPopoverItem';
 import Price from '../components/Price';
+import myData from '../data.json';
 const { Title, Text } = Typography;
 const { Search } = Input;
 
-
-const PROVINCES = [
-    { value: 'Ciudad Autónoma de Buenos Aires', shippingCost: 100 },
-    { value: 'Buenos aires', shippingCost: 200 },
-    { value: 'Catamarca', shippingCost: 300 },
-    { value: 'Chaco', shippingCost: 300 },
-    { value: 'Chubut', shippingCost: 300 },
-    { value: 'Córdoba', shippingCost: 250 },
-    { value: 'Corrientes', shippingCost: 300 },
-    { value: 'Entre Ríos', shippingCost: 250 },
-    { value: 'Formosa', shippingCost: 300 },
-    { value: 'Jujuy', shippingCost: 300 },
-    { value: 'La Pampa', shippingCost: 250 },
-    { value: 'La Rioja', shippingCost: 300 },
-    { value: 'Mendoza', shippingCost: 300 },
-    { value: 'Misiones', shippingCost: 300 },
-    { value: 'Neuquén', shippingCost: 300 },
-    { value: 'Río Negro', shippingCost: 250 },
-    { value: 'Salta', shippingCost: 300 },
-    { value: 'San Juan', shippingCost: 300 },
-    { value: 'San Luis', shippingCost: 300 },
-    { value: 'Santa Cruz', shippingCost: 300 },
-    { value: 'Santa Fe', shippingCost: 250 },
-    { value: 'Santiago del Estero', shippingCost: 300 },
-    { value: 'Tierra del Fuego', shippingCost: 300 },
-    { value: 'Tucumán', shippingCost: 300 }
-];
-
 const Checkout = () => {
 
-    const { shoppingCart, subtotal } = useContext(AppContext);
+    const { user, token, shoppingCart, subtotal } = useContext(AppContext);
     const navigate = useNavigate()
+    const [form] = Form.useForm();
+    const { provinces } = myData;
 
-    const [name, setName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [telephoneNumber, setTelephoneNumber] = useState('');
-    const [address, setAddress] = useState('');
-    const [city, setCity] = useState('');
-    const [province, setProvince] = useState('');
-    const [postalCode, setPostalCode] = useState('');
     const [deliveryMethod, setDeliveryMethod] = useState('Retiro en local');
     const [paymentMethod, setPaymentMethod] = useState('Pago en el local');
-    const [cardNumber, setCardNumber] = useState('');
-    const [titular, setTitular] = useState('');
-    const [dueDate, setDueDate] = useState('');
-    const [cvc, setCvc] = useState('');
     const [total, setTotal] = useState(0);
     const [shippingCost, setShippingCost] = useState(0);
     const [validatingDiscountCode, setValidatingDiscountCode] = useState(false);
     const [discount, setDiscount] = useState(0);
+
+    const fields = [
+        {
+            name: ['name'],
+            value: user.name
+        },
+        {
+            name: ['last_name'],
+            value: user.last_name
+        },
+        {
+            name: ['email'],
+            value: user.email
+        },
+        {
+            name: ['address'],
+            value: user.address
+        },
+        {
+            name: ['city'],
+            value: user.city
+        },
+        {
+            name: ['province'],
+            value: user.state
+        },
+        {
+            name: ['postal_code'],
+            value: user.postal_code
+        },
+    ]
 
     useEffect(() => {
         let result = subtotal - discount;
@@ -68,16 +62,31 @@ const Checkout = () => {
         setTotal(result);
     }, [subtotal, shippingCost, discount, deliveryMethod])
 
+    // useEffect(() => {
+    //     var items = shoppingCart.map(item => {
+    //         return { product_id: item.id, units: item.unit }
+    //     })
+    //     form.setFieldsValue({
+    //         items: items,
+    //     });
+    // }, [])
+
     const onChangePaymentMethod = (e) => {
         setPaymentMethod(e.target.value);
+        form.setFieldsValue({
+            payment_method: e.target.value,
+        });
     }
 
     const onChangeDeliveryMethod = (e) => {
         setDeliveryMethod(e.target.value);
+        form.setFieldsValue({
+            delivery_method: e.target.value,
+        });
     }
 
     const onChangeProvinceSelection = (value) => {
-        PROVINCES.find(function (province, index) {
+        provinces.find(function (province, index) {
             if (province.value === value) {
                 setShippingCost(province.shippingCost);
                 return true;
@@ -88,11 +97,12 @@ const Checkout = () => {
     }
 
     const validateDiscountCode = (value) => {
+
         setValidatingDiscountCode(true);
 
         fetch(`${process.env.REACT_APP_API_URL_BASE}/discountCodes/code/${value}`)
             .then((res) => res.ok ? res.json() : Promise.reject(res))
-            .then(({data}) => {
+            .then(({ data }) => {
                 if (data.length > 0) {
                     setDiscount(data[0].amount);
                     message.success("Código de descuento aplicado exitosamente!");
@@ -108,17 +118,51 @@ const Checkout = () => {
             })
             .finally(() => {
                 setValidatingDiscountCode(false);
-            });   
+            });
     }
 
     const onFinish = (values) => {
+        values.items = shoppingCart.map(item => {
+            return { product_id: item.id, units: item.unit }
+        })
         console.log(values)
+        registerOrder(values)
     };
 
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
+        errorInfo.errorFields.map((e) => {
+            openNotificationWithIcon(e.errors[0])
+        })
     };
 
+    const openNotificationWithIcon = (message) => {
+        notification['error']({
+            message: 'Cargue sus datos',
+            description: message,
+        });
+    };
+
+    const registerOrder = (values) => {
+        fetch(`${process.env.REACT_APP_API_URL_BASE}/orders`, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(values)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.error) {
+                    message.error(data.message)
+                } else {
+                    message.success(`Orden nº ${data.id} registrada con éxito!`)
+                    //navigate('/')
+                }
+            })
+    }
 
     return (
         <>
@@ -130,6 +174,7 @@ const Checkout = () => {
                         layout="vertical"
                         onFinish={onFinish}
                         onFinishFailed={onFinishFailed}
+                        fields={fields}
                     >
                         <Row>
                             <Col span={24}><Title level={2}>Información de facturación</Title></Col>
@@ -138,7 +183,6 @@ const Checkout = () => {
                                 <Form.Item
                                     label="Nombre"
                                     name="name"
-                                    value={name}
                                     rules={[
                                         {
                                             required: true,
@@ -151,7 +195,6 @@ const Checkout = () => {
                                 <Form.Item
                                     label="Correo electrónico"
                                     name="email"
-                                    value={email}
                                     rules={[
                                         {
                                             required: true,
@@ -164,7 +207,6 @@ const Checkout = () => {
                                 <Form.Item
                                     label="Dirección"
                                     name="address"
-                                    value={address}
                                     rules={[
                                         {
                                             required: true,
@@ -177,7 +219,6 @@ const Checkout = () => {
                                 <Form.Item
                                     label="Provincia"
                                     name="province"
-                                    value={province}
                                     rules={[
                                         {
                                             required: true,
@@ -186,8 +227,7 @@ const Checkout = () => {
                                     ]}
                                 >
                                     <Select
-                                        defaultValue=""
-                                        options={PROVINCES}
+                                        options={provinces}
                                         placeholder="Elija una provincia"
                                         onChange={onChangeProvinceSelection}
 
@@ -199,7 +239,6 @@ const Checkout = () => {
                                 <Form.Item
                                     label="Apellido"
                                     name="last_name"
-                                    value={lastName}
                                     rules={[
                                         {
                                             required: true,
@@ -212,7 +251,6 @@ const Checkout = () => {
                                 <Form.Item
                                     label="Número de teléfono"
                                     name="telephone_number"
-                                    value={telephoneNumber}
                                     rules={[
                                         {
                                             required: true,
@@ -225,7 +263,6 @@ const Checkout = () => {
                                 <Form.Item
                                     label="Ciudad"
                                     name="city"
-                                    value={city}
                                     rules={[
                                         {
                                             required: true,
@@ -238,7 +275,6 @@ const Checkout = () => {
                                 <Form.Item
                                     label="Código postal"
                                     name="postal_code"
-                                    value={postalCode}
                                     rules={[
                                         {
                                             required: true,
@@ -261,26 +297,48 @@ const Checkout = () => {
                         </Row>
                         <Row>
                             <Col span={24}>
-                                <Radio.Group onChange={onChangeDeliveryMethod} value={deliveryMethod} style={{width: '100%'}}>
-                                    <Space direction="vertical" style={{width: '100%'}}>
-                                        <Card>
-                                            <Radio value={'Retiro en local'}>Retiro en local</Radio>
-                                            <Text style={{ color: 'green', paddingLeft: 18 }} strong>¡Sin costo!</Text>
-                                        </Card>
-                                        <Card>
-                                            <Radio value={'Envío a domicilio'}>Envío a domicilio </Radio>
-                                            {
-                                                shippingCost !== 0 ?
-                                                    <>
-                                                        <Text style={{ color: 'green' }} strong>+$ {shippingCost}</Text>
-                                                        <Text strong> Precio adicional</Text>
-                                                    </>
-                                                :
-                                                    <Text strong>Seleccione una provincia para calcular el costo de envío</Text>
-                                            }
-                                        </Card>
-                                    </Space>
-                                </Radio.Group>
+                                <Form.Item
+                                    name="delivery_method"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Por favor seleccione un método de entrega!',
+                                        },
+                                    ]}
+                                >
+                                    <Radio.Group
+                                        onChange={onChangeDeliveryMethod}
+                                        value={deliveryMethod}
+                                        style={{ width: '100%' }}
+                                    >
+                                        <Space direction="vertical" style={{ width: '100%' }}>
+                                            <Card>
+                                                <Radio value={'Retiro en local'}>Retiro en local</Radio>
+                                                <Text style={{ color: 'green', paddingLeft: 18 }} strong>
+                                                    ¡Sin costo!
+                                                </Text>
+                                            </Card>
+                                            <Card>
+                                                <Radio value={'Envío a domicilio'}>
+                                                    Envío a domicilio
+                                                </Radio>
+                                                {
+                                                    shippingCost !== 0 ?
+                                                        <>
+                                                            <Text style={{ color: 'green' }} strong>
+                                                                +$ {shippingCost}
+                                                            </Text>
+                                                            <Text strong> Precio adicional</Text>
+                                                        </>
+                                                        :
+                                                        <Text strong>
+                                                            Seleccione una provincia para calcular el costo de envío
+                                                        </Text>
+                                                }
+                                            </Card>
+                                        </Space>
+                                    </Radio.Group>
+                                </Form.Item>
                             </Col>
                         </Row>
                         <Row style={{ paddingTop: 25 }}>
@@ -294,18 +352,32 @@ const Checkout = () => {
                         </Row>
                         <Row>
                             <Col span={24}>
-                                <Radio.Group onChange={onChangePaymentMethod} value={paymentMethod} style={{width: '100%'}}>
-                                    <Space direction="vertical" style={{width: '100%'}}>
-                                        <Card>
-                                            <Radio value={'Pago en el local'}>Pago en el local</Radio>
-                                        </Card>
-                                        <Card>
-                                            <Radio value={'Tarjeta de crédito'}>
-                                                Tarjeta de crédito
-                                            </Radio>
-                                        </Card>
-                                    </Space>
-                                </Radio.Group>
+                                <Form.Item
+                                    name="payment_method"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Por favor seleccione un medio de pago!',
+                                        },
+                                    ]}
+                                >
+                                    <Radio.Group
+                                        onChange={onChangePaymentMethod}
+                                        value={paymentMethod}
+                                        style={{ width: '100%' }}
+                                    >
+                                        <Space direction="vertical" style={{ width: '100%' }}>
+                                            <Card>
+                                                <Radio value={'Pago en el local'}>Pago en el local</Radio>
+                                            </Card>
+                                            <Card>
+                                                <Radio value={'Tarjeta de crédito'}>
+                                                    Tarjeta de crédito
+                                                </Radio>
+                                            </Card>
+                                        </Space>
+                                    </Radio.Group>
+                                </Form.Item>
                             </Col>
                             <Col span={24} style={{ paddingTop: 10 }}>
                                 {paymentMethod === 'Tarjeta de crédito' ?
@@ -315,7 +387,6 @@ const Checkout = () => {
                                                 <Form.Item
                                                     label="Número de la tarjeta"
                                                     name="card_number"
-                                                    value={cardNumber}
                                                     labelCol={24}
                                                     wrapperCol={24}
                                                     rules={[
@@ -334,7 +405,6 @@ const Checkout = () => {
                                                 <Form.Item
                                                     label="Titular"
                                                     name="titular"
-                                                    value={titular}
                                                     rules={[
                                                         {
                                                             required: true,
@@ -349,7 +419,6 @@ const Checkout = () => {
                                                 <Form.Item
                                                     label="Fecha de Vto"
                                                     name="due_date"
-                                                    value={dueDate}
                                                     rules={[
                                                         {
                                                             required: true,
@@ -364,7 +433,6 @@ const Checkout = () => {
                                                 <Form.Item
                                                     label="CVC"
                                                     name="cvc"
-                                                    value={cvc}
                                                     rules={[
                                                         {
                                                             required: true,
@@ -455,16 +523,16 @@ const Checkout = () => {
                                         </Row>
                                     }
                                     <Row>
-                                    {
-                                        !validatingDiscountCode ?
-                                        <Col span={24}>
-                                            <Search placeholder="Aplicar código de descuento" onSearch={validateDiscountCode} enterButton="Aplicar" />
-                                        </Col>
-                                        :
-                                        <Col span={24}>
-                                            <Search placeholder="Aplicar código de descuento" loading enterButton="Aplicar" />
-                                        </Col>
-                                    }
+                                        {
+                                            !validatingDiscountCode ?
+                                                <Col span={24}>
+                                                    <Search placeholder="Aplicar código de descuento" onSearch={validateDiscountCode} enterButton="Aplicar" />
+                                                </Col>
+                                                :
+                                                <Col span={24}>
+                                                    <Search placeholder="Aplicar código de descuento" loading enterButton="Aplicar" />
+                                                </Col>
+                                        }
                                     </Row>
                                     <Row>
                                         <Col span={12}><Title level={5} style={{ textAlign: 'left' }}>Total del pedido</Title></Col>

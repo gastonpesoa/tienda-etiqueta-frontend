@@ -5,29 +5,68 @@ import { AppContext } from "./AppContext";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import UserProfile from "./pages/UserProfile";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import Eror404 from "./pages/Eror404";
 import Checkout from "./pages/Checkout";
 import HeaderSearch from "./components/HeaderSearch";
 import MenuHeader from "./components/MenuHeader";
-import './App.less';
 import myData from './data.json';
+import './App.less';
 const { Header, Footer, Content } = Layout;
 
 function App() {
 
   const { menu, carousel_source, best_sellers, best_suits, current_promotions } = myData;
 
+  const [token, setToken] = useState('');
+  const [user, setUser] = useState({});
   const [shoppingCart, setShoppingCart] = useState([]);
-  const [subtotal, setSubtotal] = useState(0); 
+  const [subtotal, setSubtotal] = useState(0);
 
   useEffect(() => {
-    const result = shoppingCart.reduce((accumulator, item) => {
-      return accumulator + (item.price * parseInt(item.unit));
-    }, 0)
-    setSubtotal(result)
+    let shoppingCartLocalStorage = localStorage.getItem("shoppingCart")
+    let tokenStorage = localStorage.getItem("token")
+    let userStorage = localStorage.getItem("user")
+    if (shoppingCartLocalStorage?.length > 0) {
+      setShoppingCart(JSON.parse(shoppingCartLocalStorage))
+    }
+    if (tokenStorage) {
+      setToken(tokenStorage)
+    }
+    if (userStorage) {
+      setUser(JSON.parse(userStorage))
+    }
+  }, [])
+
+  useEffect(() => {
+    if (token === '') {
+      localStorage.removeItem("token");
+    } else {
+      localStorage.setItem("token", token);
+    }
+    if (user.email) {
+      localStorage.setItem("user", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("user");
+    }
+  }, [user, token])
+
+  useEffect(() => {
+    if (shoppingCart?.length > 0) {
+      const result = shoppingCart.reduce((accumulator, item) => {
+        return accumulator + (item.price * parseInt(item.unit));
+      }, 0)
+      localStorage.setItem("shoppingCart", JSON.stringify(shoppingCart));
+      setSubtotal(result)
+    }
   }, [shoppingCart])
+
+  const dispatchUserEvent = (token, user) => {
+    setToken(token)
+    setUser(user)
+  }
 
   const dispatchShoppingCartEvent = (actionType, payload) => {
     switch (actionType) {
@@ -60,7 +99,7 @@ function App() {
     <>
       <Layout id="page-container" className="layout">
         <div className="logo" />
-        <AppContext.Provider value={{ shoppingCart, subtotal, dispatchShoppingCartEvent }}>
+        <AppContext.Provider value={{ token, user, shoppingCart, subtotal, dispatchUserEvent, dispatchShoppingCartEvent }}>
           <HeaderSearch />
           <Header>
             <MenuHeader menu={menu} />
@@ -80,6 +119,7 @@ function App() {
                 />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/user-profile" element={<UserProfile />} />
                 <Route path="/products/:category/" element={<Products />} />
                 <Route path="/products/:category/:subcategory" element={<Products />} />
                 <Route path="/product-detail/:productId" element={<ProductDetail />} />

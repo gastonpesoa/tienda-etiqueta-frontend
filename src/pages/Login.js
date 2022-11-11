@@ -1,10 +1,13 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
-import { Button, Typography, Form, Input } from 'antd';
+import { Button, Typography, Form, Input, message } from 'antd';
+import { AppContext } from "../AppContext";
 const { Title } = Typography;
 
 const Login = () => {
- 
+
+    const { dispatchUserEvent } = useContext(AppContext);
     const navigate = useNavigate()
 
     const onFinish = (values) => {
@@ -26,12 +29,13 @@ const Login = () => {
                 if (data.error) {
                     alert("Usuario o contraseña incorrecta")
                 } else {
-                    localStorage.setItem("token", data.token);
+                    message.success(`Bienvenido ${data.data.user.name}!`)
+                    dispatchUserEvent(data.data.token, data.data.user);
                     navigate('/')
                 }
             })
     }
-    
+
     return (
         <Form
             layout="vertical"
