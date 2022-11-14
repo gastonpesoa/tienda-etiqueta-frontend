@@ -3,10 +3,32 @@ import LinksGroup from "../components/LinksGroup";
 import InfoCard from "../components/InfoCard";
 import ProductSmallCard from "../components/ProductSmallCard";
 import '../App.less';
+import { useEffect, useState } from 'react';
 const { Content } = Layout;
 const { Text } = Typography;
 
 const Home = ({ carouselSource, bestSellers, bestSuits, menu, currentPromotions }) => {
+
+    /*const [currentPromotions, setCurrentPromotions] = useState([]);
+
+    useEffect(() => {
+        fetch(`${process.env.REACT_APP_API_URL_BASE}/banks/valid/`)
+            .then((res) => res.ok ? res.json() : Promise.reject(res))
+            .then(({data}) => {
+                if (data.length > 0) {
+                    data.forEach((bk) => {
+                        if (bk.discount !== null && bk.discount > 0 && bk.discount_status) 
+                            currentPromotions.push(bk);
+                    });
+                } else {
+                    //message.error("No hay bancos disponibles");
+                }
+            })
+            .catch((err) => {
+                console.error(err);
+                //message.error("Hubo un error al traer el listado de bancos disponibles, intente nuevamente más tarde");
+            });
+    }, []);*/
 
     return (
         <>
@@ -36,12 +58,12 @@ const Home = ({ carouselSource, bestSellers, bestSuits, menu, currentPromotions 
                             buttonText="Ver promociones"
                             backgroundImage="/promociones-bancarias.svg"
                             popoverContent={
-                                currentPromotions.map(prom => (
-                                    <Row style={{ width: '250px' }}>
+                                currentPromotions.map(prom => {
+                                    return <Row style={{ width: '250px' }}>
                                         <Col span={12}><Text type="secondary">{prom.bank}</Text></Col>
-                                        <Col span={12}><Text>{`${prom.percentage}% de descuento`}</Text></Col>
-                                    </Row>
-                                ))
+                                        <Col span={12}><Text>{`${prom.discount}% de descuento`}</Text></Col>
+                                    </Row>;
+                                })
                             }
                         />
                     </Col>
