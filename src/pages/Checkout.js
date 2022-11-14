@@ -6,8 +6,10 @@ import ShoppingCartPopoverItem from '../components/ShoppingCartPopoverItem';
 import Price from '../components/Price';
 const { Title, Text } = Typography;
 const { Search } = Input;
+const { Option } = Select;
 
-const URL_VALIDATE_CODE = "https://tienda-etiqueta-backend.vercel.app/api/discountCodes/code/"
+const URL_VALIDATE_CODE = "https://tienda-etiqueta-backend.vercel.app/api/discountCodes/code/";
+const URL_BANK_LIST = "http://localhost:5000/api/banks/";
 
 const PROVINCES = [
     { value: 'Ciudad Autónoma de Buenos Aires', shippingCost: 100 },
@@ -51,6 +53,8 @@ const Checkout = () => {
     const [deliveryMethod, setDeliveryMethod] = useState('Retiro en local');
     const [paymentMethod, setPaymentMethod] = useState('Pago en el local');
     const [cardNumber, setCardNumber] = useState('');
+    const [bank, setBank] = useState('');
+    const [bankList, setBankList] = useState([]);
     const [titular, setTitular] = useState('');
     const [dueDate, setDueDate] = useState('');
     const [cvc, setCvc] = useState('');
@@ -58,6 +62,32 @@ const Checkout = () => {
     const [shippingCost, setShippingCost] = useState(0);
     const [validatingDiscountCode, setValidatingDiscountCode] = useState(false);
     const [discount, setDiscount] = useState(0);
+    const [discountRate, setDiscountRate] = useState(0);
+
+    useEffect(() => {
+
+        fetch(URL_BANK_LIST)
+            .then((res) => res.ok ? res.json() : Promise.reject(res))
+            .then(({data}) => {
+                if (data.length > 0) {
+                    data.forEach((bk) => {
+                        let bankAux = {};
+                        bankAux.value = bk.bank;
+                        bankAux.label = bk.bank;
+                        if (bk.discount !== null && bk.discount > 0 && bk.discount_status) {
+                            bankAux.label += ' (-' + bk.discount + '%)' ;
+                        }
+                        setBankList(bankList.push(bankAux));
+                    });
+                } else {
+                    message.error("No hay bancos disponibles");
+                }
+            })
+            .catch((err) => {
+                console.error(err);
+                message.error("Hubo un error al traer el listado de bancos disponibles, intente nuevamente más tarde");
+            });
+    }, []);
 
     useEffect(() => {
         let result = subtotal - discount;
@@ -65,7 +95,7 @@ const Checkout = () => {
             result += shippingCost;
         }
         setTotal(result);
-    }, [subtotal, shippingCost, discount, deliveryMethod])
+    }, [subtotal, shippingCost, discount, deliveryMethod]);
 
     const onChangePaymentMethod = (e) => {
         setPaymentMethod(e.target.value);
@@ -84,6 +114,18 @@ const Checkout = () => {
 
             return false;
         });
+    }
+
+    const onChangeBankSelection = (value) => {
+        console.log(value);
+        /*BANKS.find(function (bank, index) {
+            if (bank.value === value) {
+                //setShippingCost(bank.shippingCost);
+                return true;
+            }
+
+            return false;
+        });*/
     }
 
     const validateDiscountCode = (value) => {
@@ -181,7 +223,6 @@ const Checkout = () => {
                                     ]}
                                 >
                                     <Select
-                                        defaultValue=""
                                         options={PROVINCES}
                                         placeholder="Elija una provincia"
                                         onChange={onChangeProvinceSelection}
@@ -306,13 +347,11 @@ const Checkout = () => {
                                 {paymentMethod === 'Tarjeta de crédito' ?
                                     <Card>
                                         <Row>
-                                            <Col span={24}>
+                                            <Col span={14}>
                                                 <Form.Item
                                                     label="Número de la tarjeta"
                                                     name="card_number"
                                                     value={cardNumber}
-                                                    labelCol={24}
-                                                    wrapperCol={24}
                                                     rules={[
                                                         {
                                                             required: true,
@@ -321,6 +360,31 @@ const Checkout = () => {
                                                     ]}
                                                 >
                                                     <Input placeholder="Número de la tarjeta" />
+                                                </Form.Item>
+                                            </Col>
+                                            <Col span={10}>
+                                                <Form.Item
+                                                    label="Banco"
+                                                    name="bank"
+                                                    value={bank}
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: 'Por favor selecciona tu banco!',
+                                                        },
+                                                    ]}
+                                                >
+                                                    <Select
+                                                        //options={bankList}
+                                                        placeholder="Elija un banco"
+                                                        onChange={onChangeBankSelection}
+                                                    >
+                                                        {
+                                                            /*bankList.forEach((bank) => {
+                                                                return <Option value={bank.value}>{bank.label}</Option>
+                                                            })*/
+                                                        }
+                                                    </Select>
                                                 </Form.Item>
                                             </Col>
                                         </Row>
