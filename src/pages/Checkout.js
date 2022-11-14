@@ -31,31 +31,6 @@ const Checkout = () => {
     const [discount, setDiscount] = useState(0);
     const [discountRate, setDiscountRate] = useState(0);
 
-    useEffect(() => {
-
-        fetch(`${process.env.REACT_APP_API_URL_BASE}/api/banks/`)
-            .then((res) => res.ok ? res.json() : Promise.reject(res))
-            .then(({data}) => {
-                if (data.length > 0) {
-                    data.forEach((bk) => {
-                        let bankAux = {};
-                        bankAux.value = bk.bank;
-                        bankAux.label = bk.bank;
-                        if (bk.discount !== null && bk.discount > 0 && bk.discount_status) {
-                            bankAux.label += ' (-' + bk.discount + '%)' ;
-                        }
-                        setBankList(bankList.push(bankAux));
-                    });
-                } else {
-                    message.error("No hay bancos disponibles");
-                }
-            })
-            .catch((err) => {
-                console.error(err);
-                message.error("Hubo un error al traer el listado de bancos disponibles, intente nuevamente más tarde");
-            });
-    }, []);
-
     const fields = [
         {
             name: ['name'],
@@ -88,12 +63,42 @@ const Checkout = () => {
     ]
 
     useEffect(() => {
-        let result = subtotal - discount;
+
+        fetch(`${process.env.REACT_APP_API_URL_BASE}/banks/`)
+            .then((res) => res.ok ? res.json() : Promise.reject(res))
+            .then(({data}) => {
+                if (data.length > 0) {
+                    data.forEach((bk) => {
+                        let bankAux = {};
+                        bankAux.value = bk.bank;
+                        bankAux.label = bk.bank;
+                        bankAux.discount = bk.discount_status ? bk.discount : 0;
+                        if (bk.discount !== null && bk.discount > 0 && bk.discount_status) {
+                            bankAux.label += ' (-' + bk.discount + '%)' ;
+                        }
+                        bankList.push(bankAux);
+                    });
+                } else {
+                    message.error("No hay bancos disponibles");
+                }
+            })
+            .catch((err) => {
+                console.error(err);
+                message.error("Hubo un error al traer el listado de bancos disponibles, intente nuevamente más tarde");
+            });
+    }, []);
+
+    useEffect(() => {
+        let result = subtotal;
+        if (paymentMethod === 'Tarjeta de crédito') {
+            result = (subtotal / 100) * (100 - discountRate);
+        }
+        result -= discount;
         if (deliveryMethod === 'Envío a domicilio') {
             result += shippingCost;
         }
         setTotal(result);
-    }, [subtotal, shippingCost, discount, deliveryMethod]);
+    }, [subtotal, shippingCost, discount, discountRate, deliveryMethod, paymentMethod]);
 
     // useEffect(() => {
     //     var items = shoppingCart.map(item => {
@@ -130,7 +135,8 @@ const Checkout = () => {
     }
 
     const onChangeBankSelection = (value) => {
-        console.log(value);
+        console.log(bankList[bankList.findIndex(x => x.value === value)].discount);
+        setDiscountRate(bankList[bankList.findIndex(x => x.value === value)].discount);
         /*BANKS.find(function (bank, index) {
             if (bank.value === value) {
                 //setShippingCost(bank.shippingCost);
@@ -456,15 +462,10 @@ const Checkout = () => {
                                                     ]}
                                                 >
                                                     <Select
-                                                        //options={bankList}
+                                                        options={bankList}
                                                         placeholder="Elija un banco"
                                                         onChange={onChangeBankSelection}
                                                     >
-                                                        {
-                                                            /*bankList.forEach((bank) => {
-                                                                return <Option value={bank.value}>{bank.label}</Option>
-                                                            })*/
-                                                        }
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
@@ -495,7 +496,7 @@ const Checkout = () => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Input placeholder="DD/MM/YY" />
+                                                    <Input placeholder="MM/YY" />
                                                 </Form.Item>
                                             </Col>
                                             <Col span={5}>
@@ -585,9 +586,18 @@ const Checkout = () => {
                                     {
                                         discount !== 0 &&
                                         <Row>
-                                            <Col span={12}><Title level={5} style={{ textAlign: 'left' }}>Descuento</Title></Col>
+                                            <Col span={12}><Title level={5} style={{ textAlign: 'left' }}>Descuento por código promocional</Title></Col>
                                             <Col span={12} style={{ textAlign: 'right' }}>
                                                 <Price price={discount} level={5} style={{ color: '#FF0000' }} type={"default"} />
+                                            </Col>
+                                        </Row>
+                                    }
+                                    {
+                                        discountRate !== 0 && paymentMethod === 'Tarjeta de crédito' &&
+                                        <Row>
+                                            <Col span={12}><Title level={5} style={{ textAlign: 'left' }}>Descuento por promoción bancaria</Title></Col>
+                                            <Col span={12} style={{ textAlign: 'right' }}>
+                                                <Price price={subtotal - (subtotal / 100) * (100 - discountRate)} level={5} style={{ color: '#FF0000' }} type={"default"} />
                                             </Col>
                                         </Row>
                                     }
