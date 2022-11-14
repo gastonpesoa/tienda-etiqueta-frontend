@@ -7,9 +7,9 @@ import { useEffect, useState } from 'react';
 const { Content } = Layout;
 const { Text } = Typography;
 
-const Home = ({ carouselSource, bestSellers, bestSuits, menu, currentPromotions }) => {
+const Home = ({ carouselSource, bestSellers, bestSuits, menu }) => {
 
-    /*const [currentPromotions, setCurrentPromotions] = useState([]);
+    const [currentPromotions, setCurrentPromotions] = useState([]);
 
     useEffect(() => {
         fetch(`${process.env.REACT_APP_API_URL_BASE}/banks/valid/`)
@@ -20,15 +20,13 @@ const Home = ({ carouselSource, bestSellers, bestSuits, menu, currentPromotions 
                         if (bk.discount !== null && bk.discount > 0 && bk.discount_status) 
                             currentPromotions.push(bk);
                     });
-                } else {
-                    //message.error("No hay bancos disponibles");
+                    setCurrentPromotions([...currentPromotions]);
                 }
             })
             .catch((err) => {
                 console.error(err);
-                //message.error("Hubo un error al traer el listado de bancos disponibles, intente nuevamente más tarde");
             });
-    }, []);*/
+    }, []);
 
     return (
         <>

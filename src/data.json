@@ -327,15 +327,15 @@
     "current_promotions": [
         {
             "bank": "Banco Santander",
-            "discount": 10
+            "percentage": 10
         },
         {
             "bank": "Banco Galicia",
-            "discount": 15
+            "percentage": 15
         },
         {
             "bank": "Banco Nación",
-            "discount": 20
+            "percentage": 20
         }
     ],
     "provinces": [
