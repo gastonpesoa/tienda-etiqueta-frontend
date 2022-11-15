@@ -324,20 +324,6 @@
             "waist": "58 a 59 cm"
         }
     ],
-    "current_promotions": [
-        {
-            "bank": "Banco Santander",
-            "percentage": 10
-        },
-        {
-            "bank": "Banco Galicia",
-            "percentage": 15
-        },
-        {
-            "bank": "Banco Nación",
-            "percentage": 20
-        }
-    ],
     "provinces": [
         {
             "value": "Ciudad Autónoma de Buenos Aires",

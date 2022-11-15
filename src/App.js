@@ -14,11 +14,12 @@ import HeaderSearch from "./components/HeaderSearch";
 import MenuHeader from "./components/MenuHeader";
 import myData from './data.json';
 import './App.less';
+import Banks from './pages/Banks';
 const { Header, Footer, Content } = Layout;
 
 function App() {
 
-  const { menu, carousel_source, best_sellers, best_suits, current_promotions } = myData;
+  const { menu, carousel_source, best_sellers, best_suits } = myData;
 
   const [token, setToken] = useState('');
   const [user, setUser] = useState({});
@@ -113,7 +114,6 @@ function App() {
                     bestSellers={best_sellers}
                     bestSuits={best_suits}
                     menu={menu}
-                    currentPromotions={current_promotions}
                   />
                 }
                 />
@@ -124,6 +124,7 @@ function App() {
                 <Route path="/products/:category/:subcategory" element={<Products />} />
                 <Route path="/product-detail/:productId" element={<ProductDetail />} />
                 <Route path="/checkout" element={<Checkout />} />
+                <Route path="/banks" element={<Banks />} />
                 <Route path="*" element={<Eror404 />} />
               </Routes>
 

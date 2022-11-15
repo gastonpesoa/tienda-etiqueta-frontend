@@ -8,7 +8,6 @@ import Price from '../components/Price';
 import myData from '../data.json';
 const { Title, Text } = Typography;
 const { Search } = Input;
-const { Option } = Select;
 
 const Checkout = () => {
 
@@ -137,14 +136,6 @@ const Checkout = () => {
     const onChangeBankSelection = (value) => {
         console.log(bankList[bankList.findIndex(x => x.value === value)].discount);
         setDiscountRate(bankList[bankList.findIndex(x => x.value === value)].discount);
-        /*BANKS.find(function (bank, index) {
-            if (bank.value === value) {
-                //setShippingCost(bank.shippingCost);
-                return true;
-            }
-
-            return false;
-        });*/
     }
 
     const validateDiscountCode = (value) => {
