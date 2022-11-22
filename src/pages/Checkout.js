@@ -28,6 +28,7 @@ const Checkout = () => {
     const [shippingCost, setShippingCost] = useState(0);
     const [validatingDiscountCode, setValidatingDiscountCode] = useState(false);
     const [discount, setDiscount] = useState(0);
+    const [discountCode, setDiscountCode] = useState(0);
     const [discountRate, setDiscountRate] = useState(0);
 
     const fields = [
@@ -97,16 +98,7 @@ const Checkout = () => {
             result += shippingCost;
         }
         setTotal(result);
-    }, [subtotal, shippingCost, discount, discountRate, deliveryMethod, paymentMethod]);
-
-    // useEffect(() => {
-    //     var items = shoppingCart.map(item => {
-    //         return { product_id: item.id, units: item.unit }
-    //     })
-    //     form.setFieldsValue({
-    //         items: items,
-    //     });
-    // }, [])
+    }, [subtotal, shippingCost, discount, discountRate, deliveryMethod, paymentMethod]);   
 
     const onChangePaymentMethod = (e) => {
         setPaymentMethod(e.target.value);
@@ -134,7 +126,8 @@ const Checkout = () => {
     }
 
     const onChangeBankSelection = (value) => {
-        console.log(bankList[bankList.findIndex(x => x.value === value)].discount);
+        console.log(bankList[bankList.findIndex(x => x.value === value)]);
+        setBank(bankList[bankList.findIndex(x => x.value === value)]);
         setDiscountRate(bankList[bankList.findIndex(x => x.value === value)].discount);
     }
 
@@ -147,6 +140,7 @@ const Checkout = () => {
             .then(({ data }) => {
                 if (data.length > 0) {
                     setDiscount(data[0].amount);
+                    setDiscountCode(value);
                     message.success("Código de descuento aplicado exitosamente!");
                 } else {
                     setDiscount(0);
@@ -167,6 +161,8 @@ const Checkout = () => {
         values.items = shoppingCart.map(item => {
             return { product_id: item.id, units: item.unit }
         })
+        values.discountCode = discountCode;
+        values.bank = bank;
         console.log(values)
         registerOrder(values)
     };

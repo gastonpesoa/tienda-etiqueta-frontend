@@ -10,7 +10,7 @@ const UserProfile = () => {
     const { user, dispatchUserEvent } = useContext(AppContext);
     const navigate = useNavigate()
 
-    const handleClseSesion = () => {
+    const handleCloseSesion = () => {
         dispatchUserEvent('', {})
         navigate('/')
     }
@@ -21,7 +21,7 @@ const UserProfile = () => {
                 <Col span={12}><Title>Hola {user.name}!</Title></Col>
                 <Col span={12} style={{ textAlign: 'right' }}>
                     <Button
-                        onClick={handleClseSesion}
+                        onClick={handleCloseSesion}
                         type='link'
                         icon={<LogoutOutlined style={{ fontSize: '24px', color: 'black' }} />}
                     >

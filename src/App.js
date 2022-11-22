@@ -15,6 +15,7 @@ import MenuHeader from "./components/MenuHeader";
 import myData from './data.json';
 import './App.less';
 import Banks from './pages/Banks';
+import { isExpired, decodeToken } from "react-jwt";
 const { Header, Footer, Content } = Layout;
 
 function App() {
@@ -34,10 +35,16 @@ function App() {
       setShoppingCart(JSON.parse(shoppingCartLocalStorage))
     }
     if (tokenStorage) {
-      setToken(tokenStorage)
-    }
-    if (userStorage) {
-      setUser(JSON.parse(userStorage))
+      if (isExpired(tokenStorage)) {
+        dispatchUserEvent('', {})
+      }
+      else {
+        setToken(tokenStorage)
+        if (userStorage) {
+          setUser(JSON.parse(userStorage))
+        }
+
+      }
     }
   }, [])
 
