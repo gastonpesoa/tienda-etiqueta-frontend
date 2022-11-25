@@ -11,7 +11,7 @@ const { Search } = Input;
 
 const Checkout = () => {
 
-    const { user, token, shoppingCart, subtotal } = useContext(AppContext);
+    const { user, token, shoppingCart, subtotal, dispatchShoppingCartEvent } = useContext(AppContext);
     const navigate = useNavigate()
     const [form] = Form.useForm();
 
@@ -28,7 +28,7 @@ const Checkout = () => {
     const [shippingCost, setShippingCost] = useState(0);
     const [validatingDiscountCode, setValidatingDiscountCode] = useState(false);
     const [discount, setDiscount] = useState(0);
-    const [discountCode, setDiscountCode] = useState(0);
+    const [discountCode, setDiscountCode] = useState("");
     const [discountRate, setDiscountRate] = useState(0);    
 
     useEffect(() => {
@@ -130,6 +130,7 @@ const Checkout = () => {
                     message.success("Código de descuento aplicado exitosamente!");
                 } else {
                     setDiscount(0);
+                    setDiscountCode("");
                     message.error("El código de descuento ingresado es inválido");
                 }
             })
@@ -137,6 +138,7 @@ const Checkout = () => {
                 console.error(err);
                 message.error("Hubo un error al validar el código de descuento, intente nuevamente más tarde");
                 setDiscount(0);
+                setDiscountCode("");
             })
             .finally(() => {
                 setValidatingDiscountCode(false);
@@ -147,7 +149,9 @@ const Checkout = () => {
         values.items = shoppingCart.map(item => {
             return { product_id: item.id, units: item.unit }
         })
-        values.discount_code = discountCode;
+        if(discountCode !== ""){            
+            values.discount_code = discountCode;
+        }
         values.bank_id = bank.id;
         console.log(values)
         registerOrder(values)
@@ -178,12 +182,11 @@ const Checkout = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 if (data.error) {
                     message.error(data.message)
                 } else {
-                    message.success(`Orden nº ${data.id} registrada con éxito!`)
-                    //navigate('/')
+                    dispatchShoppingCartEvent('REMOVE_ALL');
+                    navigate(`../result/${data.data.id}`)
                 }
             })
     }

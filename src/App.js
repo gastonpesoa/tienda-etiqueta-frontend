@@ -8,13 +8,14 @@ import Register from "./pages/Register";
 import UserProfile from "./pages/UserProfile";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
-import Eror404 from "./pages/Eror404";
+import Error404 from "./pages/Error404";
 import Checkout from "./pages/Checkout";
+import CheckoutResult from "./pages/CheckoutResult";
+import Banks from './pages/Banks';
 import HeaderSearch from "./components/HeaderSearch";
 import MenuHeader from "./components/MenuHeader";
 import myData from './data.json';
 import './App.less';
-import Banks from './pages/Banks';
 import { isExpired, decodeToken } from "react-jwt";
 const { Header, Footer, Content } = Layout;
 
@@ -67,6 +68,9 @@ function App() {
       }, 0)
       localStorage.setItem("shoppingCart", JSON.stringify(shoppingCart));
       setSubtotal(result)
+    } else {
+      localStorage.removeItem("shoppingCart");
+      setSubtotal(0);
     }
   }, [shoppingCart])
 
@@ -96,6 +100,9 @@ function App() {
       case 'REMOVE_ITEM':
         setShoppingCart(shoppingCart.filter(item => item.id !== payload.itemId));
         message.success("Producto removido del carrito")
+        return;
+      case 'REMOVE_ALL':
+        setShoppingCart([]);
         return;
       default:
         return;
@@ -130,8 +137,9 @@ function App() {
                 <Route path="/products/:category/:subcategory" element={<Products />} />
                 <Route path="/product-detail/:productId" element={<ProductDetail />} />
                 <Route path="/checkout" element={<Checkout />} />
+                <Route path="/result/:orderId" element={<CheckoutResult />} />
                 <Route path="/banks" element={<Banks />} />
-                <Route path="*" element={<Eror404 />} />
+                <Route path="*" element={<Error404 />} />
               </Routes>
 
             </div>
