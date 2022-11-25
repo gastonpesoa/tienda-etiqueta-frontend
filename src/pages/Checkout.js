@@ -14,8 +14,8 @@ const Checkout = () => {
     const { user, token, shoppingCart, subtotal } = useContext(AppContext);
     const navigate = useNavigate()
     const [form] = Form.useForm();
-    const { provinces } = myData;
 
+    const [provinces, setProvinces] = useState([]);
     const [deliveryMethod, setDeliveryMethod] = useState('Retiro en local');
     const [paymentMethod, setPaymentMethod] = useState('Pago en el local');
     const [cardNumber, setCardNumber] = useState('');
@@ -29,47 +29,17 @@ const Checkout = () => {
     const [validatingDiscountCode, setValidatingDiscountCode] = useState(false);
     const [discount, setDiscount] = useState(0);
     const [discountCode, setDiscountCode] = useState(0);
-    const [discountRate, setDiscountRate] = useState(0);
-
-    const fields = [
-        {
-            name: ['name'],
-            value: user.name
-        },
-        {
-            name: ['last_name'],
-            value: user.last_name
-        },
-        {
-            name: ['email'],
-            value: user.email
-        },
-        {
-            name: ['address'],
-            value: user.address
-        },
-        {
-            name: ['city'],
-            value: user.city
-        },
-        {
-            name: ['province'],
-            value: user.state
-        },
-        {
-            name: ['postal_code'],
-            value: user.postal_code
-        },
-    ]
+    const [discountRate, setDiscountRate] = useState(0);    
 
     useEffect(() => {
-
-        fetch(`${process.env.REACT_APP_API_URL_BASE}/banks/`)
+        initializeForm()
+        fetch(`${process.env.REACT_APP_API_URL_BASE}/banks/valid/`)
             .then((res) => res.ok ? res.json() : Promise.reject(res))
             .then(({data}) => {
                 if (data.length > 0) {
                     data.forEach((bk) => {
                         let bankAux = {};
+                        bankAux.id = bk.id;
                         bankAux.value = bk.bank;
                         bankAux.label = bk.bank;
                         bankAux.discount = bk.discount_status ? bk.discount : 0;
@@ -86,6 +56,16 @@ const Checkout = () => {
                 console.error(err);
                 message.error("Hubo un error al traer el listado de bancos disponibles, intente nuevamente más tarde");
             });
+        const getProvinces = async (url) => {
+            try {
+                const res = await fetch(url)
+                const data = await res.json();
+                setProvinces(data.data);
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getProvinces(`${process.env.REACT_APP_API_URL_BASE}/provinces`)
     }, []);
 
     useEffect(() => {
@@ -100,6 +80,18 @@ const Checkout = () => {
         setTotal(result);
     }, [subtotal, shippingCost, discount, discountRate, deliveryMethod, paymentMethod]);   
 
+    const initializeForm = () => {
+        form.setFieldsValue({
+            name: user.name,
+            last_name : user.last_name,
+            email : user.email,
+            address : user.address,
+            city : user.city,
+            province : user.state,
+            postal_code : user.postal_code
+          });
+    }
+
     const onChangePaymentMethod = (e) => {
         setPaymentMethod(e.target.value);
         form.setFieldsValue({
@@ -113,28 +105,22 @@ const Checkout = () => {
             delivery_method: e.target.value,
         });
     }
-
+    
     const onChangeProvinceSelection = (value) => {
-        provinces.find(function (province, index) {
-            if (province.value === value) {
-                setShippingCost(province.shippingCost);
-                return true;
-            }
-
-            return false;
+        let provinceSelected = provinces.find(x => x.value === value);
+        setShippingCost(provinceSelected.shippingCost)        
+        form.setFieldsValue({
+            province: value
         });
     }
 
     const onChangeBankSelection = (value) => {
-        console.log(bankList[bankList.findIndex(x => x.value === value)]);
         setBank(bankList[bankList.findIndex(x => x.value === value)]);
         setDiscountRate(bankList[bankList.findIndex(x => x.value === value)].discount);
     }
 
     const validateDiscountCode = (value) => {
-
         setValidatingDiscountCode(true);
-
         fetch(`${process.env.REACT_APP_API_URL_BASE}/discountCodes/code/${value}`)
             .then((res) => res.ok ? res.json() : Promise.reject(res))
             .then(({ data }) => {
@@ -161,8 +147,8 @@ const Checkout = () => {
         values.items = shoppingCart.map(item => {
             return { product_id: item.id, units: item.unit }
         })
-        values.discountCode = discountCode;
-        values.bank = bank;
+        values.discount_code = discountCode;
+        values.bank_id = bank.id;
         console.log(values)
         registerOrder(values)
     };
@@ -212,8 +198,9 @@ const Checkout = () => {
                         layout="vertical"
                         onFinish={onFinish}
                         onFinishFailed={onFinishFailed}
-                        fields={fields}
+                        form={form}
                     >
+                        {/* Información de facturación */}
                         <Row>
                             <Col span={24}><Title level={2}>Información de facturación</Title></Col>
                             <Col span={12}>
@@ -268,7 +255,6 @@ const Checkout = () => {
                                         options={provinces}
                                         placeholder="Elija una provincia"
                                         onChange={onChangeProvinceSelection}
-
                                     />
                                 </Form.Item>
                             </Col>
@@ -324,6 +310,7 @@ const Checkout = () => {
                                 </Form.Item>
                             </Col>
                         </Row>
+                        {/* Método de entrega */}
                         <Row>
                             <Col span={24}><Title level={2}>Método de entrega</Title></Col>
                             <Col span={12}>
@@ -379,6 +366,7 @@ const Checkout = () => {
                                 </Form.Item>
                             </Col>
                         </Row>
+                        {/* Medio de pago */}
                         <Row style={{ paddingTop: 25 }}>
                             <Col span={24}><Title level={2}>Medio de pago</Title></Col>
                             <Col span={12}>
@@ -506,6 +494,7 @@ const Checkout = () => {
                                 }
                             </Col>
                         </Row>
+                        {/* Notas de la orden */}
                         <Row style={{ paddingTop: 25 }}>
                             <Col span={24}><Title level={2}>Información adicional</Title></Col>
                             <Col span={12}>
@@ -515,6 +504,7 @@ const Checkout = () => {
                                 <Text>Paso 4/4</Text>
                             </Col>
                         </Row>
+                        {/* Button submit */}
                         <Row style={{ paddingTop: 15 }}>
                             <Col span={24}>
                                 <Form.Item
@@ -535,6 +525,7 @@ const Checkout = () => {
                     </Form>
                 </Col>
                 <Col span={10} style={{ textAlign: 'right' }}>
+                    {/* Resumen */}
                     <Card style={{ marginLeft: 30 }}>
                         {
                             shoppingCart.length

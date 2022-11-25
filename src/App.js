@@ -43,7 +43,6 @@ function App() {
         if (userStorage) {
           setUser(JSON.parse(userStorage))
         }
-
       }
     }
   }, [])
