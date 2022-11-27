@@ -5,7 +5,6 @@ import TextArea from 'antd/lib/input/TextArea';
 import { AppContext } from "../AppContext";
 import ShoppingCartPopoverItem from '../components/ShoppingCartPopoverItem';
 import Price from '../components/Price';
-import myData from '../data.json';
 const { Title, Text } = Typography;
 const { Search } = Input;
 
@@ -87,7 +86,7 @@ const Checkout = () => {
             email : user.email,
             address : user.address,
             city : user.city,
-            province : user.state,
+            province : user.province,
             postal_code : user.postal_code
           });
     }
@@ -147,7 +146,7 @@ const Checkout = () => {
 
     const onFinish = (values) => {
         values.items = shoppingCart.map(item => {
-            return { product_id: item.id, units: item.unit }
+            return { product_id: item.id, units: item.unit, size: item.size }
         })
         if(discountCode !== ""){            
             values.discount_code = discountCode;

@@ -157,7 +157,7 @@ const Register = () => {
                     <Row gutter={8}>
                         <Col span={12}>
                             <Form.Item
-                                name="state"
+                                name="province"
                                 label="Provincia"
                                 rules={[
                                     {
