@@ -8,6 +8,7 @@ import Register from "./pages/Register";
 import UserProfile from "./pages/UserProfile";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
+import OrderDetail from "./pages/OrderDetail";
 import Error404 from "./pages/Error404";
 import Checkout from "./pages/Checkout";
 import CheckoutResult from "./pages/CheckoutResult";
@@ -138,6 +139,7 @@ function App() {
                 <Route path="/product-detail/:productId" element={<ProductDetail />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/result/:orderId" element={<CheckoutResult />} />
+                <Route path="/order-detail/:orderId" element={<OrderDetail />} />
                 <Route path="/banks" element={<Banks />} />
                 <Route path="*" element={<Error404 />} />
               </Routes>

@@ -145,7 +145,7 @@ const UserProfile = () => {
             key: 'detail',
             width: 80,
             render: (_, record) => (
-                <Link key={record.id} to={record.id}>
+                <Link key={record.id} to={`order-detail/${record.id}`}>
                     <Button type='link' style={{ padding: '0' }}>Ver</Button>
                 </Link>
             ),

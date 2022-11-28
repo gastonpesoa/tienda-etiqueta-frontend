@@ -24,7 +24,7 @@ const CheckoutResult = () => {
                 alert(error)
             }
         }
-        getOrderById(`${process.env.REACT_APP_API_URL_BASE}/orders/id/${orderId}`)
+        getOrderById(`${process.env.REACT_APP_API_URL_BASE}/orders/${orderId}`)
     }, [])
 
     return (
