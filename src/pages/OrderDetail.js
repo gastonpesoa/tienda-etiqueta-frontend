@@ -1,9 +1,10 @@
 import { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router'
-import { Col, Row, Typography, Image, Space, Radio, Card, Button, Tabs, Badge, Table, Divider, Skeleton } from 'antd';
+import { Link, useNavigate } from 'react-router-dom'
+import { Col, Row, Typography, Image, Space, Radio, Card, Button, Tabs, Badge, Table, Divider, Skeleton, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { AppContext } from "../AppContext";
-import { formatState } from '../Utils'
+import { formatState, formatDate } from '../Utils'
 import Price from "../components/Price";
 import UnitsSelect from "../components/UnitsSelect";
 import Rating from '../components/Rating';
@@ -11,14 +12,16 @@ const { Title, Text, Paragraph } = Typography;
 
 const OrderDetail = () => {
 
+    const navigate = useNavigate();
     const { orderId } = useParams();
     const [order, setOrder] = useState({});
     const {
-        id, date, state, items, card, billing, delivery_method
+        id, date, state, last_update_date, items, card, billing, delivery_method
     } = order;
     const [loading, setLoading] = useState(true);
     const [orderStateColor, setOrderStateColor] = useState('');
     const [orderStateText, setOrderStateText] = useState('');
+    const [orderStateDescription, setOrderStateDescription] = useState('');
     const [review, setReview] = useState({});
 
     useEffect(() => {
@@ -29,6 +32,12 @@ const OrderDetail = () => {
                     headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
                 })
                 const data = await res.json();
+                if (data.error) {
+                    console.log("data.error", data.error)
+                    message.error("Algo salió mal, por favor ingrese e intentelo nuevamente")
+                    navigate('/')
+                    return
+                }
                 setOrder(data.data);
                 setLoading(false);
             } catch (error) {
@@ -39,9 +48,13 @@ const OrderDetail = () => {
     }, [orderId])
 
     useEffect(() => {
-        let { color, text } = formatState(state)
+        if (!state) {
+            return
+        }
+        let { color, text, description } = formatState(state)
         setOrderStateColor(color)
         setOrderStateText(text)
+        setOrderStateDescription(` - ${description} ${formatDate(last_update_date)}`)
     }, [order])
 
     const orderStateStyle = {
@@ -62,9 +75,10 @@ const OrderDetail = () => {
                             </Row>
                             <Row>
                                 <Col span={24}>
-                                    <Title level={4} style={orderStateStyle}>
+                                    <Text strong style={orderStateStyle}>
                                         {orderStateText}
-                                    </Title>
+                                    </Text>
+                                    <Text>{orderStateDescription}</Text>
                                 </Col>
                             </Row>
                         </Col>

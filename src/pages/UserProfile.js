@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Row, Col, Button, Typography, Skeleton, Table, Tag, Tooltip, Form, Input, Select, notification, message } from 'antd';
 import { LogoutOutlined } from '@ant-design/icons';
 import { AppContext } from "../AppContext";
-import { formatState } from '../Utils'
+import { formatState, formatDate } from '../Utils'
 const { Title, Text } = Typography;
 
 const UserProfile = () => {
@@ -26,31 +26,30 @@ const UserProfile = () => {
                 const data = await res.json();
                 let newOrdersArray = []
                 data.data.map(item => {
-                    let d = new Date(item.date);
-                    let ye = new Intl.DateTimeFormat('es', { year: 'numeric' }).format(d);
-                    let mo = new Intl.DateTimeFormat('es', { month: 'long' }).format(d);
-                    let da = new Intl.DateTimeFormat('es', { day: '2-digit' }).format(d);
-                    let formatedSate = `${da} de ${mo} ${ye}`
-                    let productsDescriptions = item.items[0].product.title
+                    let formatedSate = formatDate(item.date)
+                    let productsDescriptions = `(${item.items[0].units}) ${item.items[0].product.title}`
                     if (item.items.length > 1) {
                         item.items.map((element, i) => {
                             if (i !== 0) {
-                                productsDescriptions += ` - ${element.product.title}`
+                                productsDescriptions += ` - (${element.units}) ${element.product.title}`
                             }
                         })
                     }
+                    let quantity = item.items.reduce((accumulator, item) => {
+                        return accumulator + item.units;
+                    }, 0)
                     newOrdersArray.push({
                         key: item._id,
                         date: formatedSate,
                         state: item.state,
-                        productsQuantity: item.items.length,
+                        productsQuantity: quantity,
                         products: productsDescriptions
                     })
                 })
                 setOrders(newOrdersArray);
                 setLoading(false);
             } catch (error) {
-                alert(error)
+                console.log(error)
             }
         }
         const getProvinces = async (url) => {
