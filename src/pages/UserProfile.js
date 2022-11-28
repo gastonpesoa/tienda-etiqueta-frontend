@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Row, Col, Button, Typography, Skeleton, Table, Tag, Tooltip, Form, Input, Select, notification, message } from 'antd';
 import { LogoutOutlined } from '@ant-design/icons';
 import { AppContext } from "../AppContext";
+import { formatState } from '../Utils'
 const { Title, Text } = Typography;
 
 const UserProfile = () => {
@@ -15,7 +16,6 @@ const UserProfile = () => {
     const [provinces, setProvinces] = useState([]);
 
     useEffect(() => {
-        console.log("user", user)
         initializeForm()
         const getOrders = async (url) => {
             try {
@@ -142,13 +142,12 @@ const UserProfile = () => {
         },
         {
             title: 'Detalle',
-            key: 'detail',
             width: 80,
             render: (_, record) => (
-                <Link key={record.id} to={`order-detail/${record.id}`}>
+                <Link key={record.key} to={`../order-detail/${record.key}`}>
                     <Button type='link' style={{ padding: '0' }}>Ver</Button>
                 </Link>
-            ),
+            )
         },
         {
             title: 'Estado',
@@ -156,34 +155,9 @@ const UserProfile = () => {
             key: 'state',
             width: 225,
             render: (_, record) => {
-                let color = '';
-                switch (record.state) {
-                    case 'CONFIRMADA':
-                        color = '#40a9ff';
-                        break;
-                    case 'LISTA_PARA_RETIRAR':
-                        color = '#85a5ff';
-                        break;
-                    case 'LISTA_PARA_ENTREGAR':
-                        color = '#bae637';
-                        break;
-                    case 'EN_VIAJE':
-                        color = '#73d13d';
-                        break;
-                    case 'ENTREGADA':
-                        color = 'green';
-                        break;
-                    case 'ENTREGA_FALLIDA':
-                        color = '#ffec3d';
-                        break;
-                    case 'CANCELADA':
-                        color = 'volcano';
-                        break;
-                    default:
-                        break;
-                }
+                let { color, text } = formatState(record.state)
                 return <Tag color={color} key={record.id}>
-                    {record.state}
+                    {text}
                 </Tag>
 
             }
