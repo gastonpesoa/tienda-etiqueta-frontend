@@ -19,7 +19,7 @@ const UnitsSelect = ({ units, unit, setUnit, size }) => {
             updatedItems.push(unit)
         }
         setItems(updatedItems);
-    }, [])
+    }, [units])
 
     const onNewUnitChange = (newUnit) => {
         setNewUnit(newUnit);

@@ -14,15 +14,14 @@ const FilterSize = ({ sizes }) => {
                 style={{ marginLeft: 10, width: 70 }}
                 onChange={onChangeSize}
             >
-                <Option value="XS">XS</Option>
-                <Option value="S">S</Option>
-                <Option value="M">M</Option>
-                <Option value="L">L</Option>
-                <Option value="XL">XL</Option>
-                <Option value="XXL">XXL</Option>
+                {
+                    sizes.map((item, i) => (
+
+                        <Option key={i} value={item}>{item}</Option>
+                    ))
+                }
             </Select>
         </div>
     );
-}
-
+}   
 export default FilterSize;

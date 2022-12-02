@@ -18,6 +18,10 @@ const Products = () => {
     const { category, subcategory } = useParams();
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [showGenderFilter, setShowGenderFilter] = useState(false);
+    const [sizes, setSizes] = useState([]);
+    const [ratings, setRatings] = useState([]);
+    const [filtersApplied, setFiltersApplied] = useState([]);
 
     useEffect(() => {
         const getProducts = async (url) => {
@@ -36,6 +40,22 @@ const Products = () => {
         getProducts(urlGet)
     }, [category, subcategory])
 
+    useEffect(() => {
+        const genders = [...new Set(products.map(item => item.gender))];
+        setShowGenderFilter(genders.length > 1)
+
+        let articlesResult = products.map(item => item.articles)
+            .reduce((prev, curr) => prev.concat(curr), [])
+        const sizes = [...new Set(articlesResult.map(item => item.size))];
+        setSizes(sizes)
+
+        const ratings = [...new Set(
+            products.filter(item => item.rating_average > 0)
+                .map(item => item.rating_average)
+        )];
+        setRatings(ratings)
+    }, [products])
+
     const handleFilterRatingChange = (checkedValues) => {
         console.log('checked = ', checkedValues);
         //products.filter(item => item.rating_average !== checkedValues);
@@ -50,37 +70,41 @@ const Products = () => {
                         <Row>
                             <Col span={12}><Title level={2}>{category}</Title></Col>
                             <Col span={12} style={{ textAlign: 'right' }}>
-                                <Space>
-                                    <BadgeProductsCount count={products.length} />
-                                </Space>
+                                <BadgeProductsCount count={products.length} />
                             </Col>
                         </Row>
                         <Row style={{ marginBottom: 16 }}>
                             <Col span={24}>
                                 <Space>
-                                    <FilterGender />
-                                    <FilterSize />
+                                    {
+                                        showGenderFilter &&
+                                        <FilterGender />
+                                    }
+                                    <FilterSize sizes={sizes} />
                                 </Space>
                             </Col>
                         </Row>
                         <Row style={{ marginBottom: 16 }}>
                             <Col span={24}>
-                                <FiltersApplied />
+                                <FiltersApplied filters={filtersApplied} />
                             </Col>
                         </Row>
                         <Row>
                             <Col span={6}>
                                 <Space direction='vertical' size='large'>
                                     <FilterBrand brands={products.map((item, i) => ({ id: i, label: item.brand, value: item.brand }))} />
-                                    <FilterRating
-                                        ratings={
-                                            products.map((item, i) => ({
-                                                id: i,
-                                                label: <Rating rating={item.rating_average} color={'#FDBC15'} />,
-                                                value: item.rating_average
-                                            }))}
-                                        handleFilterRatingChange={handleFilterRatingChange}
-                                    />
+                                    {
+                                        ratings.length > 0 &&
+                                        <FilterRating
+                                            ratings={
+                                                ratings.map((item, i) => ({
+                                                    id: i,
+                                                    label: <Rating rating={item} color={'#FDBC15'} />,
+                                                    value: item
+                                                }))}
+                                            handleFilterRatingChange={handleFilterRatingChange}
+                                        />
+                                    }
                                     <FilterPrice />
                                 </Space>
                             </Col>

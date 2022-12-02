@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Space, Typography, Col, InputNumber, Row, Slider } from 'antd';
 const { Title, Text } = Typography;
 
-const FilterPrice = ({ min, max }) => {
+const FilterPrice = ({ min, max, dispatchFilterApplied }) => {
     const [inputMinValue, setMinInputValue] = useState(2000);
     const [inputMaxValue, setMaxInputValue] = useState(50000);
     const onChange = (value) => {

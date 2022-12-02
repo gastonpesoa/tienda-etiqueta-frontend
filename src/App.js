@@ -84,8 +84,8 @@ function App() {
     switch (actionType) {
       case 'ADD_ITEM':
         for (var i = 0; i < shoppingCart.length; i++) {
-          if (shoppingCart[i].id === payload.newItem.id) {
-            message.error(`Ya agregaste ${payload.newItem.title} al carrito`)
+          if (shoppingCart[i].sku === payload.newItem.sku) {
+            message.error(`Ya agregaste este artículo al carrito`)
             return;
           }
         }
@@ -99,7 +99,7 @@ function App() {
         setShoppingCart(newArr)
         return;
       case 'REMOVE_ITEM':
-        setShoppingCart(shoppingCart.filter(item => item.id !== payload.itemId));
+        setShoppingCart(shoppingCart.filter(item => item.sku !== payload.sku));
         message.success("Producto removido del carrito")
         return;
       case 'REMOVE_ALL':

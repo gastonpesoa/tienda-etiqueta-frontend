@@ -2,9 +2,10 @@ import { Space, Checkbox, Typography } from 'antd';
 import '../App.less';
 const { Title, Text } = Typography;
 
-const FilterBrand = ({ brands }) => {
+const FilterBrand = ({ brands, dispatchFilterApplied }) => {
     const onChangeBrand = (checkedValues) => {
         console.log('checked = ', checkedValues);
+        dispatchFilterApplied(checkedValues)
     };
     return (
         <Space key={brands.id} direction='vertical'>

@@ -27,11 +27,14 @@ const ProductCard = ({ product }) => {
                                     <Text level={5}>{product.description}</Text>
                                 </Col>
                             </Row>
-                            <Row style={{ marginBottom: '30px' }} >
-                                <Col span={24}>
-                                    <Rating rating={product.rating_average} />
-                                </Col>
-                            </Row>
+                            {
+                                product.rating_average > 0 &&
+                                <Row style={{ marginBottom: '30px' }} >
+                                    <Col span={24}>
+                                        <Rating rating={product.rating_average} />
+                                    </Col>
+                                </Row>
+                            }
                             {
                                 product.brand &&
                                 <Row>
@@ -46,16 +49,9 @@ const ProductCard = ({ product }) => {
                                     <Col span={18}><Text>{product.cut}</Text></Col>
                                 </Row>
                             }
-                            {
-                                product.stock &&
-                                <Row>
-                                    <Col span={6}><Text type="secondary">Stock:</Text></Col>
-                                    <Col span={18}><Text type="success">{product.stock}</Text></Col>
-                                </Row>
-                            }
                         </Col>
                         <Col span={7} style={{ textAlign: 'right' }}>
-                            <Price price={product.price} type={'default'} level={4} style={{ marginBottom: '170px' }} />                           
+                            <Price price={product.price} type={'default'} level={4} style={{ marginBottom: '170px' }} />
                         </Col>
                     </Row>
                 </Card>
