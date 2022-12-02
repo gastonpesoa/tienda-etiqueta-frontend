@@ -32,7 +32,7 @@ const ShoppingCartPopover = () => {
                         ?
                         (shoppingCart.map((item) => (
                             <ShoppingCartPopoverItem
-                                key={item.id}
+                                key={item.sku}
                                 item={item}
                             />
                         )))

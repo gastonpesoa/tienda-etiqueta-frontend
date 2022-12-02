@@ -99,7 +99,8 @@ function App() {
         setShoppingCart(newArr)
         return;
       case 'REMOVE_ITEM':
-        setShoppingCart(shoppingCart.filter(item => item.sku !== payload.sku));
+        let filteredShoppingCart = shoppingCart.filter(item => item.sku !== payload.itemSku)
+        setShoppingCart(filteredShoppingCart);
         message.success("Producto removido del carrito")
         return;
       case 'REMOVE_ALL':

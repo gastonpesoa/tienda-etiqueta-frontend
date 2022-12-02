@@ -13,7 +13,7 @@ const ShoppingCartPopoverItem = ({ item }) => {
     const { dispatchShoppingCartEvent } = useContext(AppContext);
 
     const handleRemoveItem = () => {
-        dispatchShoppingCartEvent('REMOVE_ITEM', { itemId: item.id });
+        dispatchShoppingCartEvent('REMOVE_ITEM', { itemSku: item.sku });
     }
 
     const handleUpdateItem = (quantity) => {
