@@ -1,17 +1,19 @@
 import { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
-import { Row, Col, Button, Typography, Space, Tag, Card, Input, Form, Select, Radio, Empty, message, notification, Table } from 'antd';
+import { Row, Col, Typography, Tag, message, Table } from 'antd';
 import { AppContext } from "../AppContext";
 import { formatState, formatDate } from '../Utils';
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
-const dataSource = [
+/*const dataSource = [
     {
         key: '1',
         date: new Date('08/10/2022'),
         items: [
             {
-                product: 'Corbata',
+                product: {
+                    title: 'Corbata'
+                },
                 units: 1
             }
         ],
@@ -22,14 +24,18 @@ const dataSource = [
         date: new Date('08/23/2022'),
         items: [
             {
-                product: 'Camisa Azul Estampada',
-                units: 1,
-                size: 'S'
+                product: {
+                    title: 'Camisa Azul Estampada',
+                    size: 'S'
+                },
+                units: 1
             },
             {
-                product: 'Pantalón Gabardina Azul',
-                units: 1,
-                size: 'S'
+                product: {
+                    title: 'Pantalón Gabardina Azul',
+                    size: 'S'
+                },
+                units: 1
             }
         ],
         state: 'CONFIRMADA'
@@ -39,14 +45,16 @@ const dataSource = [
         date: new Date('08/02/2022'),
         items: [
             {
-                product: 'Pantalón Gabardina Azul',
-                units: 2,
-                size: 'S'
+                product: {
+                    title: 'Pantalón Gabardina Azul',
+                    size: 'S'
+                },
+                units: 2
             }
         ],
         state: 'ENTREGADA'
     },
-];
+];*/
 
 const columns = [
     {
@@ -68,10 +76,10 @@ const columns = [
         render: (items) => {
             let output = '';
             for (let i = 0; i < items.length; i++) {
-                const { product, units, size } = items[i];
+                const { product, units } = items[i];
                 if (i != 0) output += ', ';
                 output += product.title;
-                if (size !== undefined) output += ` (talle ${size})`;
+                if (product.size !== undefined) output += ` (talle ${product.size})`;
                 output += ` x${units}`;
             }
             return output;
@@ -131,28 +139,29 @@ const OrderManagement = () => {
 
     //const { user, token } = useContext(AppContext);
     //const navigate = useNavigate()
-
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_URL_BASE}/orders/`, {
+        fetch(`${process.env.REACT_APP_API_URL_BASE}/orders/all/`, {
                 headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
             })
             .then((res) => res.ok ? res.json() : Promise.reject(res))
             .then(({data}) => {
-                console.log(data);
                 //setOrders(dataSource);
                 if (data.length > 0) {
                     data.forEach((order) => {
-                        let orderAux = {};
-                        orderAux.key = order._id;
-                        orderAux.date = new Date(order.date);
-                        orderAux.items = order.items;
-                        orderAux.state = order.state;
-                        orders.push(orderAux);
+                        setOrders((savedOrders) => {
+                            return [
+                                ...savedOrders,
+                                {
+                                    key: order._id,
+                                    date: new Date(order.date),
+                                    items: order.items,
+                                    state: order.state
+                                }
+                            ];
+                        })
                     });
-                    console.log(orders);
-                    //setOrders(orders);
                 } else {
                     message.error("No hay compras para gestionar");
                 }
