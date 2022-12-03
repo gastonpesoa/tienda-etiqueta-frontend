@@ -28,13 +28,13 @@ const Checkout = () => {
     const [validatingDiscountCode, setValidatingDiscountCode] = useState(false);
     const [discount, setDiscount] = useState(0);
     const [discountCode, setDiscountCode] = useState("");
-    const [discountRate, setDiscountRate] = useState(0);    
+    const [discountRate, setDiscountRate] = useState(0);
 
     useEffect(() => {
         initializeForm()
         fetch(`${process.env.REACT_APP_API_URL_BASE}/banks/valid/`)
             .then((res) => res.ok ? res.json() : Promise.reject(res))
-            .then(({data}) => {
+            .then(({ data }) => {
                 if (data.length > 0) {
                     data.forEach((bk) => {
                         let bankAux = {};
@@ -43,7 +43,7 @@ const Checkout = () => {
                         bankAux.label = bk.bank;
                         bankAux.discount = bk.discount_status ? bk.discount : 0;
                         if (bk.discount !== null && bk.discount > 0 && bk.discount_status) {
-                            bankAux.label += ' (-' + bk.discount + '%)' ;
+                            bankAux.label += ' (-' + bk.discount + '%)';
                         }
                         bankList.push(bankAux);
                     });
@@ -77,18 +77,18 @@ const Checkout = () => {
             result += shippingCost;
         }
         setTotal(result);
-    }, [subtotal, shippingCost, discount, discountRate, deliveryMethod, paymentMethod]);   
+    }, [subtotal, shippingCost, discount, discountRate, deliveryMethod, paymentMethod]);
 
     const initializeForm = () => {
         form.setFieldsValue({
             name: user.name,
-            last_name : user.last_name,
-            email : user.email,
-            address : user.address,
-            city : user.city,
-            province : user.province,
-            postal_code : user.postal_code
-          });
+            last_name: user.last_name,
+            email: user.email,
+            address: user.address,
+            city: user.city,
+            province: user.province,
+            postal_code: user.postal_code
+        });
     }
 
     const onChangePaymentMethod = (e) => {
@@ -104,10 +104,10 @@ const Checkout = () => {
             delivery_method: e.target.value,
         });
     }
-    
+
     const onChangeProvinceSelection = (value) => {
         let provinceSelected = provinces.find(x => x.value === value);
-        setShippingCost(provinceSelected.shippingCost)        
+        setShippingCost(provinceSelected.shippingCost)
         form.setFieldsValue({
             province: value
         });
@@ -146,9 +146,9 @@ const Checkout = () => {
 
     const onFinish = (values) => {
         values.items = shoppingCart.map(item => {
-            return { product_id: item.id, units: item.unit, size: item.size }
+            return { product_sku: item.sku, units: item.unit }
         })
-        if(discountCode !== ""){            
+        if (discountCode !== "") {
             values.discount_code = discountCode;
         }
         values.bank_id = bank.id;
@@ -184,6 +184,7 @@ const Checkout = () => {
                 if (data.error) {
                     message.error(data.message)
                 } else {
+                    console.log(data)
                     dispatchShoppingCartEvent('REMOVE_ALL');
                     navigate(`../result/${data.data.id}`)
                 }
@@ -542,7 +543,7 @@ const Checkout = () => {
                                         {
                                             shoppingCart.map(item => (
                                                 <ShoppingCartPopoverItem
-                                                    key={item.id}
+                                                    key={item.sku}
                                                     item={item}
                                                 />))
 

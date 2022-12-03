@@ -16,7 +16,7 @@ const ProductDetail = () => {
     const navigate = useNavigate();
     const { dispatchShoppingCartEvent } = useContext(AppContext);
     const [product, setProduct] = useState({});
-    const { id, category, title, description, detail, images,
+    const { _id, category, title, description, detail, images,
         brand, color, cut, price,
         rating_average, reviews, articles
     } = product;
@@ -51,14 +51,14 @@ const ProductDetail = () => {
                     label:
                         <Space>
                             <Text>Opiniones</Text>
-                            <Badge style={{ color: '#6A983C', backgroundColor: '#F4F8EC' }} count={data.data.reviews.length} />
+                            <Badge style={{ color: '#6A983C', backgroundColor: '#F4F8EC' }} count={data.data.reviews?.length} />
                         </Space>,
                     key: 'reviews',
                     children:
                         <>
                             <Title level={5} style={{ marginTop: '40px', marginBottom: '20px' }}>Opiniones del producto</Title>
                             {
-                                data.data.reviews.map((review, i) => (
+                                data.data.reviews?.map((review, i) => (
                                     <div key={i} style={{ marginTop: '50px' }} >
                                         <Rating rating={review.rating} />
                                         <Paragraph>
@@ -71,7 +71,7 @@ const ProductDetail = () => {
                         </>
                 }
 
-                if (data.data.reviews.length > 0) {
+                if (data.data.reviews?.length > 0) {
                     setTabs([descriptionTab, reiviewsTab])
                 } else {
                     setTabs([descriptionTab])
@@ -91,7 +91,6 @@ const ProductDetail = () => {
     }
 
     const onSizeChange = (e) => {
-        console.log(e.target.value)
         let articleSelected = articles.find(x => x.sku === e.target.value);
         setArticle(articleSelected)
         setUnit("1")
@@ -99,7 +98,7 @@ const ProductDetail = () => {
 
     const handleClickAddToShoppingCart = () => {
         let productToAdd = {
-            id: id,
+            id: _id,
             sku: article.sku,
             title: title,
             brand: brand,
@@ -152,14 +151,14 @@ const ProductDetail = () => {
                         <Col span={12}>
                             <Title>{title}</Title>
                             {
-                                reviews.length > 0 &&
+                                reviews?.length > 0 &&
                                 <Row style={{ marginBottom: '30px' }} >
                                     <Col span={6}>
                                         <Rating rating={rating_average} color={'#FDBC15'} />
                                     </Col>
                                     <Col span={18}>
                                         <Text type="secondary" underline>
-                                            {`${reviews.length} opiniones de clientes`}
+                                            {`${reviews?.length} opiniones de clientes`}
                                         </Text>
                                     </Col>
                                 </Row>

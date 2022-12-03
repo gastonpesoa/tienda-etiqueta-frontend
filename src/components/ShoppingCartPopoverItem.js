@@ -63,7 +63,7 @@ const ShoppingCartPopoverItem = ({ item }) => {
                     </Row>
                 }
                 {
-                    item.rating_average &&
+                    item.rating_average > 0 &&
                     <Row>
                         <Col span={24}><Rating rating={item.rating_average} /></Col>
                     </Row>

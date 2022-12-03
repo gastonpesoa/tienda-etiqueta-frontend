@@ -37,13 +37,13 @@ const CheckoutResult = () => {
                         title="Compra realizada con éxito!"
                         subTitle={`Order number: ${order.id}.`}
                         extra={[
-                            <Link to="/user-profile">
-                                <Button type="primary" key="user">
+                            <Link to="/user-profile" key="compras">
+                                <Button type="primary" >
                                     Ver en mis compras
                                 </Button>
                             </Link>,
-                            <Link to="/">
-                                <Button key="buy">Volver a la página de inicio</Button>
+                            <Link to="/" key="buy">
+                                <Button>Volver a la página de inicio</Button>
                             </Link>
                         ]}
                     />
