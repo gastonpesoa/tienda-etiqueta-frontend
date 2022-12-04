@@ -19,6 +19,7 @@ import myData from './data.json';
 import './App.less';
 import { isExpired, decodeToken } from "react-jwt";
 import OrderManagement from './pages/OrderManagement';
+import OrderManagementDetail from './pages/OrderManagementDetail';
 const { Header, Footer, Content } = Layout;
 
 function App() {
@@ -143,6 +144,7 @@ function App() {
                 <Route path="/result/:orderId" element={<CheckoutResult />} />
                 <Route path="/order-detail/:orderId" element={<OrderDetail />} />
                 <Route path="/order-management" element={<OrderManagement />} />
+                <Route path="/order-management-detail/:orderId" element={<OrderManagementDetail />} />
                 <Route path="/banks" element={<Banks />} />
                 <Route path="*" element={<Error404 />} />
               </Routes>

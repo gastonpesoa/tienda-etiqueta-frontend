@@ -131,7 +131,7 @@ const columns = [
     {
         title: 'Acciones',
         dataIndex: 'key',
-        render: (id) => <Link to={'/order-detail/'+id}>Ver detalle</Link>
+        render: (id) => <Link to={'/order-management-detail/'+id}>Ver detalle</Link>
     },
 ];
 
