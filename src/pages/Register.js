@@ -14,6 +14,7 @@ const Register = () => {
     const { provinces } = myData;
 
     const onFinish = (values) => {
+        values.type = "client"
         registerUser(values)
     };
 

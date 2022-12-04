@@ -1,5 +1,5 @@
 {
-    "menu": [
+    "menu_client": [
         {
             "key": "trajes",
             "title": "Trajes",
@@ -65,6 +65,204 @@
             "key": "accesorios",
             "title": "Accesorios",
             "link": "/products/accesorios",
+            "items": []
+        }
+    ],
+    "menu_employee": [
+        {
+            "key": "trajes",
+            "title": "Trajes",
+            "link": "/products/trajes",
+            "items": [
+                {
+                    "key": "trajes-ejecutivos",
+                    "title": "Trajes Ejecutivos",
+                    "link": "/products/trajes/trajes-ejecutivos"
+                },
+                {
+                    "key": "trajes-chaque",
+                    "title": "Trajes Chaqué",
+                    "link": "/products/trajes/trajes-chaque"
+                },
+                {
+                    "key": "trajes-novio",
+                    "title": "Trajes de Novio",
+                    "link": "/products/trajes/trajes-novio"
+                },
+                {
+                    "key": "esmoquins",
+                    "title": "Esmoquins",
+                    "link": "/products/trajes/esmoquins"
+                }
+            ]
+        },
+        {
+            "key": "camisas",
+            "title": "Camisas",
+            "link": "/products/camisas",
+            "items": [
+                {
+                    "key": "camisas-lisas",
+                    "title": "Camisas Lisas",
+                    "link": "/products/camisas/camisas-lisas"
+                },
+                {
+                    "key": "camisas-rayadas",
+                    "title": "Camisas Rayadas",
+                    "link": "/products/camisas/camisas-rayadas"
+                },
+                {
+                    "key": "camisas-estampadas",
+                    "title": "Camisas Estampadas",
+                    "link": "/products/camisas/camisas-estampadas"
+                }
+            ]
+        },
+        {
+            "key": "zapatos",
+            "title": "Zapatos",
+            "link": "/products/zapatos",
+            "items": []
+        },
+        {
+            "key": "corbatas",
+            "title": "Corbatas",
+            "link": "/products/corbatas",
+            "items": []
+        },
+        {
+            "key": "accesorios",
+            "title": "Accesorios",
+            "link": "/products/accesorios",
+            "items": []
+        },
+        {
+            "key": "categories",
+            "title": "Gestión de categorías",
+            "link": "/categories-management",
+            "items": []
+        },
+        {
+            "key": "products",
+            "title": "Gestión de artículos",
+            "link": "/products-management",
+            "items": []
+        },
+        {
+            "key": "orders",
+            "title": "Gestión de compras",
+            "link": "/order-management",
+            "items": []
+        },
+        {
+            "key": "banks",
+            "title": "Gestión de bancos",
+            "link": "/banks",
+            "items": []
+        }
+    ],
+    "menu_admin": [
+        {
+            "key": "trajes",
+            "title": "Trajes",
+            "link": "/products/trajes",
+            "items": [
+                {
+                    "key": "trajes-ejecutivos",
+                    "title": "Trajes Ejecutivos",
+                    "link": "/products/trajes/trajes-ejecutivos"
+                },
+                {
+                    "key": "trajes-chaque",
+                    "title": "Trajes Chaqué",
+                    "link": "/products/trajes/trajes-chaque"
+                },
+                {
+                    "key": "trajes-novio",
+                    "title": "Trajes de Novio",
+                    "link": "/products/trajes/trajes-novio"
+                },
+                {
+                    "key": "esmoquins",
+                    "title": "Esmoquins",
+                    "link": "/products/trajes/esmoquins"
+                }
+            ]
+        },
+        {
+            "key": "camisas",
+            "title": "Camisas",
+            "link": "/products/camisas",
+            "items": [
+                {
+                    "key": "camisas-lisas",
+                    "title": "Camisas Lisas",
+                    "link": "/products/camisas/camisas-lisas"
+                },
+                {
+                    "key": "camisas-rayadas",
+                    "title": "Camisas Rayadas",
+                    "link": "/products/camisas/camisas-rayadas"
+                },
+                {
+                    "key": "camisas-estampadas",
+                    "title": "Camisas Estampadas",
+                    "link": "/products/camisas/camisas-estampadas"
+                }
+            ]
+        },
+        {
+            "key": "zapatos",
+            "title": "Zapatos",
+            "link": "/products/zapatos",
+            "items": []
+        },
+        {
+            "key": "corbatas",
+            "title": "Corbatas",
+            "link": "/products/corbatas",
+            "items": []
+        },
+        {
+            "key": "accesorios",
+            "title": "Accesorios",
+            "link": "/products/accesorios",
+            "items": []
+        },
+        {
+            "key": "users",
+            "title": "Gestión de usuarios",
+            "link": "/users-management",
+            "items": []
+        },
+        {
+            "key": "categories",
+            "title": "Gestión de categorías",
+            "link": "/categories-management",
+            "items": []
+        },
+        {
+            "key": "products",
+            "title": "Gestión de artículos",
+            "link": "/products-management",
+            "items": []
+        },
+        {
+            "key": "orders",
+            "title": "Gestión de compras",
+            "link": "/order-management",
+            "items": []
+        },
+        {
+            "key": "discounts",
+            "title": "Gestión de descuentos",
+            "link": "/discounts-management",
+            "items": []
+        },
+        {
+            "key": "banks",
+            "title": "Gestión de bancos",
+            "link": "/banks",
             "items": []
         }
     ],

@@ -24,12 +24,13 @@ const { Header, Footer, Content } = Layout;
 
 function App() {
 
-  const { menu, carousel_source, best_sellers, best_suits } = myData;
+  const { menu_employee, menu_client, menu_admin, carousel_source, best_sellers, best_suits } = myData;
 
   const [token, setToken] = useState('');
   const [user, setUser] = useState({});
   const [shoppingCart, setShoppingCart] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
+  const [menu, setMenu] = useState(menu_client);
 
   useEffect(() => {
     let shoppingCartLocalStorage = localStorage.getItem("shoppingCart")
@@ -59,8 +60,10 @@ function App() {
     }
     if (user.email) {
       localStorage.setItem("user", JSON.stringify(user));
+      renderUserMenu()
     } else {
       localStorage.removeItem("user");
+      setMenu(menu_client)
     }
   }, [user, token])
 
@@ -80,6 +83,18 @@ function App() {
   const dispatchUserEvent = (token, user) => {
     setToken(token)
     setUser(user)
+  }
+
+  const renderUserMenu = () => {
+    if (user.type === "client") {
+      setMenu(menu_client)
+    }
+    else if (user.type === "employee") {
+      setMenu(menu_employee)
+    }
+    else if (user.type === "admin") {
+      setMenu(menu_admin)
+    }
   }
 
   const dispatchShoppingCartEvent = (actionType, payload) => {
