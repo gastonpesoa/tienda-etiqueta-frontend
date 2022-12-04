@@ -52,24 +52,32 @@ const OrderDetail = () => {
         if (!state) {
             return
         }
-        let { color, text, description } = formatState(state)
+        const user = JSON.parse(localStorage.getItem("user"))
+        const { color, text, description } = formatState(state)
         setOrderStateColor(color)
         setOrderStateText(text)
         setOrderStateDescription(` - ${description} ${formatDate(last_update_date)}`)
+        order.items.map(item => {
+            item.reviewedByUser = item.product.reviews.some(review => review.user_id == user.id)
+        })
     }, [order])
 
     const orderStateStyle = {
         color: orderStateColor
     }
 
-    const handleSetShowReview = (product) => {
-        console.log("product", product)
-        setShowReview(true)
-        setProductToReview(product)
+    const handleSetShowReview = (item, product) => {
+        if (!item.reviewedByUser) {
+            setShowReview(true)
+            setProductToReview(product)
+        } else {
+            message.error("Ya calificaste este producto!")
+        }
     }
 
     const onFinish = (values) => {
         values.product_id = productToReview.id
+        values.order_id = orderId
         console.log(values)
         registerReview(values)
     };
@@ -90,6 +98,7 @@ const OrderDetail = () => {
 
     const registerReview = async (values) => {
         try {
+            setLoading(true);
             let res = await fetch(`${process.env.REACT_APP_API_URL_BASE}/products/review`, {
                 method: "PUT",
                 headers: {
@@ -99,9 +108,13 @@ const OrderDetail = () => {
                 body: JSON.stringify(values)
             })
             let data = await res.json()
+            setLoading(false);
+            setShowReview(false)
+            setProductToReview({})
             if (data.error) {
                 message.error(data.message)
             } else {
+                setOrder(data.data);
                 message.success('Ya hemos registrado tu calificación. Gracias por tu dejarnos tu opinón!')
             }
         } catch (error) {
@@ -140,9 +153,14 @@ const OrderDetail = () => {
                                         renderItem={(item) => (
                                             <List.Item
                                                 style={{ padding: '12px 0' }}
-                                                key={item.product.id}
+                                                key={item._id}
                                                 actions={[
-                                                    <Button type="primary" icon={<StarOutlined />} onClick={() => handleSetShowReview(item.product)}>
+                                                    <Button
+                                                        disabled={item.reviewedByUser}
+                                                        type="primary"
+                                                        icon={<StarOutlined />}
+                                                        onClick={() => handleSetShowReview(item, item.product)}
+                                                    >
                                                         Calificar
                                                     </Button>
                                                 ]}
@@ -161,7 +179,7 @@ const OrderDetail = () => {
                                                 </Row>
                                                 <Row>
                                                     <Col span={8}><Text type="secondary">Talle:</Text></Col>
-                                                    <Col span={16}><Text>{item.size}</Text></Col>
+                                                    <Col span={16}><Text>{item.product.articles[0].size}</Text></Col>
                                                 </Row>
                                                 <Row>
                                                     <Col span={8}><Text type="secondary">Unidades:</Text></Col>
@@ -281,7 +299,7 @@ const OrderDetail = () => {
                                 >
                                     <Title level={2}>Calificación</Title>
                                     <Form.Item
-                                        label={`Dejanos tu opinion sobre ${productToReview.title}`}
+                                        label={`Dejanos tu opinion sobre ${productToReview.title}:`}
                                         name="opinion"
                                         rules={[
                                             {
@@ -293,6 +311,7 @@ const OrderDetail = () => {
                                         <TextArea rows={4} placeholder="Ingresá tu opinión..." />
                                     </Form.Item>
                                     <Form.Item
+                                        label="Calificación:"
                                         name="rate"
                                         rules={[
                                             {

@@ -12,10 +12,11 @@ const UnitsSelect = ({ units, unit, setUnit, size }) => {
     useEffect(() => {
         var updatedItems = []
         updatedItems.push(1)
-        for (let index = 1; index < 6; index++) {
+        let limit = units > 6 ? 6 : units
+        for (let index = 1; index < limit; index++) {
             updatedItems.push(index + 1)
         }
-        if(unit > 6){
+        if (unit > 6) {
             updatedItems.push(unit)
         }
         setItems(updatedItems);
