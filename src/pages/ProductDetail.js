@@ -1,13 +1,13 @@
 import { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router'
 import { useNavigate } from 'react-router-dom'
-import { Col, Row, Typography, Image, Space, Radio, Card, Button, Tabs, Badge, Table, Divider, Skeleton, message } from 'antd';
+import { Col, Row, Typography, Image, Space, Radio, Card, Button, Tabs, Badge, Table, Divider, Skeleton, Rate, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { AppContext } from "../AppContext";
 import Price from "../components/Price";
 import UnitsSelect from "../components/UnitsSelect";
-import Rating from '../components/Rating';
 import myData from '../data.json';
+import { formatDate } from '../Utils'
 const { Title, Text, Paragraph } = Typography;
 
 const ProductDetail = () => {
@@ -60,10 +60,18 @@ const ProductDetail = () => {
                             {
                                 data.data.reviews?.map((review, i) => (
                                     <div key={i} style={{ marginTop: '50px' }} >
-                                        <Rating rating={review.rating} />
+                                        <div>
+                                            <Text>{formatDate(review.date)}</Text>
+                                        </div>
                                         <Paragraph>
                                             {review.review}
                                         </Paragraph>
+                                        <Rate
+                                            defaultValue={review.rating}
+                                            disabled
+                                            allowHalf
+                                            style={{ color: "black" }}
+                                        />
                                         <Divider />
                                     </div>
                                 ))
@@ -154,7 +162,7 @@ const ProductDetail = () => {
                                 reviews?.length > 0 &&
                                 <Row style={{ marginBottom: '30px' }} >
                                     <Col span={6}>
-                                        <Rating rating={rating_average} color={'#FDBC15'} />
+                                        <Rate defaultValue={rating_average} disabled allowHalf />
                                     </Col>
                                     <Col span={18}>
                                         <Text type="secondary" underline>

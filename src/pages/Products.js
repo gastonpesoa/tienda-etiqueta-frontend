@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { Row, Col, Typography, Space, Skeleton } from 'antd';
+import { Row, Col, Typography, Space, Skeleton, Rate } from 'antd';
 import BadgeProductsCount from "../components/BadgeProductsCount";
 import ProductCard from '../components/ProductCard';
 import FiltersApplied from "../components/FiltersApplied";
@@ -9,7 +9,6 @@ import FilterSize from "../components/FilterSize";
 import FilterBrand from "../components/FilterBrand";
 import FilterRating from "../components/FilterRating";
 import FilterPrice from '../components/FilterPrice';
-import Rating from '../components/Rating';
 import '../App.less';
 const { Title } = Typography;
 
@@ -99,7 +98,7 @@ const Products = () => {
                                             ratings={
                                                 ratings.map((item, i) => ({
                                                     id: i,
-                                                    label: <Rating rating={item} color={'#FDBC15'} />,
+                                                    label: <Rate defaultValue={item} disabled />,
                                                     value: item
                                                 }))}
                                             handleFilterRatingChange={handleFilterRatingChange}

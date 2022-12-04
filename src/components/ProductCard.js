@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom'
-import { Button, Card, Row, Col, Image, Typography, Space } from 'antd';
+import { Button, Card, Row, Col, Image, Typography, Space, Rate } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import Price from "./Price";
-import Rating from './Rating';
 const { Meta } = Card;
 const { Title, Text } = Typography;
 
@@ -31,7 +30,12 @@ const ProductCard = ({ product }) => {
                                 product.rating_average > 0 &&
                                 <Row style={{ marginBottom: '30px' }} >
                                     <Col span={24}>
-                                        <Rating rating={product.rating_average} />
+                                        <Rate
+                                            allowHalf
+                                            style={{ color: "black" }}
+                                            defaultValue={product.rating_average}
+                                            disabled
+                                        />
                                     </Col>
                                 </Row>
                             }

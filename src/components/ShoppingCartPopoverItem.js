@@ -1,9 +1,8 @@
 import { useContext } from 'react';
-import { Row, Col, Image, Typography, Divider, Button } from 'antd';
+import { Row, Col, Image, Typography, Divider, Button, Rate } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import { AppContext } from "../AppContext";
 import Price from "./Price";
-import Rating from "./Rating";
 import UnitsSelect from "./UnitsSelect";
 import '../App.less';
 const { Title, Text } = Typography;
@@ -65,7 +64,14 @@ const ShoppingCartPopoverItem = ({ item }) => {
                 {
                     item.rating_average > 0 &&
                     <Row>
-                        <Col span={24}><Rating rating={item.rating_average} /></Col>
+                        <Col span={24}>
+                            <Rate
+                                defaultValue={item.rating_average}
+                                disabled
+                                allowHalf
+                                style={{ color: "black" }}
+                            />
+                        </Col>
                     </Row>
                 }
                 <Row>
