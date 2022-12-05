@@ -30,7 +30,6 @@ const fileList = [
 
 const ProductForm = () => {
 
-
     const navigate = useNavigate()
     const { provinces } = myData;
 
@@ -62,21 +61,21 @@ const ProductForm = () => {
 
     return (
         <Form
-                    layout="vertical"
-                    name="basic"
-                    labelCol={{
-                        span: 24
-                    }}
-                    wrapperCol={{
-                        span: 24
-                    }}
-                    initialValues={{
-                        remember: true,
-                    }}
-                    onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
-                    autoComplete="off"
-                >
+            layout="vertical"
+            name="basic"
+            labelCol={{
+                span: 24
+            }}
+            wrapperCol={{
+                span: 24
+            }}
+            initialValues={{
+                remember: true,
+            }}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
+        >
             <Row>
                 <Col span={24}>
                     <Form.Item>
