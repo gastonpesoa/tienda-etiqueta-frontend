@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Space, Typography, Col, InputNumber, Row, Slider } from 'antd';
 const { Title, Text } = Typography;
 
-const FilterPrice = ({ min, max, dispatchFilterApplied }) => {
+const FilterPrice = ({ min, max, dispatchFilterPriceApplied }) => {
     const [inputMinValue, setMinInputValue] = useState(2000);
     const [inputMaxValue, setMaxInputValue] = useState(50000);
     const onChange = (value) => {
@@ -11,18 +11,21 @@ const FilterPrice = ({ min, max, dispatchFilterApplied }) => {
         }
         setMinInputValue(value[0]);
         setMaxInputValue(value[1])
+        dispatchFilterPriceApplied({ type: "price", minValue: value[0], maxValue: value[1] })
     };
     const onChangeMin = (value) => {
         if (isNaN(value)) {
             return;
         }
         setMinInputValue(value);
+        dispatchFilterPriceApplied({ type: "price", minValue: value, maxValue: inputMaxValue })
     };
     const onChangeMax = (value) => {
         if (isNaN(value)) {
             return;
         }
         setMaxInputValue(value);
+        dispatchFilterPriceApplied({ type: "price", minValue: inputMinValue, maxValue: value })
     };
     return (
         <Space direction='vertical'>

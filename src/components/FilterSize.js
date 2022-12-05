@@ -1,11 +1,11 @@
 import { Typography, Select } from 'antd';
 import '../App.less';
 const { Option } = Select;
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
-const FilterSize = ({ sizes }) => {
+const FilterSize = ({ sizes, dispatchFilterSizeApplied }) => {
     const onChangeSize = (value) => {
-        console.log('radio checked', value);
+        dispatchFilterSizeApplied({ type: "size", value: value })
     };
     return (
         <div className='header-filter-container'>
@@ -23,5 +23,5 @@ const FilterSize = ({ sizes }) => {
             </Select>
         </div>
     );
-}   
+}
 export default FilterSize;

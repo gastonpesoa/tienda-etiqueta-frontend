@@ -1,16 +1,15 @@
 import { Radio } from 'antd';
 import '../App.less';
 
-const FilterGender = ({ dispatchFilterApplied }) => {
+const FilterGender = ({ dispatchFilterGenderApplied }) => {
     const onChangeGender = (e) => {
-        console.log('radio checked', e.target.value);
-        dispatchFilterApplied(e.target.value)
+        dispatchFilterGenderApplied({ type: "gender", value: e.target.value })
     };
     return (
         <div className='header-filter-container'>
             <Radio.Group onChange={onChangeGender} style={{ marginTop: 4 }}>
-                <Radio value={1}>Mujer</Radio>
-                <Radio value={2}>Hombre</Radio>
+                <Radio value={'Mujer'}>Mujer</Radio>
+                <Radio value={'Hombre'}>Hombre</Radio>
             </Radio.Group>
         </div>
     );
