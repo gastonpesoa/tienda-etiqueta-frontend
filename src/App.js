@@ -20,6 +20,7 @@ import './App.less';
 import { isExpired, decodeToken } from "react-jwt";
 import OrderManagement from './pages/OrderManagement';
 import OrderManagementDetail from './pages/OrderManagementDetail';
+import ProductForm from './pages/ProductForm';
 const { Header, Footer, Content } = Layout;
 
 function App() {
@@ -155,6 +156,7 @@ function App() {
                 <Route path="/products/:category/" element={<Products />} />
                 <Route path="/products/:category/:subcategory" element={<Products />} />
                 <Route path="/product-detail/:productId" element={<ProductDetail />} />
+                <Route path="/product-create" element={<ProductForm />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/result/:orderId" element={<CheckoutResult />} />
                 <Route path="/order-detail/:orderId" element={<OrderDetail />} />
