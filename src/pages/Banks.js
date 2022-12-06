@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { Row, Col, Button, Typography } from 'antd';
-import DataTable from '../components/DataTable';
+import { Row, Col, Button, Typography, Table } from 'antd';
 import { useEffect, useState } from 'react';
 const { Title, Text } = Typography;
 
@@ -29,11 +28,19 @@ const columns = [
       title: 'Descuento',
       dataIndex: 'discount',
       key: 'discount',
+      render: (discount) => {
+        if (discount <= 0)
+            return '-';
+        return discount + '%';
+      }
     },
     {
       title: 'Promoción vigente',
       dataIndex: 'discount_status',
       key: 'discount_status',
+      render: (discount_status) => {
+        return discount_status ? "Sí" : "No"
+      }
     },
 ];
 
@@ -76,7 +83,7 @@ const Banks = () => {
     return (
         <>
             <Title level={2}>Bancos</Title>
-            <DataTable
+            <Table
                 dataSource={dataSource}
                 columns={columns}
             />
