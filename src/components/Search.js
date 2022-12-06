@@ -1,6 +1,11 @@
+import { useNavigate } from 'react-router-dom'
 import { AutoComplete, Input } from 'antd';
 
 const Search = () => {
+    const navigate = useNavigate()
+    const onSearch = (value) => {
+        navigate(`/products-search/${value}`)
+    }
     return (
         <div>
             <AutoComplete
@@ -9,7 +14,12 @@ const Search = () => {
                     width: 600,
                 }}
             >
-                <Input.Search size="large" placeholder="Buscar Productos, categorías ..." enterButton />
+                <Input.Search
+                    size="large"
+                    placeholder="Buscar productos, categorías ..."
+                    enterButton
+                    onSearch={onSearch}
+                />
             </AutoComplete>
         </div>
     );

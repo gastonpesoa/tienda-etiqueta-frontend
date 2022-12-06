@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { Row, Col, Typography, Space, Skeleton, Rate } from 'antd';
+import { Row, Col, Typography, Space, Skeleton, Rate, Empty } from 'antd';
 import BadgeProductsCount from "../components/BadgeProductsCount";
 import ProductCard from '../components/ProductCard';
 import FiltersApplied from "../components/FiltersApplied";
@@ -14,10 +14,11 @@ const { Title } = Typography;
 
 const Products = () => {
 
-    const { category, subcategory } = useParams();
+    const { category, subcategory, query } = useParams();
     const [allProducts, setAllProducts] = useState([]);
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [title, setTitle] = useState("");
     const [showGenderFilter, setShowGenderFilter] = useState(false);
     const [sizes, setSizes] = useState([]);
     const [brands, setBrands] = useState([]);
@@ -37,22 +38,31 @@ const Products = () => {
                 alert(error)
             }
         }
-        const urlBase = `${process.env.REACT_APP_API_URL_BASE}/products/category/${category}`;
-        const urlGet = `${urlBase}${subcategory ? '/subcategory/'.concat(subcategory) : ''}`
+
+        let urlGet = ""
+        if (query) {
+            urlGet = `${process.env.REACT_APP_API_URL_BASE}/products/search/${query}`
+            setTitle(`Resultados para ${query}`)
+        } else {
+            const urlBase = `${process.env.REACT_APP_API_URL_BASE}/products/category/${category}`;
+            urlGet = `${urlBase}${subcategory ? '/subcategory/'.concat(subcategory) : ''}`
+            setTitle(category.charAt(0).toUpperCase() + category.slice(1))
+        }
         getProducts(urlGet)
-    }, [category, subcategory])
+
+    }, [category, subcategory, query])
 
     useEffect(() => {
-        const genders = [...new Set(allProducts.map(item => item.gender))];
+        const genders = [...new Set(allProducts?.map(item => item.gender))];
         setShowGenderFilter(genders.length > 1)
-        const brands = [...new Set(allProducts.map(item => item.brand))];
+        const brands = [...new Set(allProducts?.map(item => item.brand))];
         setBrands(brands)
-        let articlesResult = allProducts.map(item => item.articles)
+        let articlesResult = allProducts?.map(item => item.articles)
             .reduce((prev, curr) => prev.concat(curr), [])
-        const sizes = [...new Set(articlesResult.map(item => item.size))];
+        const sizes = [...new Set(articlesResult?.map(item => item.size))];
         setSizes(sizes)
         const ratings = [...new Set(
-            allProducts.filter(item => item.rating_average > 0)
+            allProducts?.filter(item => item.rating_average > 0)
                 .map(item => Math.floor(item.rating_average))
         )];
         setRatings(ratings)
@@ -164,62 +174,72 @@ const Products = () => {
             {
                 loading
                     ? (<Skeleton active />)
-                    : (<>
-                        <Row>
-                            <Col span={12}><Title level={2}>{category.charAt(0).toUpperCase() + category.slice(1)}</Title></Col>
-                            <Col span={12} style={{ textAlign: 'right' }}>
-                                <BadgeProductsCount count={products.length} />
-                            </Col>
-                        </Row>
-                        <Row style={{ marginBottom: 16 }}>
-                            <Col span={24}>
-                                <Space>
-                                    {
-                                        showGenderFilter &&
-                                        <FilterGender dispatchFilterGenderApplied={dispatchFilterGenderApplied} />
-                                    }
-                                    <FilterSize sizes={sizes} dispatchFilterSizeApplied={dispatchFilterSizeApplied} />
-                                </Space>
-                            </Col>
-                        </Row>
-                        <Row style={{ marginBottom: 16 }}>
-                            <Col span={24}>
-                                <FiltersApplied filters={filtersApplied} dispatchRemoveFilterApplied={dispatchRemoveFilterApplied} />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col span={6}>
-                                <Space direction='vertical' size='large'>
-                                    <FilterBrand
-                                        brands={brands.map((brand, i) => ({
-                                            id: i, label: brand, value: brand
-                                        }))}
-                                        dispatchFilterBrandApplied={dispatchFilterBrandApplied}
-                                    />
-                                    {
-                                        ratings.length > 0 &&
-                                        <FilterRating
-                                            ratings={
-                                                ratings.map((rate, i) => ({
-                                                    id: i,
-                                                    label: <Rate defaultValue={rate} disabled />,
-                                                    value: rate
+                    : (
+                        products?.length > 0
+                            ? <>
+                                <Row>
+                                    <Col span={12}><Title level={2}>{title}</Title></Col>
+                                    <Col span={12} style={{ textAlign: 'right' }}>
+                                        <BadgeProductsCount count={products.length} />
+                                    </Col>
+                                </Row>
+                                <Row style={{ marginBottom: 16 }}>
+                                    <Col span={24}>
+                                        <Space>
+                                            {
+                                                showGenderFilter &&
+                                                <FilterGender dispatchFilterGenderApplied={dispatchFilterGenderApplied} />
+                                            }
+                                            <FilterSize sizes={sizes} dispatchFilterSizeApplied={dispatchFilterSizeApplied} />
+                                        </Space>
+                                    </Col>
+                                </Row>
+                                <Row style={{ marginBottom: 16 }}>
+                                    <Col span={24}>
+                                        <FiltersApplied filters={filtersApplied} dispatchRemoveFilterApplied={dispatchRemoveFilterApplied} />
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col span={6}>
+                                        <Space direction='vertical' size='large'>
+                                            <FilterBrand
+                                                brands={brands.map((brand, i) => ({
+                                                    id: i, label: brand, value: brand
                                                 }))}
-                                            dispatchFilterRatingApplied={dispatchFilterRatingApplied}
-                                        />
-                                    }
-                                    <FilterPrice dispatchFilterPriceApplied={dispatchFilterPriceApplied} />
-                                </Space>
-                            </Col>
-                            <Col span={18}>
-                                {
-                                    products.map((traje, i) => (
-                                        <ProductCard key={i} product={traje} />
-                                    ))
+                                                dispatchFilterBrandApplied={dispatchFilterBrandApplied}
+                                            />
+                                            <FilterRating
+                                                ratings={
+                                                    ratings.map((rate, i) => ({
+                                                        id: i,
+                                                        label: <Rate defaultValue={rate} disabled />,
+                                                        value: rate
+                                                    }))}
+                                                dispatchFilterRatingApplied={dispatchFilterRatingApplied}
+                                            />
+                                            <FilterPrice dispatchFilterPriceApplied={dispatchFilterPriceApplied} />
+                                        </Space>
+                                    </Col>
+                                    <Col span={18}>
+                                        {
+                                            products.map((traje, i) => (
+                                                <ProductCard key={i} product={traje} />
+                                            ))
+                                        }
+                                    </Col>
+                                </Row>
+                            </>
+                            : <Empty
+                                imageStyle={{
+                                    marginTop: 160,
+                                }}
+                                description={
+                                    <span>
+                                        No encontramos resultados para su búsqueda
+                                    </span>
                                 }
-                            </Col>
-                        </Row>
-                    </>)
+                            />
+                    )
             }
         </>
     );
