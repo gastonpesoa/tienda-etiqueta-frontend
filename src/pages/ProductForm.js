@@ -4,10 +4,11 @@ import { Col, Row, Button, Typography, Form, Input, Select, InputNumber, message
 import { UploadOutlined } from '@ant-design/icons';
 import myData from '../data.json';
 import TextArea from 'antd/lib/input/TextArea';
+import { useEffect, useState } from 'react';
 const { Option } = Select;
 const { Title } = Typography;
 
-const fileList = [
+/*const fileList = [
     {
       uid: '0',
       name: 'xxx.png',
@@ -26,12 +27,39 @@ const fileList = [
       name: 'zzz.png',
       status: 'error',
     },
-];
+];*/
 
 const ProductForm = () => {
 
     const navigate = useNavigate()
-    const { provinces } = myData;
+    const [categoriesList, setCategoriesList] = useState([]);
+
+    useEffect(() => {
+        fetch(`${process.env.REACT_APP_API_URL_BASE}/categories/`)
+            .then((res) => res.ok ? res.json() : Promise.reject(res))
+            .then(({ data }) => {
+                if (data.length > 0) {
+                    data.forEach((category) => {
+                        setCategoriesList((savedCategories) => {
+                            return [
+                                ...savedCategories,
+                                {
+                                    id: category._id,
+                                    value: category.name,
+                                    label: category.name
+                                }
+                            ];
+                        })
+                    });
+                } else {
+                    message.error("No hay categorías disponibles");
+                }
+            })
+            .catch((err) => {
+                console.error(err);
+                message.error("Hubo un error al traer el listado de categorías, intente nuevamente más tarde");
+            });
+    }, []);
 
     const onFinish = (values) => {
         createProduct(values)
@@ -259,7 +287,7 @@ const ProductForm = () => {
                         </Link>
                     </Form.Item>
                 </Col>
-                <Col span={12} style={{ padding: '30px 0px 0px 30px', textAlign: 'center' }}>
+                {/*<Col span={12} style={{ padding: '30px 0px 0px 30px', textAlign: 'center' }}>
                     <Upload
                         action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                         listType="picture"
@@ -267,7 +295,7 @@ const ProductForm = () => {
                     >
                         <Button icon={<UploadOutlined />} size='large'>Subir imagen</Button>
                     </Upload>
-                </Col>
+                </Col>*/}
             </Row>
         </Form>
     );
