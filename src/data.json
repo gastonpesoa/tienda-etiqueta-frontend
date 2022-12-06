@@ -145,7 +145,7 @@
         {
             "key": "products",
             "title": "Gestión de artículos",
-            "link": "/products-management",
+            "link": "/product-create",
             "items": []
         },
         {
@@ -244,7 +244,7 @@
         {
             "key": "products",
             "title": "Gestión de artículos",
-            "link": "/products-management",
+            "link": "/product-create",
             "items": []
         },
         {
@@ -282,55 +282,6 @@
         {
             "src": "https://img.freepik.com/foto-gratis/captura-pantalla-hermosa-joven-caucasica-posando-al-aire-libre-vestido-formal_181624-58139.jpg?w=996&t=st=1666222587~exp=1666223187~hmac=dca9e637284b092af25e00cef53cf92d1bfe6fe0106a35b47d63253750556ae2",
             "alt": "vestido"
-        }
-    ],
-    "best_sellers": [
-        {
-            "id": "4",
-            "image": "https://sastreriadetali.com.ar/wp-content/uploads/2022/04/26.jpg",
-            "title": "Camisa Verde",
-            "description": "Camisas de algodón / polyester / spandex",
-            "brand": "Equus",
-            "price": 12480.00
-        },
-        {
-            "id": "5",
-            "image": "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/corbatas.jpg",
-            "title": "Corbatas",
-            "description": "Corbatas para toda ocación",
-            "brand": "Farenheite",
-            "price": 1280.00
-        },
-        {
-            "id": "6",
-            "image": "https://sastreriadetali.com.ar/wp-content/uploads/2022/01/habano.jpg",
-            "title": "Zapatos Havana",
-            "description": "Zapatos combinados, cuero y jean, suela natural",
-            "brand": "Briganti",
-            "price": 26880.00
-        }
-    ],
-    "best_suits": [
-        {
-            "id": "1",
-            "image": "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_19.jpg",
-            "title": "Traje Gris Acero",
-            "description": "Traje color gris plomo",
-            "price": 70000.00
-        },
-        {
-            "id": "2",
-            "image": "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_22.jpg",
-            "title": "Traje Azulino Pic and Pic",
-            "description": "Traje color Azulino Pic and Pic",
-            "price": 66300.00
-        },
-        {
-            "id": "3",
-            "image": "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_40.jpg",
-            "title": "Traje Gris Cuadrillé",
-            "description": "Traje color gris cuadrillé",
-            "price": 57600.00
         }
     ],
     "sizes_list": [

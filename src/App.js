@@ -25,7 +25,7 @@ const { Header, Footer, Content } = Layout;
 
 function App() {
 
-  const { menu_employee, menu_client, menu_admin, carousel_source, best_sellers, best_suits } = myData;
+  const { menu_employee, menu_client, menu_admin, carousel_source } = myData;
 
   const [token, setToken] = useState('');
   const [user, setUser] = useState({});
@@ -144,8 +144,6 @@ function App() {
                 <Route path="/" element={
                   <Home
                     carouselSource={carousel_source}
-                    bestSellers={best_sellers}
-                    bestSuits={best_suits}
                     menu={menu}
                   />
                 }
