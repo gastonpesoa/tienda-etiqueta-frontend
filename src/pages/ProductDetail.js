@@ -219,7 +219,7 @@ const ProductDetail = () => {
                                 </Col>
                                 <Col span={12}>
                                     <Row>
-                                        <Col span={24}><Text type="secondary">Talle:</Text></Col>
+                                        <Col span={24}><Text type="secondary">Tipo:</Text></Col>
                                     </Row>
                                     <Row>
                                         <Col span={24}>

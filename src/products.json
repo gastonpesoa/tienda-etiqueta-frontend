@@ -1,0 +1,659 @@
+[{
+  "_id": {
+    "$oid": "638933bfbb23507f4d4c963d"
+  },
+  "images": [
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_19.jpg",
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_18.jpg",
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_20.jpg"
+  ],
+  "title": "Traje Gris Acero",
+  "category": {
+    "name": "Trajes",
+    "url": "trajes"
+  },
+  "subcategory": {
+    "name": "Trajes Ejecutivos",
+    "url": "trajes-ejecutivos"
+  },
+  "description": "Traje color gris plomo",
+  "detail": "Traje ejecutivo, corte slim fit de tejido fluído, entallado en pecho y cintura, solapas con muesca, bolsillo en el pecho, dos bolsillos de solapa en la parte frontal, manga larga, puños abotonados, cierre de botones, forro interior tafetán acetato, bolsillos interiores",
+  "price": 70000,
+  "brand": "Equus",
+  "color": "Gris plomo",
+  "gender": "Hombre",
+  "cut": "Slim Fit",
+  "articles": [
+    {
+      "sku": "0TEEQU0GA00S001",
+      "stock": 0,
+      "size": "S"
+    },
+    {
+      "sku": "0TEEQU0GA00L001",
+      "stock": 1,
+      "size": "L"
+    },
+    {
+      "sku": "0TEEQU0GA0XL001",
+      "stock": 0,
+      "size": "XL"
+    }
+  ],
+  "__v": 35,
+  "reviews": [
+    {
+      "rating": 2,
+      "review": "maso nomas",
+      "user_id": "636db4790847e03562293860",
+      "date": {
+        "$date": {
+          "$numberLong": "1670284476900"
+        }
+      },
+      "_id": {
+        "$oid": "638e84bcf26bf815d44bc68f"
+      }
+    },
+    {
+      "rating": 1,
+      "review": "muy malo",
+      "user_id": "636d98b60847e0356229385b",
+      "date": {
+        "$date": {
+          "$numberLong": "1670284569560"
+        }
+      },
+      "_id": {
+        "$oid": "638e8519f26bf815d44bc6c4"
+      }
+    }
+  ],
+  "rating_average": 1.5
+},{
+  "_id": {
+    "$oid": "638933bfbb23507f4d4c963e"
+  },
+  "images": [
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_22.jpg",
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_23.jpg",
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_21.jpg"
+  ],
+  "title": "Traje Azulino Pic and Pic",
+  "category": {
+    "name": "Trajes",
+    "url": "trajes"
+  },
+  "subcategory": {
+    "name": "Trajes Ejecutivos",
+    "url": "trajes-ejecutivos"
+  },
+  "description": "Traje color Azulino Pic and Pic",
+  "detail": "Traje ejecutivo azul, corte slim fit de tejido fluído, entallado en pecho y cintura, solapas con muesca, bolsillo en el pecho, dos bolsillos de solapa en la parte frontal, manga larga, puños abotonados, cierre de botones, forro interior tafetán acetato, bolsillos interiores",
+  "price": 66300,
+  "brand": "Farenheite",
+  "color": "Azulino",
+  "gender": "Mujer",
+  "cut": "Slim Fit",
+  "articles": [
+    {
+      "sku": "0TEEQUAPP00S001",
+      "stock": 13,
+      "size": "S"
+    },
+    {
+      "sku": "0TEEQUAPP00L001",
+      "stock": 16,
+      "size": "L"
+    },
+    {
+      "sku": "0TEEQUAPP0XL001",
+      "stock": 7,
+      "size": "XL"
+    }
+  ],
+  "__v": 8,
+  "rating_average": 3.5,
+  "reviews": [
+    {
+      "rating": 5,
+      "review": "aaaa",
+      "user_id": "636db4790847e03562293860",
+      "date": {
+        "$date": {
+          "$numberLong": "1670176154250"
+        }
+      },
+      "_id": {
+        "$oid": "638cdd9ac87e20e844ac9c78"
+      }
+    },
+    {
+      "rating": 2,
+      "review": "maso",
+      "user_id": "636d7791285398d26ed726cd",
+      "date": {
+        "$date": {
+          "$numberLong": "1670178656169"
+        }
+      },
+      "_id": {
+        "$oid": "638ce760c87e20e844ac9d1c"
+      }
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "638933bfbb23507f4d4c963f"
+  },
+  "images": [
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_40.jpg",
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_41.jpg",
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_39.jpg"
+  ],
+  "title": "Traje Gris Cuadrillé",
+  "category": {
+    "name": "Trajes",
+    "url": "trajes"
+  },
+  "subcategory": {
+    "name": "Trajes Ejecutivos",
+    "url": "trajes-ejecutivos"
+  },
+  "description": "Traje color gris cuadrillé",
+  "detail": "Traje ejecutivo, corte slim fit de tejido fluído, entallado en pecho y cintura, solapas con muesca, bolsillo en el pecho, dos bolsillos de solapa en la parte frontal, manga larga, puños abotonados, cierre de botones, forro interior tafetán acetato, bolsillos interiores",
+  "price": 57600,
+  "brand": "Macowens",
+  "color": "Gris cuadrillé",
+  "gender": "Hombre",
+  "cut": "Slim Fit",
+  "articles": [
+    {
+      "sku": "0TEEQU0GC00S001",
+      "stock": 9,
+      "size": "S"
+    },
+    {
+      "sku": "0TEEQU0GC00L001",
+      "stock": 6,
+      "size": "L"
+    },
+    {
+      "sku": "0TEEQU0GC0XL001",
+      "stock": 3,
+      "size": "XL"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "638eb05c791333c2f9fa4ec0"
+  },
+  "images": [
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/04/26.jpg",
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/04/14.jpg",
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/04/41.jpg"
+  ],
+  "title": "Camisa Verde",
+  "category": {
+    "name": "Camisas",
+    "url": "camisas"
+  },
+  "subcategory": {
+    "name": "Camisas Lisas",
+    "url": "camisas-lisas"
+  },
+  "description": "Camisas de algodón / polyester / spandex",
+  "detail": "Camisas de algodón, corte slim fit de tejido fluído, entallado en pecho y cintura, solapas con muesca, bolsillo en el pecho, dos bolsillos de solapa en la parte frontal, manga larga, puños abotonados, cierre de botones, forro interior tafetán acetato, bolsillos interiores",
+  "price": 12000,
+  "brand": "Macowens",
+  "color": "Verde",
+  "gender": "M",
+  "cut": "Slim Fit",
+  "articles": [
+    {
+      "sku": "0CLMAC00V00S001",
+      "stock": 9,
+      "size": "S"
+    },
+    {
+      "sku": "0CLMAC00V00L001",
+      "stock": 6,
+      "size": "L"
+    },
+    {
+      "sku": "0CLMAC00V0XL001",
+      "stock": 3,
+      "size": "XL"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "638eb05c791333c2f9fa4ec1"
+  },
+  "images": [
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/04/28.jpg",
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/04/19.jpg",
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/04/39.jpg"
+  ],
+  "title": "Camisa Blanca Azul a Raya",
+  "category": {
+    "name": "Camisas",
+    "url": "camisas"
+  },
+  "subcategory": {
+    "name": "Camisas Rayadas",
+    "url": "camisas-rayadas"
+  },
+  "description": "Camisas de algodón / polyester / spandex",
+  "detail": "Camisas de algodón, corte slim fit de tejido fluído, entallado en pecho y cintura, solapas con muesca, bolsillo en el pecho, dos bolsillos de solapa en la parte frontal, manga larga, puños abotonados, cierre de botones, forro interior tafetán acetato, bolsillos interiores",
+  "price": 10000,
+  "brand": "Farenheite",
+  "color": "Verde",
+  "gender": "M",
+  "cut": "Slim Fit",
+  "articles": [
+    {
+      "sku": "0CRFAR0BA00S001",
+      "stock": 19,
+      "size": "S"
+    },
+    {
+      "sku": "0CRFAR0BA00L001",
+      "stock": 6,
+      "size": "L"
+    },
+    {
+      "sku": "0CRFAR0BA0XL001",
+      "stock": 3,
+      "size": "XL"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "638eb05c791333c2f9fa4ec2"
+  },
+  "images": [
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/12/camisa9.jpg"
+  ],
+  "title": "Camisa Gris Topo con Flores",
+  "category": {
+    "name": "Camisas",
+    "url": "camisas"
+  },
+  "subcategory": {
+    "name": "Camisas Estampadas",
+    "url": "camisas-estampadas"
+  },
+  "description": "Camisas de algodón / polyester / spandex",
+  "detail": "Camisas de algodón, corte slim fit de tejido fluído, entallado en pecho y cintura, solapas con muesca, bolsillo en el pecho, dos bolsillos de solapa en la parte frontal, manga larga, puños abotonados, cierre de botones, forro interior tafetán acetato, bolsillos interiores",
+  "price": 9500,
+  "brand": "Equus",
+  "color": "Gris Topo",
+  "gender": "M",
+  "cut": "Slim Fit",
+  "articles": [
+    {
+      "sku": "0CEEQU0GT00S001",
+      "stock": 4,
+      "size": "S"
+    },
+    {
+      "sku": "0CEEQU0GT00L001",
+      "stock": 26,
+      "size": "L"
+    },
+    {
+      "sku": "0CEEQU0GT0XL001",
+      "stock": 13,
+      "size": "XL"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "638eb05c791333c2f9fa4ec3"
+  },
+  "images": [
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/04/25.jpg",
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/04/12.jpg",
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/04/42.jpg"
+  ],
+  "title": "Camisa Negra",
+  "category": {
+    "name": "Camisas",
+    "url": "camisas"
+  },
+  "subcategory": {
+    "name": "Camisas Lisas",
+    "url": "camisas-lisas"
+  },
+  "description": "Camisas de algodón / polyester / spandex",
+  "detail": "Camisas de algodón, corte slim fit de tejido fluído, entallado en pecho y cintura, solapas con muesca, bolsillo en el pecho, dos bolsillos de solapa en la parte frontal, manga larga, puños abotonados, cierre de botones, forro interior tafetán acetato, bolsillos interiores",
+  "price": 13000,
+  "brand": "Farenheite",
+  "color": "Negra",
+  "gender": "M",
+  "cut": "Slim Fit",
+  "articles": [
+    {
+      "sku": "0CLFAR00N00S001",
+      "stock": 9,
+      "size": "S"
+    },
+    {
+      "sku": "0CLFAR00N00L001",
+      "stock": 6,
+      "size": "L"
+    },
+    {
+      "sku": "0CLFAR00N0XL001",
+      "stock": 3,
+      "size": "XL"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "638eb05c791333c2f9fa4ec4"
+  },
+  "images": [
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/01/rayada-azul-2-1.jpg",
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/01/rayada-azul-1-1-1.jpg"
+  ],
+  "title": "Camisa Rayas Azules",
+  "category": {
+    "name": "Camisas",
+    "url": "camisas"
+  },
+  "subcategory": {
+    "name": "Camisas Rayadas",
+    "url": "camisas-rayadas"
+  },
+  "description": "Camisas de algodón / polyester / spandex",
+  "detail": "Camisas de algodón, corte slim fit de tejido fluído, entallado en pecho y cintura, solapas con muesca, bolsillo en el pecho, dos bolsillos de solapa en la parte frontal, manga larga, puños abotonados, cierre de botones, forro interior tafetán acetato, bolsillos interiores",
+  "price": 15000,
+  "brand": "Equus",
+  "color": "Azul",
+  "gender": "M",
+  "cut": "Slim Fit",
+  "articles": [
+    {
+      "sku": "0CREQU00A00S001",
+      "stock": 19,
+      "size": "S"
+    },
+    {
+      "sku": "0CREQU00A00L001",
+      "stock": 6,
+      "size": "L"
+    },
+    {
+      "sku": "0CREQU00A0XL001",
+      "stock": 3,
+      "size": "XL"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "638eb135791333c2f9fa4ec7"
+  },
+  "images": [
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/04/29.jpg",
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/04/17.jpg",
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/04/38.jpg"
+  ],
+  "title": "Camisa Azul Estampada",
+  "category": {
+    "name": "Camisas",
+    "url": "camisas"
+  },
+  "subcategory": {
+    "name": "Camisas Estampadas",
+    "url": "camisas-estampadas"
+  },
+  "description": "Camisas de algodón / polyester / spandex",
+  "detail": "Camisas de algodón, corte slim fit de tejido fluído, entallado en pecho y cintura, solapas con muesca, bolsillo en el pecho, dos bolsillos de solapa en la parte frontal, manga larga, puños abotonados, cierre de botones, forro interior tafetán acetato, bolsillos interiores",
+  "price": 21000,
+  "brand": "Macowens",
+  "color": "Gris Topo",
+  "gender": "M",
+  "cut": "Slim Fit",
+  "articles": [
+    {
+      "sku": "0CEMAC0AE00S001",
+      "stock": 4,
+      "size": "S"
+    },
+    {
+      "sku": "0CEMAC0AE00L001",
+      "stock": 26,
+      "size": "L"
+    },
+    {
+      "sku": "0CEMAC0AE0XL001",
+      "stock": 13,
+      "size": "XL"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "638eb454791333c2f9fa4ec9"
+  },
+  "images": [
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/01/zapatos-levington.jpg"
+  ],
+  "title": "Zapatos Ellington",
+  "category": {
+    "name": "Zapatos",
+    "url": "zapatos"
+  },
+  "description": "Zapatos combinados, cuero y jean, suela natural",
+  "detail": "Zapatos combinados, cuero y jean, suela natural",
+  "price": 32000,
+  "brand": "Ellington",
+  "color": "Azul",
+  "gender": "M",
+  "articles": [
+    {
+      "sku": "00ZELL00A038001",
+      "stock": 4,
+      "size": "38"
+    },
+    {
+      "sku": "00ZELL00A039001",
+      "stock": 26,
+      "size": "39"
+    },
+    {
+      "sku": "00ZELL00A040001",
+      "stock": 13,
+      "size": "40"
+    },
+    {
+      "sku": "00ZELL00A041001",
+      "stock": 26,
+      "size": "41"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "638eb454791333c2f9fa4eca"
+  },
+  "images": [
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/01/habano.jpg"
+  ],
+  "title": "Zapatos Havana",
+  "category": {
+    "name": "Zapatos",
+    "url": "zapatos"
+  },
+  "description": "Zapatos puro cuero, suela natural.",
+  "detail": "Zapatos puro cuero, suela natural.",
+  "price": 52000,
+  "brand": "Havana",
+  "color": "Marrón",
+  "gender": "M",
+  "articles": [
+    {
+      "sku": "00ZHAV00M034001",
+      "stock": 4,
+      "size": "34"
+    },
+    {
+      "sku": "00ZHAV00M038001",
+      "stock": 26,
+      "size": "38"
+    },
+    {
+      "sku": "00ZHAV00M042001",
+      "stock": 13,
+      "size": "42"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "638eb454791333c2f9fa4ecb"
+  },
+  "images": [
+    "https://sastreriadetali.com.ar/wp-content/uploads/2021/09/zapatos3.jpg",
+    "https://sastreriadetali.com.ar/wp-content/uploads/2021/09/zapatos2.jpg",
+    "https://sastreriadetali.com.ar/wp-content/uploads/2021/09/zapatos.jpg"
+  ],
+  "title": "Zapatos Anderson, cuero y jean",
+  "category": {
+    "name": "Zapatos",
+    "url": "zapatos"
+  },
+  "description": "Zapatos combinados, cuero y jean, suela natural.",
+  "detail": "Zapatos combinados, cuero y jean, suela natural.",
+  "price": 22000,
+  "brand": "Anderson",
+  "color": "Marrón",
+  "gender": "M",
+  "articles": [
+    {
+      "sku": "00ZAND00M040001",
+      "stock": 4,
+      "size": "40"
+    },
+    {
+      "sku": "00ZAND00M042001",
+      "stock": 26,
+      "size": "42"
+    },
+    {
+      "sku": "00ZAND00M043001",
+      "stock": 13,
+      "size": "43"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "638eb454791333c2f9fa4ecc"
+  },
+  "images": [
+    "https://sastreriadetali.com.ar/wp-content/uploads/2021/08/Mancini3-1.jpg",
+    "https://sastreriadetali.com.ar/wp-content/uploads/2021/08/Mancini-1.jpg",
+    "https://sastreriadetali.com.ar/wp-content/uploads/2021/08/mancini-2-1.jpg"
+  ],
+  "title": "Zapatos Mancini, cuero vacuno",
+  "category": {
+    "name": "Zapatos",
+    "url": "zapatos"
+  },
+  "description": "Zapatos puro cuero vacuno, suela natural.",
+  "detail": "Zapatos puro cuero vacuno, suela natural.",
+  "price": 42000,
+  "brand": "Mancini",
+  "color": "Marrón",
+  "gender": "M",
+  "articles": [
+    {
+      "sku": "00ZMAN00M037001",
+      "stock": 4,
+      "size": "37"
+    },
+    {
+      "sku": "00ZMAN00M038001",
+      "stock": 26,
+      "size": "38"
+    },
+    {
+      "sku": "00ZMAN00M042001",
+      "stock": 13,
+      "size": "42"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "638eb5d6791333c2f9fa4ece"
+  },
+  "images": [
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_57.jpg",
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_59.jpg",
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/03/trajesfotoproducto_62.jpg"
+  ],
+  "title": "Corbatas",
+  "category": {
+    "name": "Corbatas",
+    "url": "corbatas"
+  },
+  "description": "Corbatas para toda ocación",
+  "detail": "Corbatas para toda ocación",
+  "price": 2000,
+  "brand": "Farenheite",
+  "color": "Varios",
+  "gender": "M",
+  "articles": [
+    {
+      "sku": "00CFAR00V0RA001",
+      "stock": 4,
+      "size": "Rosa"
+    },
+    {
+      "sku": "00CFAR00V0RO001",
+      "stock": 26,
+      "size": "Roja"
+    },
+    {
+      "sku": "00CFAR00V00N001",
+      "stock": 13,
+      "size": "Negra"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "638eb792791333c2f9fa4ed0"
+  },
+  "images": [
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/01/cinto-levington.jpg",
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/01/cinto-habano.jpg",
+    "https://sastreriadetali.com.ar/wp-content/uploads/2022/01/cinto-anderson-blue.jpg"
+  ],
+  "title": "Cinturón",
+  "category": {
+    "name": "Accesorios",
+    "url": "accesorios"
+  },
+  "description": "Cinturón para toda ocación",
+  "detail": "Cinturón para toda ocación",
+  "price": 2000,
+  "brand": "Narrow",
+  "color": "Varios",
+  "gender": "M",
+  "articles": [
+    {
+      "sku": "00ANAR00V00N001",
+      "stock": 4,
+      "size": "Negro"
+    },
+    {
+      "sku": "00ANAR00V00M001",
+      "stock": 26,
+      "size": "Marrón"
+    },
+    {
+      "sku": "00CFAR00V00A001",
+      "stock": 13,
+      "size": "Azul"
+    }
+  ]
+}]
