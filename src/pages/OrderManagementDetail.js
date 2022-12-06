@@ -47,7 +47,7 @@ const OrderManagementDetail = () => {
                 navigate('/order-management');
             }
         }
-        getOrderById(`${process.env.REACT_APP_API_URL_BASE}/orders/${orderId}`);
+        getOrderById(`${process.env.REACT_APP_API_URL_BASE}/orders/id/${orderId}`);
     }, [orderId]);
 
     useEffect(() => {

@@ -1,16 +1,16 @@
 import { Link } from 'react-router-dom';
-import { Button, Card, Row, Col, Image } from 'antd';
+import { Card, Image } from 'antd';
 import Price from "./Price";
 const { Meta } = Card;
 
 const ProductSmallCard = ({ product }) => {
 
     return (
-        <Link to={`../product-detail/${product.id}`}>
+        <Link to={`../product-detail/${product._id}`}>
             <Card hoverable style={{ width: 330 }}>
                 <Image
                     alt={product.title}
-                    src={product.image}
+                    src={product.images[0]}
                     preview={false}
                     style={{ marginBottom: '20px' }} />
                 <Meta

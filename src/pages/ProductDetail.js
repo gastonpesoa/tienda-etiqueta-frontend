@@ -91,7 +91,7 @@ const ProductDetail = () => {
                 navigate("/")
             }
         }
-        getProductById(`${process.env.REACT_APP_API_URL_BASE}/products/${productId}`)
+        getProductById(`${process.env.REACT_APP_API_URL_BASE}/products/id/${productId}`)
     }, [productId])
 
     const changeUnitsState = (value) => {

@@ -1,4 +1,4 @@
-import { Carousel, Image, Row, Col, Layout, Typography } from 'antd';
+import { Carousel, Image, Row, Col, Layout, Typography, Skeleton } from 'antd';
 import LinksGroup from "../components/LinksGroup";
 import InfoCard from "../components/InfoCard";
 import ProductSmallCard from "../components/ProductSmallCard";
@@ -7,17 +7,46 @@ import { useEffect, useState } from 'react';
 const { Content } = Layout;
 const { Text } = Typography;
 
-const Home = ({ carouselSource, bestSellers, bestSuits, menu }) => {
+const Home = ({ carouselSource, menu }) => {
 
+    const [loadingBestSellers, setLoadingBestSellers] = useState(true);
+    const [loadingBestSuits, setLoadingBestSuits] = useState(true);
     const [currentPromotions, setCurrentPromotions] = useState([]);
+    const [bestSellers, setBestSellers] = useState([]);
+    const [bestSuits, setBestSuits] = useState([]);
 
     useEffect(() => {
+        const getBestSellers = async (url) => {
+            setLoadingBestSellers(true);
+            try {
+                const res = await fetch(url)
+                const data = await res.json();
+                console.log(data.data)
+                setBestSellers(data.data);
+                setLoadingBestSellers(false);
+            } catch (error) {
+                alert(error)
+            }
+        }
+        const getBestSuits = async (url) => {
+            setLoadingBestSuits(true);
+            try {
+                const res = await fetch(url)
+                const data = await res.json();
+                console.log(data.data)
+                setBestSuits(data.data);
+                setLoadingBestSuits(false);
+            } catch (error) {
+                alert(error)
+            }
+        }
+
         fetch(`${process.env.REACT_APP_API_URL_BASE}/banks/valid/`)
             .then((res) => res.ok ? res.json() : Promise.reject(res))
-            .then(({data}) => {
+            .then(({ data }) => {
                 if (data.length > 0) {
                     data.forEach((bk) => {
-                        if (bk.discount !== null && bk.discount > 0 && bk.discount_status) 
+                        if (bk.discount !== null && bk.discount > 0 && bk.discount_status)
                             currentPromotions.push(bk);
                     });
                     setCurrentPromotions([...currentPromotions]);
@@ -26,6 +55,9 @@ const Home = ({ carouselSource, bestSellers, bestSuits, menu }) => {
             .catch((err) => {
                 console.error(err);
             });
+
+        getBestSellers(`${process.env.REACT_APP_API_URL_BASE}/products/best-sellers`)
+        getBestSuits(`${process.env.REACT_APP_API_URL_BASE}/products/best/trajes`)
     }, []);
 
     return (
@@ -33,7 +65,7 @@ const Home = ({ carouselSource, bestSellers, bestSuits, menu }) => {
             <div className='carousel-container-style'>
                 <Carousel autoplay>
                     {
-                        carouselSource.map((img, i)=> (
+                        carouselSource.map((img, i) => (
                             <Image key={i} src={img.src} alt={img.alt} className='carousel-img' preview={false} />
                         ))
                     }
@@ -96,38 +128,51 @@ const Home = ({ carouselSource, bestSellers, bestSuits, menu }) => {
                     </Col>
                 </Row>
                 <Row gutter={16} className='space-margin-bottom'>
-                    <Col sm={24} lg={6} >
-                        <LinksGroup
-                            title="Productos más vendidos"
-                            items={bestSellers.map((item, i) => {
-                                return { title: item.title, link: `/product-detail/${item.id}` }
-                            })}
-                        />
-                    </Col>
                     {
-                        bestSellers.map(item => (
-                            <Col key={item.id} sm={24} lg={6} >
-                                <ProductSmallCard key={item.id} product={item} />
-                            </Col>
-                        ))
+                        loadingBestSellers ? <Skeleton active /> :
+                            <>
+                                <Col sm={24} lg={6} >
+                                    <LinksGroup
+                                        title="Productos más vendidos"
+                                        items={
+                                            bestSellers.map((item, i) => {
+                                                return { title: item.item.title, link: `/product-detail/${item._id}` }
+                                            })
+                                        }
+                                    />
+                                </Col>
+                                {
+                                    bestSellers.map(item => (
+                                        <Col key={item._id} sm={24} lg={6} >
+                                            <ProductSmallCard product={item.item} />
+                                        </Col>
+                                    ))
+                                }
+                            </>
                     }
                 </Row>
                 <Row gutter={16} className='space-margin-bottom'>
-                    <Col sm={24} lg={6} >
-                        <LinksGroup
-                            title="Mejores en Trajes"
-                            items={bestSuits.map((item, i) => {
-                                return { title: item.title, link: `/product-detail/${item.id}` }
-                            })}
-                        />
-                    </Col>
                     {
-                        bestSuits.map(item => (
-                            <Col key={item.id} sm={24} lg={6} >
-                                <ProductSmallCard key={item.id} product={item} />
-                            </Col>
-                        ))
+                        loadingBestSuits ? <Skeleton active /> :
+                            <>
+                                <Col sm={24} lg={6} >
+                                    <LinksGroup
+                                        title="Mejores en Trajes"
+                                        items={bestSuits.map((item, i) => {
+                                            return { title: item.title, link: `/product-detail/${item.id}` }
+                                        })}
+                                    />
+                                </Col>
+                                {
+                                    bestSuits.map(item => (
+                                        <Col key={item._id} sm={24} lg={6} >
+                                            <ProductSmallCard key={item._id} product={item} />
+                                        </Col>
+                                    ))
+                                }
+                            </>
                     }
+
                 </Row>
             </Content>
         </>
