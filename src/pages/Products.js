@@ -20,6 +20,7 @@ const Products = () => {
     const [loading, setLoading] = useState(false);
     const [showGenderFilter, setShowGenderFilter] = useState(false);
     const [sizes, setSizes] = useState([]);
+    const [brands, setBrands] = useState([]);
     const [ratings, setRatings] = useState([]);
     const [filtersApplied, setFiltersApplied] = useState([]);
 
@@ -44,103 +45,118 @@ const Products = () => {
     useEffect(() => {
         const genders = [...new Set(allProducts.map(item => item.gender))];
         setShowGenderFilter(genders.length > 1)
-
+        const brands = [...new Set(allProducts.map(item => item.brand))];
+        setBrands(brands)
         let articlesResult = allProducts.map(item => item.articles)
             .reduce((prev, curr) => prev.concat(curr), [])
         const sizes = [...new Set(articlesResult.map(item => item.size))];
         setSizes(sizes)
-
         const ratings = [...new Set(
             allProducts.filter(item => item.rating_average > 0)
-                .map(item => item.rating_average)
+                .map(item => Math.floor(item.rating_average))
         )];
         setRatings(ratings)
     }, [allProducts])
 
-
     useEffect(() => {
-
-        let filterAcumulator = [...allProducts]
-
+        let productsFilteredAcumulator = [...allProducts]
+        const sizeFilters = filtersApplied
+            .filter(filter => filter.type === 'size')
+            .map(filter => filter.value)
+        const brandFilters = filtersApplied
+            .filter(filter => filter.type === 'brand')
+            .map(filter => filter.value)
+        const rateFilters = filtersApplied
+            .filter(filter => filter.type === 'rate')
+            .map(filter => filter.value)
+        if (brandFilters.length > 0) {
+            const filterBrandResult = productsFilteredAcumulator.filter(product =>
+                brandFilters.includes(product.brand)
+            );
+            productsFilteredAcumulator = [...filterBrandResult]
+        }
+        if (sizeFilters.length > 0) {
+            const filterSizeResult = productsFilteredAcumulator.filter(product =>
+                product.articles.some(article => sizeFilters.includes(article.size))
+            );
+            productsFilteredAcumulator = [...filterSizeResult]
+        }
+        if (rateFilters.length > 0) {
+            const filterSizeResult = productsFilteredAcumulator.filter(product =>
+                rateFilters.includes(Math.floor(product.rating_average))
+            );
+            productsFilteredAcumulator = [...filterSizeResult]
+        }
         filtersApplied.map(filter => {
-
             if (filter.type === "gender") {
-
-                let filterResult = filterAcumulator.filter(product => product.gender === filter.value)
-                filterAcumulator = [...filterResult]
-                console.log("products by gender", filterResult)
-                console.log("filterAcumulator after gender", filterAcumulator)
-
-            } else if (filter.type === "size") {
-                const filterResult = filterAcumulator.filter((el) => {
-                    return el.articles.some(article => article.size === filter.value)
-                });
-                filterAcumulator = [...filterResult]
-                console.log("products by size", filterResult)
-                console.log("filterAcumulator after size", filterAcumulator)
+                const filterResult = productsFilteredAcumulator.filter(product => product.gender === filter.value)
+                productsFilteredAcumulator = [...filterResult]
+            } else if (filter.type === "price") {
+                const filterResult = productsFilteredAcumulator.filter(product =>
+                    product.price > filter.minValue && product.price < filter.maxValue
+                );
+                productsFilteredAcumulator = [...filterResult]
             }
         })
-
-        console.log("filterAcumulator final", filterAcumulator)
-        setProducts(filterAcumulator)
-
+        setProducts(productsFilteredAcumulator)
     }, [filtersApplied])
-
-    const handleFilterRatingChange = (checkedValues) => {
-        console.log('checked = ', checkedValues);
-        //products.filter(item => item.rating_average !== checkedValues);
-    };
 
     const dispatchFilterPriceApplied = (priceFilter) => {
         if (filtersApplied.some(filter => filter.type === 'price')) {
-            let filteredfiltersApplied = filtersApplied.filter(item => item.type !== 'price')
-            filteredfiltersApplied.push(priceFilter)
-            setFiltersApplied(filteredfiltersApplied)
+            let filteredFiltersApplied = filtersApplied.filter(item => item.type !== 'price')
+            filteredFiltersApplied.push(priceFilter)
+            setFiltersApplied(filteredFiltersApplied)
         } else {
             setFiltersApplied([...filtersApplied, priceFilter])
         }
-        // const filteredProducts = allProducts.filter((el) => {
-        //     return el.price > min && el.price < max
-        // });
-        // setProducts(filteredProducts)
     }
 
-    const dispatchFilterGenderApplied = (gender) => {
+    const dispatchFilterGenderApplied = (genderFilter) => {
         if (filtersApplied.some(filter => filter.type === 'gender')) {
-            let filteredfiltersApplied = filtersApplied.filter(item => item.type !== 'gender')
-            filteredfiltersApplied.push(gender)
-            setFiltersApplied(filteredfiltersApplied)
+            let filteredFiltersApplied = filtersApplied.filter(item => item.type !== 'gender')
+            filteredFiltersApplied.push(genderFilter)
+            setFiltersApplied(filteredFiltersApplied)
         } else {
-            setFiltersApplied([...filtersApplied, gender])
+            setFiltersApplied([...filtersApplied, genderFilter])
         }
         setShowGenderFilter(false)
     }
 
-    const dispatchFilterSizeApplied = (size) => {
-        if (!filtersApplied.some(filter => filter.value === size.value)) {
-            const filteredProducts = allProducts.filter((el) => {
-                return el.articles.some(article => article.size === size.value)
-            });
-            setFiltersApplied([...filtersApplied, size])
+    const dispatchFilterSizeApplied = (sizeFilter) => {
+        if (!filtersApplied.some(filter => filter.value === sizeFilter.value)) {
+            setFiltersApplied([...filtersApplied, sizeFilter])
         }
     }
 
+    const dispatchFilterBrandApplied = (brandFilter) => {
+        let filteredFiltersApplied = filtersApplied.filter(item => item.type !== "brand")
+        brandFilter.value.map(brand => {
+            filteredFiltersApplied.push({ type: brandFilter.type, value: brand })
+        })
+        setFiltersApplied(filteredFiltersApplied)
+    }
+
+    const dispatchFilterRatingApplied = (rateFilter) => {
+        console.log('checked = ', rateFilter);
+        let filteredFiltersApplied = filtersApplied.filter(item => item.type !== "rate")
+        rateFilter.value.map(rate => {
+            filteredFiltersApplied.push({ type: rateFilter.type, value: rate })
+        })
+        setFiltersApplied(filteredFiltersApplied)
+        //products.filter(item => item.rating_average !== checkedValues);
+    };
+
     const dispatchRemoveFilterApplied = (filter) => {
-        console.log("filter removed", filter)
-        let filteredfiltersApplied = filtersApplied.filter(item => item.value !== filter.value)
-        setFiltersApplied(filteredfiltersApplied);
-        if (filter.type === 'gender') {
-            const filteredProducts = allProducts.filter((el) => {
-                return el.gender === 'Mujer' || el.gender === 'Hombre'
-            });
-            //res = arr1.filter(item => !arr2.includes(item));
-            setProducts(filteredProducts)
+        let filteredFiltersApplied = []
+        if (filter.type === "gender") {
+            filteredFiltersApplied = filtersApplied.filter(item => item.type !== 'gender')
             setShowGenderFilter(true)
+        } else if (filter.type === "size") {
+            filteredFiltersApplied = filtersApplied.filter(item => item.value !== filter.value)
+        } else if (filter.type === "price") {
+            filteredFiltersApplied = filtersApplied.filter(item => item.type !== 'price')
         }
-        // const filteredProducts = allProducts.filter((el) => {
-        //     return el.gender === gender
-        // });
-        // setProducts(filteredProducts)
+        setFiltersApplied([...filteredFiltersApplied]);
     }
 
     return (
@@ -174,17 +190,22 @@ const Products = () => {
                         <Row>
                             <Col span={6}>
                                 <Space direction='vertical' size='large'>
-                                    <FilterBrand brands={products.map((item, i) => ({ id: i, label: item.brand, value: item.brand }))} />
+                                    <FilterBrand
+                                        brands={brands.map((brand, i) => ({
+                                            id: i, label: brand, value: brand
+                                        }))}
+                                        dispatchFilterBrandApplied={dispatchFilterBrandApplied}
+                                    />
                                     {
                                         ratings.length > 0 &&
                                         <FilterRating
                                             ratings={
-                                                ratings.map((item, i) => ({
+                                                ratings.map((rate, i) => ({
                                                     id: i,
-                                                    label: <Rate defaultValue={item} disabled />,
-                                                    value: item
+                                                    label: <Rate defaultValue={rate} disabled />,
+                                                    value: rate
                                                 }))}
-                                            handleFilterRatingChange={handleFilterRatingChange}
+                                            dispatchFilterRatingApplied={dispatchFilterRatingApplied}
                                         />
                                     }
                                     <FilterPrice dispatchFilterPriceApplied={dispatchFilterPriceApplied} />

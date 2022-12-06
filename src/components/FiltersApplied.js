@@ -1,4 +1,5 @@
-import { Space, Radio, Typography, Tag } from 'antd';
+import { Space, Typography, Button } from 'antd';
+import { CloseOutlined } from '@ant-design/icons';
 import '../App.less';
 const { Title, Text } = Typography;
 
@@ -14,7 +15,18 @@ const FiltersApplied = ({ filters, dispatchRemoveFilterApplied }) => {
                     <Text style={{ color: '#A9A9A9', fontWeight: '600' }}>Filtros aplicados</Text>
                     {
                         filters.map((filter, i) => (
-                            <Tag key={i} closable className='filter-tag' onClose={() => onCloseFilterTag(filter)}>{filter.value}</Tag>
+                            filter.type !== "brand" && filter.type !== "rate" &&
+                            <Button
+                                key={i}
+                                onClick={() => onCloseFilterTag(filter)}
+                                icon={<CloseOutlined />}
+                            >
+                                {
+                                    filter.type === "price"
+                                        ? `$${filter.minValue} - $${filter.maxValue}`
+                                        : filter.value
+                                }
+                            </Button>
                         ))
                     }
                 </Space>
