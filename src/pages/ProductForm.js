@@ -145,7 +145,7 @@ const ProductForm = () => {
                                 <Select
                                     placeholder="Seleccione una categoría"
                                     allowClear
-                                    options={null}
+                                    options={categoriesList}
                                 />
                             </Form.Item>
                         </Col>
