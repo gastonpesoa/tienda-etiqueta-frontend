@@ -33,6 +33,7 @@ const ProductForm = () => {
 
     const navigate = useNavigate()
     const [categoriesList, setCategoriesList] = useState([]);
+    const [subcategoriesList, setSubcategoriesList] = useState([]);
 
     useEffect(() => {
         fetch(`${process.env.REACT_APP_API_URL_BASE}/categories/`)
@@ -40,12 +41,13 @@ const ProductForm = () => {
             .then(({ data }) => {
                 if (data.length > 0) {
                     data.forEach((category) => {
+                        console.log(category);
                         setCategoriesList((savedCategories) => {
                             return [
                                 ...savedCategories,
                                 {
-                                    id: category._id,
-                                    value: category.name,
+                                    id: category.id,
+                                    value: category.id,
                                     label: category.name
                                 }
                             ];
@@ -60,6 +62,34 @@ const ProductForm = () => {
                 message.error("Hubo un error al traer el listado de categorías, intente nuevamente más tarde");
             });
     }, []);
+
+    const onChangeCategory = (idCategory) => {
+        fetch(`${process.env.REACT_APP_API_URL_BASE}/subcategories/category/${idCategory}`)
+            .then((res) => res.ok ? res.json() : Promise.reject(res))
+            .then(({ data }) => {
+                setSubcategoriesList([]);
+                if (data.length > 0) {
+                    data.forEach((subcategory) => {
+                        setSubcategoriesList((savedSubcategories) => {
+                            return [
+                                ...savedSubcategories,
+                                {
+                                    id: subcategory._id,
+                                    value: subcategory.name,
+                                    label: subcategory.name
+                                }
+                            ];
+                        })
+                    });
+                } /*else {
+                    message.error("No hay subcategorías disponibles");
+                }*/
+            })
+            .catch((err) => {
+                console.error(err);
+                message.error("Hubo un error al traer el listado de subcategorías, intente nuevamente más tarde");
+            });
+    };
 
     const onFinish = (values) => {
         createProduct(values)
@@ -107,8 +137,8 @@ const ProductForm = () => {
             <Row>
                 <Col span={24}>
                     <Form.Item>
-                        <Title level={3} >Crear artículo</Title>
-                        <Title level={5} type="secondary">Introduzca los datos del artículo</Title>
+                        <Title level={3} >Crear producto</Title>
+                        <Title level={5} type="secondary">Introduzca los datos del producto</Title>
                     </Form.Item>
                 </Col>
             </Row>
@@ -122,11 +152,11 @@ const ProductForm = () => {
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Por favor ingresá el título del artículo!',
+                                        message: 'Por favor ingresá el título del producto!',
                                     },
                                 ]}
                             >
-                                <Input placeholder="Ingrese el título del artículo" />
+                                <Input placeholder="Ingrese el título del producto" />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -138,13 +168,14 @@ const ProductForm = () => {
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Por favor seleccione la categoría del artículo!',
+                                        message: 'Por favor seleccione la categoría del producto!',
                                     },
                                 ]}
                             >
                                 <Select
                                     placeholder="Seleccione una categoría"
                                     allowClear
+                                    onChange={onChangeCategory}
                                     options={categoriesList}
                                 />
                             </Form.Item>
@@ -155,14 +186,14 @@ const ProductForm = () => {
                                 label="Sub-categoría"
                                 rules={[
                                     {
-                                        message: 'Por favor seleccione la sub-categoría del artículo!',
+                                        message: 'Por favor seleccione la sub-categoría del producto!',
                                     },
                                 ]}
                             >
                                 <Select
                                     placeholder="Seleccione una sub-categoría"
                                     allowClear
-                                    options={null}
+                                    options={subcategoriesList}
                                 />
                             </Form.Item>
                         </Col>
@@ -175,11 +206,11 @@ const ProductForm = () => {
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Por favor ingresá la marca del artículo!',
+                                        message: 'Por favor ingresá la marca del producto!',
                                     },
                                 ]}
                             >
-                                <Input placeholder="Ingrese la marca del artículo" />
+                                <Input placeholder="Ingrese la marca del producto" />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
@@ -189,11 +220,11 @@ const ProductForm = () => {
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Por favor ingresá el color del artículo!',
+                                        message: 'Por favor ingresá el color del producto!',
                                     },
                                 ]}
                             >
-                                <Input placeholder="Ingrese el color del artículo" />
+                                <Input placeholder="Ingrese el color del producto" />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -205,12 +236,12 @@ const ProductForm = () => {
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Por favor ingresá el precio del artículo!',
+                                        message: 'Por favor ingresá el precio del producto!',
                                     },
                                 ]}
                             >
                                 <InputNumber 
-                                    placeholder="Ingrese el precio del artículo" 
+                                    placeholder="Ingrese el precio del producto" 
                                     formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                     parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                                     style={{ width: '100%' }}
@@ -224,7 +255,7 @@ const ProductForm = () => {
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Por favor seleccione el género del artículo!',
+                                        message: 'Por favor seleccione el género del producto!',
                                     },
                                 ]}
                             >
@@ -251,11 +282,11 @@ const ProductForm = () => {
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Por favor ingresá la descripción del artículo!',
+                                        message: 'Por favor ingresá la descripción del producto!',
                                     },
                                 ]}
                             >
-                                <TextArea rows={3} placeholder="Ingrese la descripción del artículo" />
+                                <TextArea rows={3} placeholder="Ingrese la descripción del producto" />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
@@ -265,17 +296,17 @@ const ProductForm = () => {
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Por favor ingresá el detalle del artículo!',
+                                        message: 'Por favor ingresá el detalle del producto!',
                                     },
                                 ]}
                             >
-                                <TextArea rows={3} placeholder="Ingrese el detalle del artículo" />
+                                <TextArea rows={3} placeholder="Ingrese el detalle del producto" />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Form.Item>
                         <Button type="primary" htmlType="submit" size='large' style={{ marginRight: '8px' }}>
-                            Crear artículo
+                            Crear producto
                         </Button>
                         <Link to="/">
                             <Button
