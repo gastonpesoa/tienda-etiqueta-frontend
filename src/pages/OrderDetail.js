@@ -67,11 +67,14 @@ const OrderDetail = () => {
     }
 
     const handleSetShowReview = (item, product) => {
-        if (!item.reviewedByUser) {
+        console.log("state", state)
+        if (!item.reviewedByUser && state === 'ENTREGADA') {
             setShowReview(true)
             setProductToReview(product)
-        } else {
+        } else if (item.reviewedByUser) {
             message.error("Ya calificaste este producto!")
+        } else if (state !== 'ENTREGADA') {
+            message.error("Podrás calificar cuando recibas el producto!")
         }
     }
 

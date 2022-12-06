@@ -9,7 +9,7 @@ const FilterSize = ({ sizes, dispatchFilterSizeApplied }) => {
     };
     return (
         <div className='header-filter-container'>
-            <Text>Talle:</Text>
+            <Text>Tipo:</Text>
             <Select
                 style={{ marginLeft: 10, width: 70 }}
                 onChange={onChangeSize}
