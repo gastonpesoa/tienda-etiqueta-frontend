@@ -175,70 +175,71 @@ const Products = () => {
                 loading
                     ? (<Skeleton active />)
                     : (
-                        products?.length > 0
-                            ? <>
-                                <Row>
-                                    <Col span={12}><Title level={2}>{title}</Title></Col>
-                                    <Col span={12} style={{ textAlign: 'right' }}>
-                                        <BadgeProductsCount count={products.length} />
-                                    </Col>
-                                </Row>
-                                <Row style={{ marginBottom: 16 }}>
-                                    <Col span={24}>
-                                        <Space>
-                                            {
-                                                showGenderFilter &&
-                                                <FilterGender dispatchFilterGenderApplied={dispatchFilterGenderApplied} />
-                                            }
-                                            <FilterSize sizes={sizes} dispatchFilterSizeApplied={dispatchFilterSizeApplied} />
-                                        </Space>
-                                    </Col>
-                                </Row>
-                                <Row style={{ marginBottom: 16 }}>
-                                    <Col span={24}>
-                                        <FiltersApplied filters={filtersApplied} dispatchRemoveFilterApplied={dispatchRemoveFilterApplied} />
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col span={6}>
-                                        <Space direction='vertical' size='large'>
-                                            <FilterBrand
-                                                brands={brands.map((brand, i) => ({
-                                                    id: i, label: brand, value: brand
-                                                }))}
-                                                dispatchFilterBrandApplied={dispatchFilterBrandApplied}
-                                            />
-                                            <FilterRating
-                                                ratings={
-                                                    ratings.map((rate, i) => ({
-                                                        id: i,
-                                                        label: <Rate defaultValue={rate} disabled />,
-                                                        value: rate
-                                                    }))}
-                                                dispatchFilterRatingApplied={dispatchFilterRatingApplied}
-                                            />
-                                            <FilterPrice dispatchFilterPriceApplied={dispatchFilterPriceApplied} />
-                                        </Space>
-                                    </Col>
-                                    <Col span={18}>
+                        <>
+                            <Row>
+                                <Col span={12}><Title level={2}>{title}</Title></Col>
+                                <Col span={12} style={{ textAlign: 'right' }}>
+                                    <BadgeProductsCount count={products.length} />
+                                </Col>
+                            </Row>
+                            <Row style={{ marginBottom: 16 }}>
+                                <Col span={24}>
+                                    <Space>
                                         {
-                                            products.map((traje, i) => (
+                                            showGenderFilter &&
+                                            <FilterGender dispatchFilterGenderApplied={dispatchFilterGenderApplied} />
+                                        }
+                                        <FilterSize sizes={sizes} dispatchFilterSizeApplied={dispatchFilterSizeApplied} />
+                                    </Space>
+                                </Col>
+                            </Row>
+                            <Row style={{ marginBottom: 16 }}>
+                                <Col span={24}>
+                                    <FiltersApplied filters={filtersApplied} dispatchRemoveFilterApplied={dispatchRemoveFilterApplied} />
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col span={6}>
+                                    <Space direction='vertical' size='large'>
+                                        <FilterBrand
+                                            brands={brands.map((brand, i) => ({
+                                                id: i, label: brand, value: brand
+                                            }))}
+                                            dispatchFilterBrandApplied={dispatchFilterBrandApplied}
+                                        />
+                                        <FilterRating
+                                            ratings={
+                                                ratings.map((rate, i) => ({
+                                                    id: i,
+                                                    label: <Rate defaultValue={rate} disabled />,
+                                                    value: rate
+                                                }))}
+                                            dispatchFilterRatingApplied={dispatchFilterRatingApplied}
+                                        />
+                                        <FilterPrice dispatchFilterPriceApplied={dispatchFilterPriceApplied} />
+                                    </Space>
+                                </Col>
+                                <Col span={18}>
+                                    {
+                                        products?.length > 0
+                                            ? products.map((traje, i) => (
                                                 <ProductCard key={i} product={traje} />
                                             ))
-                                        }
-                                    </Col>
-                                </Row>
-                            </>
-                            : <Empty
-                                imageStyle={{
-                                    marginTop: 160,
-                                }}
-                                description={
-                                    <span>
-                                        No encontramos resultados para su búsqueda
-                                    </span>
-                                }
-                            />
+                                            : <Empty
+                                                imageStyle={{
+                                                    marginTop: 160,
+                                                }}
+                                                description={
+                                                    <span>
+                                                        No encontramos resultados para su búsqueda
+                                                    </span>
+                                                }
+                                            />
+                                    }
+                                </Col>
+                            </Row>
+                        </>
+
                     )
             }
         </>
