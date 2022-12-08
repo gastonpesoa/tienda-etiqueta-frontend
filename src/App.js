@@ -17,10 +17,11 @@ import HeaderSearch from "./components/HeaderSearch";
 import MenuHeader from "./components/MenuHeader";
 import myData from './data.json';
 import './App.less';
-import { isExpired, decodeToken } from "react-jwt";
+import { isExpired } from "react-jwt";
 import OrderManagement from './pages/OrderManagement';
-import UserManagement from './pages/UserManagement';
 import OrderManagementDetail from './pages/OrderManagementDetail';
+import UserManagement from './pages/UserManagement';
+import ZoneManagement from './pages/ZoneManagement';
 import ProductForm from './pages/ProductForm';
 const { Header, Footer, Content } = Layout;
 
@@ -163,6 +164,7 @@ function App() {
                 <Route path="/order-management" element={<OrderManagement />} />
                 <Route path="/order-management-detail/:orderId" element={<OrderManagementDetail />} />
                 <Route path="/users-management" element={<UserManagement />} />
+                <Route path="/zones-management" element={<ZoneManagement />} />
                 <Route path="/banks" element={<Banks />} />
                 <Route path="*" element={<Error404 />} />
               </Routes>
