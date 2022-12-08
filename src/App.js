@@ -22,6 +22,7 @@ import OrderManagement from './pages/OrderManagement';
 import OrderManagementDetail from './pages/OrderManagementDetail';
 import UserManagement from './pages/UserManagement';
 import ZoneManagement from './pages/ZoneManagement';
+import DiscountCodeManagement from './pages/DiscountCodeManagement';
 import ProductForm from './pages/ProductForm';
 const { Header, Footer, Content } = Layout;
 
@@ -165,6 +166,7 @@ function App() {
                 <Route path="/order-management-detail/:orderId" element={<OrderManagementDetail />} />
                 <Route path="/users-management" element={<UserManagement />} />
                 <Route path="/zones-management" element={<ZoneManagement />} />
+                <Route path="/discounts-management" element={<DiscountCodeManagement />} />
                 <Route path="/banks" element={<Banks />} />
                 <Route path="*" element={<Error404 />} />
               </Routes>
