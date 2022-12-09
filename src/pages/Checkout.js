@@ -92,7 +92,8 @@ const Checkout = () => {
             address: user.address,
             city: user.city,
             province: user.province,
-            postal_code: user.postal_code
+            postal_code: user.postal_code,
+            telephone_number: user.telephone
         });
     }
 
