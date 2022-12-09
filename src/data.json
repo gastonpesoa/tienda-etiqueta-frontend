@@ -159,6 +159,12 @@
             "title": "Gestión de bancos",
             "link": "/banks",
             "items": []
+        },
+        {
+            "key": "zonas",
+            "title": "Gestión de zonas",
+            "link": "/zones-management",
+            "items": []
         }
     ],
     "menu_admin": [
@@ -263,6 +269,12 @@
             "key": "banks",
             "title": "Gestión de bancos",
             "link": "/banks",
+            "items": []
+        },
+        {
+            "key": "zonas",
+            "title": "Gestión de zonas",
+            "link": "/zones-management",
             "items": []
         }
     ],
