@@ -171,7 +171,10 @@ const ProductForm = () => {
     const createProduct = (value) => {
         fetch(`${process.env.REACT_APP_API_URL_BASE}/products`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+                "Authorization": `Bearer ${localStorage.getItem("token")}`, 
+                "Content-Type": "application/json" 
+            },
             body: JSON.stringify(value)
         })
             .then(res => res.json())
@@ -220,10 +223,14 @@ const ProductForm = () => {
     }
 
     const handleUpdateProduct = (item) => {
+        getSubcategories(item.category._id);
+        console.log(item);
         setArticlesAmout(item.articles.length);
         form.setFieldsValue({
             title: item.title,
             price: item.price,
+            categoryId: item.category._id,
+            subcategoryId: item.subcategory._id,
             brand: item.brand,
             color: item.color,
             cut: item.cut,
@@ -273,7 +280,7 @@ const ProductForm = () => {
             key: 'category',
             render: (_, record) => {
                 let retorno = record.category.name 
-                if (record.subcategory !== undefined)
+                if (record.subcategory !== undefined && record.subcategory !== null)
                     retorno += record.subcategory.name && ` / ${record.subcategory.name}`
                 return retorno;
             }
