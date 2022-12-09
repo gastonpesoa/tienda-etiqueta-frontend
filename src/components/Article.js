@@ -29,7 +29,7 @@ const Article = ({ articleNumber }) => {
                     ]}
                 >
                     <InputNumber 
-                        placeholder="Ingrese el stock del artículo" 
+                        placeholder="Ingrese el stock del talle" 
                         formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                         parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                         style={{ width: '100%' }}
