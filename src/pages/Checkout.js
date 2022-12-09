@@ -79,6 +79,11 @@ const Checkout = () => {
         setTotal(result);
     }, [subtotal, shippingCost, discount, discountRate, deliveryMethod, paymentMethod]);
 
+    useEffect(() => {
+        if (user !== undefined && user.province !== undefined && provinces.length > 0)
+            onChangeProvinceSelection(user.province);
+    }, [provinces])
+
     const initializeForm = () => {
         form.setFieldsValue({
             name: user.name,
