@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom'
-import { Row, Col, Typography, Tag, message, Table } from 'antd';
+import { Row, Col, Typography, Tag, message, Table, Button } from 'antd';
 import { formatState, formatDate } from '../Utils';
 const { Title } = Typography;
 
@@ -79,14 +79,11 @@ const columns = [
     {
         title: 'Acciones',
         dataIndex: 'key',
-        render: (id) => <Link to={'/order-management-detail/'+id}>Ver detalle</Link>
+        render: (id) => <Button><Link to={'/order-management-detail/'+id}>Ver detalle</Link></Button>
     },
 ];
 
 const OrderManagement = () => {
-
-    //const { user, token } = useContext(AppContext);
-    //const navigate = useNavigate()
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
