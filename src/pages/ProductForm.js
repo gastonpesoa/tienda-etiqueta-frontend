@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
-import { Col, Row, Button, Typography, Form, Input, Select, InputNumber, message, Upload } from 'antd';
+import { Col, Row, Button, Typography, Form, Input, Select, InputNumber, message, Upload, notification } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import myData from '../data.json';
 import TextArea from 'antd/lib/input/TextArea';
 import { useEffect, useState } from 'react';
+import Article from '../components/Article';
 const { Option } = Select;
 const { Title } = Typography;
 
@@ -34,6 +35,7 @@ const ProductForm = () => {
     const navigate = useNavigate()
     const [categoriesList, setCategoriesList] = useState([]);
     const [subcategoriesList, setSubcategoriesList] = useState([]);
+    const [articlesAmount, setArticlesAmout] = useState(1);
 
     useEffect(() => {
         fetch(`${process.env.REACT_APP_API_URL_BASE}/categories/`)
@@ -74,8 +76,8 @@ const ProductForm = () => {
                             return [
                                 ...savedSubcategories,
                                 {
-                                    id: subcategory._id,
-                                    value: subcategory.name,
+                                    id: subcategory.id,
+                                    value: subcategory.id,
                                     label: subcategory.name
                                 }
                             ];
@@ -92,11 +94,22 @@ const ProductForm = () => {
     };
 
     const onFinish = (values) => {
-        createProduct(values)
+        console.log(values);
+        //createProduct(values)
     };
 
     const onFinishFailed = (errorInfo) => {
         console.error('Failed:', errorInfo);
+        errorInfo.errorFields.map((e) => {
+            openNotificationWithIcon(e.errors[0])
+        })
+    };
+
+    const openNotificationWithIcon = (message) => {
+        notification['error']({
+            message: 'Cargue los datos necesarios',
+            description: message,
+        });
     };
 
     const createProduct = (value) => {
@@ -111,10 +124,19 @@ const ProductForm = () => {
                     message.error(data.message)
                     console.log(data)
                 } else {
-                    message.success(`Producto creado exitosamente!`)
-                    navigate('/')
+                    message.success(`Artículo creado exitosamente!`)
+                    //navigate('/')
                 }
             })
+    }
+
+    const handleAddArticle = () => {
+        setArticlesAmout(articlesAmount+1);
+    }
+
+    const handleRemoveArticle = () => {
+        if (articlesAmount > 1)
+            setArticlesAmout(articlesAmount-1);
     }
 
     return (
@@ -137,8 +159,8 @@ const ProductForm = () => {
             <Row>
                 <Col span={24}>
                     <Form.Item>
-                        <Title level={3} >Crear producto</Title>
-                        <Title level={5} type="secondary">Introduzca los datos del producto</Title>
+                        <Title level={3} >Crear artículo</Title>
+                        <Title level={5} type="secondary">Introduzca los datos del artículo</Title>
                     </Form.Item>
                 </Col>
             </Row>
@@ -152,23 +174,23 @@ const ProductForm = () => {
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Por favor ingresá el título del producto!',
+                                        message: 'Por favor ingresá el título del artículo!',
                                     },
                                 ]}
                             >
-                                <Input placeholder="Ingrese el título del producto" />
+                                <Input placeholder="Ingrese el título del artículo" />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={8}>
                         <Col span={12}>
                             <Form.Item
-                                name="category"
+                                name="categoryId"
                                 label="Categoría"
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Por favor seleccione la categoría del producto!',
+                                        message: 'Por favor seleccione la categoría del artículo!',
                                     },
                                 ]}
                             >
@@ -182,11 +204,11 @@ const ProductForm = () => {
                         </Col>
                         <Col span={12}>
                             <Form.Item
-                                name="subcategory"
+                                name="subcategoryId"
                                 label="Sub-categoría"
                                 rules={[
                                     {
-                                        message: 'Por favor seleccione la sub-categoría del producto!',
+                                        message: 'Por favor seleccione la sub-categoría del artículo!',
                                     },
                                 ]}
                             >
@@ -206,11 +228,11 @@ const ProductForm = () => {
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Por favor ingresá la marca del producto!',
+                                        message: 'Por favor ingresá la marca del artículo!',
                                     },
                                 ]}
                             >
-                                <Input placeholder="Ingrese la marca del producto" />
+                                <Input placeholder="Ingrese la marca del artículo" />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
@@ -220,11 +242,11 @@ const ProductForm = () => {
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Por favor ingresá el color del producto!',
+                                        message: 'Por favor ingresá el color del artículo!',
                                     },
                                 ]}
                             >
-                                <Input placeholder="Ingrese el color del producto" />
+                                <Input placeholder="Ingrese el color del artículo" />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -236,12 +258,12 @@ const ProductForm = () => {
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Por favor ingresá el precio del producto!',
+                                        message: 'Por favor ingresá el precio del artículo!',
                                     },
                                 ]}
                             >
                                 <InputNumber 
-                                    placeholder="Ingrese el precio del producto" 
+                                    placeholder="Ingrese el precio del artículo" 
                                     formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                     parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                                     style={{ width: '100%' }}
@@ -255,7 +277,7 @@ const ProductForm = () => {
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Por favor seleccione el género del producto!',
+                                        message: 'Por favor seleccione el género del artículo!',
                                     },
                                 ]}
                             >
@@ -264,10 +286,10 @@ const ProductForm = () => {
                                     allowClear
                                     options={[
                                         {
-                                            value: 'M'
+                                            value: 'Hombre'
                                         },
                                         {
-                                            value: 'F'
+                                            value: 'Mujer'
                                         }
                                     ]}
                                 />
@@ -282,11 +304,11 @@ const ProductForm = () => {
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Por favor ingresá la descripción del producto!',
+                                        message: 'Por favor ingresá la descripción del artículo!',
                                     },
                                 ]}
                             >
-                                <TextArea rows={3} placeholder="Ingrese la descripción del producto" />
+                                <TextArea rows={3} placeholder="Ingrese la descripción del artículo" />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
@@ -296,17 +318,17 @@ const ProductForm = () => {
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Por favor ingresá el detalle del producto!',
+                                        message: 'Por favor ingresá el detalle del artículo!',
                                     },
                                 ]}
                             >
-                                <TextArea rows={3} placeholder="Ingrese el detalle del producto" />
+                                <TextArea rows={3} placeholder="Ingrese el detalle del artículo" />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Form.Item>
                         <Button type="primary" htmlType="submit" size='large' style={{ marginRight: '8px' }}>
-                            Crear producto
+                            Crear artículo
                         </Button>
                         <Link to="/">
                             <Button
@@ -317,6 +339,37 @@ const ProductForm = () => {
                             </Button>
                         </Link>
                     </Form.Item>
+                </Col>
+                <Col span={12} style={{ paddingLeft: '30px', textAlign: 'center' }}>
+                    {
+                        (function (rows, i, len) {
+                            while (++i <= len) {
+                                rows.push(<Article articleNumber={i-1} />)
+                            }
+                            return rows;
+                        })
+                        ([], 1, articlesAmount+1)
+                    }
+                    <Row align='center'>
+                        <Button
+                            type="primary"
+                            size='large'
+                            onClick={handleAddArticle}
+                        >
+                            Agregar talle
+                        </Button>
+                        {
+                            articlesAmount > 1 && 
+                            <Button
+                                type="default"
+                                size='large'
+                                onClick={handleRemoveArticle}
+                                style={{ marginLeft: '8px' }}
+                            >
+                                Remover talle
+                            </Button>
+                        }
+                    </Row>
                 </Col>
                 {/*<Col span={12} style={{ padding: '30px 0px 0px 30px', textAlign: 'center' }}>
                     <Upload
