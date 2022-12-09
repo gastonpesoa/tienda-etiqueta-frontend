@@ -145,7 +145,7 @@
         {
             "key": "products",
             "title": "Gestión de artículos",
-            "link": "/product-create",
+            "link": "/product-management",
             "items": []
         },
         {
@@ -250,7 +250,7 @@
         {
             "key": "products",
             "title": "Gestión de artículos",
-            "link": "/product-create",
+            "link": "/product-management",
             "items": []
         },
         {

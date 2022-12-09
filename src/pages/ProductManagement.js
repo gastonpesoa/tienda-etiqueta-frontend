@@ -29,7 +29,7 @@ const { Title } = Typography;
     },
 ];*/
 
-const ProductForm = () => {
+const ProductManagement = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showForm, setShowForm] = useState(false);
@@ -605,4 +605,4 @@ const ProductForm = () => {
     );
 }
 
-export default ProductForm;
+export default ProductManagement;

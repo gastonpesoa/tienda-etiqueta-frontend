@@ -23,7 +23,7 @@ import OrderManagementDetail from './pages/OrderManagementDetail';
 import UserManagement from './pages/UserManagement';
 import ZoneManagement from './pages/ZoneManagement';
 import DiscountCodeManagement from './pages/DiscountCodeManagement';
-import ProductForm from './pages/ProductForm';
+import ProductManagement from './pages/ProductManagement';
 const { Header, Footer, Content } = Layout;
 
 function App() {
@@ -158,7 +158,7 @@ function App() {
                 <Route path="/products/:category/:subcategory" element={<Products />} />
                 <Route path="/products-search/:query" element={<Products />} />
                 <Route path="/product-detail/:productId" element={<ProductDetail />} />
-                <Route path="/product-create" element={<ProductForm />} />
+                <Route path="/product-management" element={<ProductManagement />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/result/:orderId" element={<CheckoutResult />} />
                 <Route path="/order-detail/:orderId" element={<OrderDetail />} />
