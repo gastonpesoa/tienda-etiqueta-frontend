@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Skeleton, Row, Col, Table, Typography, Button, Input, message, Space, Form, InputNumber, DatePicker, Popconfirm, notification } from 'antd';
+import { Skeleton, Row, Col, Table, Typography, Button, Input, message, Space, Form, InputNumber, DatePicker, Popconfirm, notification, Switch } from 'antd';
 import moment from 'moment';
 import Price from "../components/Price";
 import { formatDate } from '../Utils'
@@ -31,6 +31,7 @@ const DiscountCodeManagement = () => {
                     key: item.id,
                     code: item.code,
                     amount: item.amount,
+                    used: item.used,
                     due_date: item.due_date,
                     created_by: item.created_by
                 })
@@ -47,6 +48,7 @@ const DiscountCodeManagement = () => {
         form.setFieldsValue({
             code: item.code,
             amount: item.amount,
+            used: item.used,
             due_date: moment(item.due_date),
             created_by: item.created_by
         });
@@ -161,6 +163,14 @@ const DiscountCodeManagement = () => {
             )
         },
         {
+            title: 'Utilizado',
+            dataIndex: 'used',
+            key: 'used',
+            render: (_, record) => (
+                record.used ? "Sí" : "No"
+            )
+        },
+        {
             title: 'Fecha de vencimiento',
             dataIndex: 'due_date',
             key: 'due_date',
@@ -228,7 +238,7 @@ const DiscountCodeManagement = () => {
                                 form={form}
                             >
                                 <Row gutter={8}>
-                                    <Col span={8}>
+                                    <Col span={6}>
                                         <Form.Item
                                             label="Código"
                                             name="code"
@@ -242,7 +252,7 @@ const DiscountCodeManagement = () => {
                                             <Input placeholder="Código" />
                                         </Form.Item>
                                     </Col>
-                                    <Col span={8}>
+                                    <Col span={6}>
                                         <Form.Item
                                             label="Descuento"
                                             name="amount"
@@ -256,7 +266,16 @@ const DiscountCodeManagement = () => {
                                             <InputNumber placeholder="Monto del descuento" style={{ width: 200 }} />
                                         </Form.Item>
                                     </Col>
-                                    <Col span={8}>
+                                    <Col span={6}>
+                                        <Form.Item
+                                            label="Utilizado"
+                                            name="used"
+                                            valuePropName="checked"
+                                        >
+                                            <Switch />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col span={6}>
                                         <Form.Item
                                             label="Fecha de vencimiento"
                                             name="due_date"
