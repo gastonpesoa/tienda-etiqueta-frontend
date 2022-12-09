@@ -41,6 +41,7 @@ const ProductForm = () => {
         fetch(`${process.env.REACT_APP_API_URL_BASE}/categories/`)
             .then((res) => res.ok ? res.json() : Promise.reject(res))
             .then(({ data }) => {
+                setCategoriesList([]);
                 if (data.length > 0) {
                     data.forEach((category) => {
                         console.log(category);
@@ -94,8 +95,15 @@ const ProductForm = () => {
     };
 
     const onFinish = (values) => {
-        console.log(values);
-        //createProduct(values)
+        const articles = [];
+        for (let i = 1; i <= articlesAmount; i++) {
+            articles.push({
+                size: values[`size${i}`],
+                stock: values[`stock${i}`]
+            })
+        }
+        values.articles = articles;
+        createProduct(values)
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -167,7 +175,7 @@ const ProductForm = () => {
             <Row>
                 <Col span={12}>
                     <Row gutter={8}>
-                        <Col span={24}>
+                        <Col span={12}>
                             <Form.Item
                                 label="Título"
                                 name="title"
@@ -179,6 +187,25 @@ const ProductForm = () => {
                                 ]}
                             >
                                 <Input placeholder="Ingrese el título del artículo" />
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item
+                                label="Precio"
+                                name="price"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Por favor ingresá el precio del artículo!',
+                                    },
+                                ]}
+                            >
+                                <InputNumber 
+                                    placeholder="Ingrese el precio del artículo" 
+                                    formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                                    style={{ width: '100%' }}
+                                />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -253,21 +280,10 @@ const ProductForm = () => {
                     <Row gutter={8}>
                         <Col span={12}>
                             <Form.Item
-                                label="Precio"
-                                name="price"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Por favor ingresá el precio del artículo!',
-                                    },
-                                ]}
+                                label="Corte"
+                                name="cut"
                             >
-                                <InputNumber 
-                                    placeholder="Ingrese el precio del artículo" 
-                                    formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                                    style={{ width: '100%' }}
-                                />
+                                <Input placeholder="Ingrese el corte del artículo" />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
