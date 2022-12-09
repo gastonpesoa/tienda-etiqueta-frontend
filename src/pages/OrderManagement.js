@@ -1,60 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Row, Col, Typography, Tag, message, Table } from 'antd';
-import { AppContext } from "../AppContext";
 import { formatState, formatDate } from '../Utils';
 const { Title } = Typography;
-
-/*const dataSource = [
-    {
-        key: '1',
-        date: new Date('08/10/2022'),
-        items: [
-            {
-                product: {
-                    title: 'Corbata'
-                },
-                units: 1
-            }
-        ],
-        state: 'EN_VIAJE'
-    },
-    {
-        key: '2',
-        date: new Date('08/23/2022'),
-        items: [
-            {
-                product: {
-                    title: 'Camisa Azul Estampada',
-                    size: 'S'
-                },
-                units: 1
-            },
-            {
-                product: {
-                    title: 'Pantalón Gabardina Azul',
-                    size: 'S'
-                },
-                units: 1
-            }
-        ],
-        state: 'CONFIRMADA'
-    },
-    {
-        key: 'pedro',
-        date: new Date('08/02/2022'),
-        items: [
-            {
-                product: {
-                    title: 'Pantalón Gabardina Azul',
-                    size: 'S'
-                },
-                units: 2
-            }
-        ],
-        state: 'ENTREGADA'
-    },
-];*/
 
 const columns = [
     {
@@ -79,7 +27,7 @@ const columns = [
                 const { product, units } = items[i];
                 if (i != 0) output += ', ';
                 output += product.title;
-                if (product.size !== undefined) output += ` (talle ${product.size})`;
+                if (product.articles[0].size !== undefined) output += ` (talle ${product.articles[0].size})`;
                 output += ` x${units}`;
             }
             return output;
@@ -147,7 +95,6 @@ const OrderManagement = () => {
             })
             .then((res) => res.ok ? res.json() : Promise.reject(res))
             .then(({data}) => {
-                //setOrders(dataSource);
                 if (data.length > 0) {
                     data.forEach((order) => {
                         setOrders((savedOrders) => {
