@@ -25,6 +25,7 @@ import ZoneManagement from './pages/ZoneManagement';
 import DiscountCodeManagement from './pages/DiscountCodeManagement';
 import ProductManagement from './pages/ProductManagement';
 import CategoryManagement from './pages/CategoryManagement';
+import SubcategoryManagement from './pages/SubcategoryManagement';
 const { Header, Footer, Content } = Layout;
 
 function App() {
@@ -169,6 +170,7 @@ function App() {
                 <Route path="/zones-management" element={<ZoneManagement />} />
                 <Route path="/discounts-management" element={<DiscountCodeManagement />} />
                 <Route path="/categories-management" element={<CategoryManagement />} />
+                <Route path="/subcategories-management" element={<SubcategoryManagement />} />
                 <Route path="/banks" element={<Banks />} />
                 <Route path="*" element={<Error404 />} />
               </Routes>

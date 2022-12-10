@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
-import { Skeleton, Row, Col, Table, Typography, Button, Input, message, Space, Form, Popconfirm, notification } from 'antd';
+import { Skeleton, Row, Col, Table, Typography, Button, Input, message, Space, Form, InputNumber, DatePicker, Popconfirm, notification, Switch, Select } from 'antd';
 const { Title } = Typography;
 
-const CategoryManagement = () => {
+const SubcategoryManagement = () => {
 
-    const [categories, setCategories] = useState([]);
+    const [subcategories, setSubcategories] = useState([]);
+    const [categoriesList, setCategoriesList] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showForm, setShowForm] = useState(false);
     const [isCreateForm, setIsCreateForm] = useState(false);
@@ -12,13 +13,14 @@ const CategoryManagement = () => {
     const [form] = Form.useForm();
 
     useEffect(() => {
-        getCategories()
+        getCategories();
+        getSubcategories();
     }, [])
 
-    const getCategories = async () => {
+    const getSubcategories = async () => {
         setLoading(true);
         try {
-            const res = await fetch(`${process.env.REACT_APP_API_URL_BASE}/categories`, {
+            const res = await fetch(`${process.env.REACT_APP_API_URL_BASE}/subcategories`, {
                 headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
             })
             const data = await res.json();
@@ -27,10 +29,11 @@ const CategoryManagement = () => {
                 newArray.push({
                     key: item.id,
                     name: item.name,
-                    url: item.url
+                    url: item.url,
+                    category: item.category
                 })
             })
-            setCategories(newArray);
+            setSubcategories(newArray);
             setLoading(false);
         } catch (error) {
             message.error(error)
@@ -38,25 +41,55 @@ const CategoryManagement = () => {
         }
     }
 
-    const handleUpdateCategory = (item) => {
+    const getCategories = () => {
+        fetch(`${process.env.REACT_APP_API_URL_BASE}/categories/`)
+            .then((res) => res.ok ? res.json() : Promise.reject(res))
+            .then(({ data }) => {
+                setCategoriesList([]);
+                if (data.length > 0) {
+                    data.forEach((category) => {
+                        setCategoriesList((savedCategories) => {
+                            return [
+                                ...savedCategories,
+                                {
+                                    id: category.id,
+                                    value: category.id,
+                                    label: category.name
+                                }
+                            ];
+                        })
+                    });
+                } else {
+                    message.error("No hay categorías disponibles");
+                }
+            })
+            .catch((err) => {
+                console.error(err);
+                message.error("Hubo un error al traer el listado de categorías, intente nuevamente más tarde");
+            });
+    }
+
+    const handleUpdateSubcategory = (item) => {
+        console.log(item);
         form.setFieldsValue({
             name: item.name,
-            url: item.url
+            url: item.url,
+            idCategory: item.category.id
         });
         setUpdateId(item.key);
         setIsCreateForm(false);
         setShowForm(true)
     }
 
-    const handleCreateCategory = () => {
+    const handleCreateSubcategory = () => {
         setShowForm(true);
         setIsCreateForm(true);
         form.resetFields();
     }
 
-    const handleDeleteCategory = async (item) => {
+    const handleDeleteSubcategory = async (item) => {
         try {
-            const res = await fetch(`${process.env.REACT_APP_API_URL_BASE}/categories/id/${item.key}`, {
+            const res = await fetch(`${process.env.REACT_APP_API_URL_BASE}/subcategories/id/${item.key}`, {
                 method: "DELETE",
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`,
@@ -64,8 +97,8 @@ const CategoryManagement = () => {
                 }
             })
             const data = await res.json();
-            message.success("Categoría eliminada con éxito!")
-            getCategories()
+            message.success("Subcategoría eliminada con éxito!")
+            getSubcategories()
         } catch (error) {
             console.log(error)
         }
@@ -77,9 +110,9 @@ const CategoryManagement = () => {
 
     const onFinish = (values) => {
         if (isCreateForm) {
-            registerCategory(values)
+            registerSubcategory(values)
         } else {
-            updateCategory(values)
+            updateSubcategory(values)
         }
     };
 
@@ -97,8 +130,9 @@ const CategoryManagement = () => {
         });
     };
 
-    const registerCategory = (value) => {
-        fetch(`${process.env.REACT_APP_API_URL_BASE}/categories`, {
+    const registerSubcategory = (value) => {
+        console.log(value);
+        fetch(`${process.env.REACT_APP_API_URL_BASE}/subcategories`, {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`,
@@ -112,15 +146,15 @@ const CategoryManagement = () => {
                     message.error(data.message)
                     console.log(data)
                 } else {
-                    message.success(`Categoría registrada con éxito!`)
-                    getCategories()
+                    message.success(`Subcategoría registrada con éxito!`)
+                    getSubcategories()
                 }
             })
     }
 
-    const updateCategory = async (values) => {
+    const updateSubcategory = async (values) => {
         try {
-            const res = await fetch(`${process.env.REACT_APP_API_URL_BASE}/categories/id/${updateId}`, {
+            const res = await fetch(`${process.env.REACT_APP_API_URL_BASE}/subcategories/id/${updateId}`, {
                 method: "PUT",
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`,
@@ -130,7 +164,7 @@ const CategoryManagement = () => {
             })
             const data = await res.json();
             message.success("Las modificaciones han sido registradas con éxito!")
-            getCategories()
+            getSubcategories()
         } catch (error) {
             console.log(error)
         }
@@ -138,7 +172,7 @@ const CategoryManagement = () => {
 
     const columns = [
         {
-            title: 'Categoría',
+            title: 'Subcategoría',
             dataIndex: 'name',
             key: 'name'
         },
@@ -148,15 +182,23 @@ const CategoryManagement = () => {
             key: 'url'
         },
         {
+            title: 'Categoría padre',
+            dataIndex: 'category',
+            key: 'category',
+            render: (_, record) => {
+                return record.category.name;
+            }
+        },
+        {
             title: 'Acciones',
             render: (_, record) => (
                 <Space key={record._id}>
-                    <Button type='primary' onClick={() => { handleUpdateCategory(record) }}>
+                    <Button type='primary' onClick={() => { handleUpdateSubcategory(record) }}>
                         Modificar
                     </Button>
                     <Popconfirm
-                        title="Estás seguro que deseas eliminar esta categoría?"
-                        onConfirm={() => { handleDeleteCategory(record) }}
+                        title="Estás seguro que deseas eliminar esta sub-categoría?"
+                        onConfirm={() => { handleDeleteSubcategory(record) }}
                         onCancel={cancel}
                         okText="Si"
                         cancelText="No"
@@ -178,17 +220,17 @@ const CategoryManagement = () => {
                     : <>
                         <Row>
                             <Col span={12}>
-                                <Title level={2}>Gestión de categorías</Title>
+                                <Title level={2}>Gestión de sub-categorías</Title>
                             </Col>
                             <Col span={12} style={{ textAlign: 'right' }}>
-                                <Button type='primary' onClick={handleCreateCategory}>
-                                    Crear categoría
+                                <Button type='primary' onClick={handleCreateSubcategory}>
+                                    Crear sub-categoría
                                 </Button>
                             </Col>
                         </Row>
                         <Row>
                             <Col span={24}>
-                                <Table dataSource={categories} columns={columns} pagination={{ pageSize: 5 }}></Table>
+                                <Table dataSource={subcategories} columns={columns} pagination={{ pageSize: 5 }}></Table>
                             </Col>
                         </Row>
                         {
@@ -202,32 +244,50 @@ const CategoryManagement = () => {
                                 form={form}
                             >
                                 <Row gutter={8}>
-                                    <Col span={12}>
+                                    <Col span={8}>
                                         <Form.Item
-                                            label="Categoría"
+                                            label="Sub-categoría"
                                             name="name"
                                             rules={[
                                                 {
                                                     required: true,
-                                                    message: 'Por favor ingresá el nombre de la categoría!',
+                                                    message: 'Por favor ingresá el nombre de la sub-categoría!',
                                                 },
                                             ]}
                                         >
-                                            <Input placeholder="Ingrese el nombre de la categoría" />
+                                            <Input placeholder="Ingrese el nombre de la sub-categoría" />
                                         </Form.Item>
                                     </Col>
-                                    <Col span={12}>
+                                    <Col span={8}>
                                         <Form.Item
                                             label="URL"
                                             name="url"
                                             rules={[
                                                 {
                                                     required: true,
-                                                    message: 'Por favor ingresá la URL de la categoría!',
+                                                    message: 'Por favor ingresá la URL de la sub-categoría!',
                                                 },
                                             ]}
                                         >
-                                            <Input placeholder="Ingrese la URL de la categoría" />
+                                            <Input placeholder="Ingrese la URL de la sub-categoría" />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col span={8}>
+                                        <Form.Item
+                                            name="idCategory"
+                                            label="Categoría padre"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Por favor seleccione la categoría padre de la sub-categoría!',
+                                                },
+                                            ]}
+                                        >
+                                            <Select
+                                                placeholder="Seleccione una categoría padre"
+                                                allowClear
+                                                options={categoriesList}
+                                            />
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -259,4 +319,4 @@ const CategoryManagement = () => {
     );
 }
 
-export default CategoryManagement;
+export default SubcategoryManagement;
