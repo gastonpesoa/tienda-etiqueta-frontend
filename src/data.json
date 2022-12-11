@@ -137,18 +137,6 @@
             "items": []
         },
         {
-            "key": "categories",
-            "title": "Gestión de categorías",
-            "link": "/categories-management",
-            "items": [
-                {
-                    "key": "subcategories",
-                    "title": "Gestión de sub-categorías",
-                    "link": "/subcategories-management"
-                }
-            ]
-        },
-        {
             "key": "products",
             "title": "Gestión de artículos",
             "link": "/product-management",
