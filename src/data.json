@@ -137,15 +137,9 @@
             "items": []
         },
         {
-            "key": "categories",
-            "title": "Gestión de categorías",
-            "link": "/categories-management",
-            "items": []
-        },
-        {
             "key": "products",
             "title": "Gestión de artículos",
-            "link": "/product-create",
+            "link": "/product-management",
             "items": []
         },
         {
@@ -245,12 +239,18 @@
             "key": "categories",
             "title": "Gestión de categorías",
             "link": "/categories-management",
-            "items": []
+            "items": [
+                {
+                    "key": "subcategories",
+                    "title": "Gestión de sub-categorías",
+                    "link": "/subcategories-management"
+                }
+            ]
         },
         {
             "key": "products",
             "title": "Gestión de artículos",
-            "link": "/product-create",
+            "link": "/product-management",
             "items": []
         },
         {
@@ -335,101 +335,29 @@
         }
     ],
     "provinces": [
-        {
-            "value": "Ciudad Autónoma de Buenos Aires",
-            "shippingCost": 100
-        },
-        {
-            "value": "Buenos aires",
-            "shippingCost": 200
-        },
-        {
-            "value": "Catamarca",
-            "shippingCost": 300
-        },
-        {
-            "value": "Chaco",
-            "shippingCost": 300
-        },
-        {
-            "value": "Chubut",
-            "shippingCost": 300
-        },
-        {
-            "value": "Córdoba",
-            "shippingCost": 250
-        },
-        {
-            "value": "Corrientes",
-            "shippingCost": 300
-        },
-        {
-            "value": "Entre Ríos",
-            "shippingCost": 250
-        },
-        {
-            "value": "Formosa",
-            "shippingCost": 300
-        },
-        {
-            "value": "Jujuy",
-            "shippingCost": 300
-        },
-        {
-            "value": "La Pampa",
-            "shippingCost": 250
-        },
-        {
-            "value": "La Rioja",
-            "shippingCost": 300
-        },
-        {
-            "value": "Mendoza",
-            "shippingCost": 300
-        },
-        {
-            "value": "Misiones",
-            "shippingCost": 300
-        },
-        {
-            "value": "Neuquén",
-            "shippingCost": 300
-        },
-        {
-            "value": "Río Negro",
-            "shippingCost": 250
-        },
-        {
-            "value": "Salta",
-            "shippingCost": 300
-        },
-        {
-            "value": "San Juan",
-            "shippingCost": 300
-        },
-        {
-            "value": "San Luis",
-            "shippingCost": 300
-        },
-        {
-            "value": "Santa Cruz",
-            "shippingCost": 300
-        },
-        {
-            "value": "Santa Fe",
-            "shippingCost": 250
-        },
-        {
-            "value": "Santiago del Estero",
-            "shippingCost": 300
-        },
-        {
-            "value": "Tierra del Fuego",
-            "shippingCost": 300
-        },
-        {
-            "value": "Tucumán",
-            "shippingCost": 300
-        }
+        { "value": "Ciudad Autónoma de Buenos Aires" },
+        { "value": "Buenos aires" },
+        { "value": "Catamarca" },
+        { "value": "Chaco" },
+        { "value": "Chubut" },
+        { "value": "Córdoba" },
+        { "value": "Corrientes" },
+        { "value": "Entre Ríos" },
+        { "value": "Formosa" },
+        { "value": "Jujuy" },
+        { "value": "La Pampa" },
+        { "value": "La Rioja" },
+        { "value": "Mendoza" },
+        { "value": "Misiones" },
+        { "value": "Neuquén" },
+        { "value": "Río Negro" },
+        { "value": "Salta" },
+        { "value": "San Juan" },
+        { "value": "San Luis" },
+        { "value": "Santa Cruz" },
+        { "value": "Santa Fe" },
+        { "value": "Santiago del Estero" },
+        { "value": "Tierra del Fuego" },
+        { "value": "Tucumán" }
     ]
 }

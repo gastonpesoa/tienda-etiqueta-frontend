@@ -1,13 +1,10 @@
 import { useState, useEffect } from 'react'
-import { Skeleton, Row, Col, Table, Typography, Button, Input, message, Space, Form, InputNumber, DatePicker, Popconfirm, notification, Switch } from 'antd';
-import moment from 'moment';
-import Price from "../components/Price";
-import { formatDate } from '../Utils'
-const { Title, Text } = Typography;
+import { Skeleton, Row, Col, Table, Typography, Button, Input, message, Space, Form, Popconfirm, notification } from 'antd';
+const { Title } = Typography;
 
-const DiscountCodeManagement = () => {
+const CategoryManagement = () => {
 
-    const [dicounts, setDiscounts] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showForm, setShowForm] = useState(false);
     const [isCreateForm, setIsCreateForm] = useState(false);
@@ -15,13 +12,13 @@ const DiscountCodeManagement = () => {
     const [form] = Form.useForm();
 
     useEffect(() => {
-        getDiscounts(`${process.env.REACT_APP_API_URL_BASE}/discountCodes`)
+        getCategories()
     }, [])
 
-    const getDiscounts = async (url) => {
+    const getCategories = async () => {
         setLoading(true);
         try {
-            const res = await fetch(url, {
+            const res = await fetch(`${process.env.REACT_APP_API_URL_BASE}/categories`, {
                 headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
             })
             const data = await res.json();
@@ -29,14 +26,11 @@ const DiscountCodeManagement = () => {
             data.data.map(item => {
                 newArray.push({
                     key: item.id,
-                    code: item.code,
-                    amount: item.amount,
-                    used: item.used,
-                    due_date: item.due_date,
-                    created_by: item.created_by
+                    name: item.name,
+                    url: item.url
                 })
             })
-            setDiscounts(newArray);
+            setCategories(newArray);
             setLoading(false);
         } catch (error) {
             message.error(error)
@@ -44,30 +38,25 @@ const DiscountCodeManagement = () => {
         }
     }
 
-    const handleUpdateDiscount = (item) => {
+    const handleUpdateCategory = (item) => {
         form.setFieldsValue({
-            code: item.code,
-            amount: item.amount,
-            used: item.used,
-            due_date: moment(item.due_date),
-            created_by: item.created_by
+            name: item.name,
+            url: item.url
         });
         setUpdateId(item.key);
         setIsCreateForm(false);
         setShowForm(true)
     }
 
-    const handleCreateDiscount = () => {
-        console.log("create discount")
+    const handleCreateCategory = () => {
         setShowForm(true);
         setIsCreateForm(true);
         form.resetFields();
     }
 
-    const handleDeleteDiscount = async (discount) => {
-        console.log("delete", discount)
+    const handleDeleteCategory = async (item) => {
         try {
-            const res = await fetch(`${process.env.REACT_APP_API_URL_BASE}/discountCodes/id/${discount.key}`, {
+            const res = await fetch(`${process.env.REACT_APP_API_URL_BASE}/categories/id/${item.key}`, {
                 method: "DELETE",
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`,
@@ -75,8 +64,8 @@ const DiscountCodeManagement = () => {
                 }
             })
             const data = await res.json();
-            message.success("Descuento eliminada con éxito!")
-            getDiscounts(`${process.env.REACT_APP_API_URL_BASE}/discountCodes`)
+            message.success("Categoría eliminada con éxito!")
+            getCategories()
         } catch (error) {
             console.log(error)
         }
@@ -87,11 +76,10 @@ const DiscountCodeManagement = () => {
     };
 
     const onFinish = (values) => {
-        console.log("form finish", values)
         if (isCreateForm) {
-            registerDiscount(values)
+            registerCategory(values)
         } else {
-            updateDiscountData(values)
+            updateCategory(values)
         }
     };
 
@@ -109,8 +97,8 @@ const DiscountCodeManagement = () => {
         });
     };
 
-    const registerDiscount = (value) => {
-        fetch(`${process.env.REACT_APP_API_URL_BASE}/discountCodes`, {
+    const registerCategory = (value) => {
+        fetch(`${process.env.REACT_APP_API_URL_BASE}/categories`, {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`,
@@ -124,15 +112,15 @@ const DiscountCodeManagement = () => {
                     message.error(data.message)
                     console.log(data)
                 } else {
-                    message.success(`Descuento registrada con éxito!`)
-                    getDiscounts(`${process.env.REACT_APP_API_URL_BASE}/discountCodes`)
+                    message.success(`Categoría registrada con éxito!`)
+                    getCategories()
                 }
             })
     }
 
-    const updateDiscountData = async (values) => {
+    const updateCategory = async (values) => {
         try {
-            const res = await fetch(`${process.env.REACT_APP_API_URL_BASE}/discountCodes/id/${updateId}`, {
+            const res = await fetch(`${process.env.REACT_APP_API_URL_BASE}/categories/id/${updateId}`, {
                 method: "PUT",
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`,
@@ -142,7 +130,7 @@ const DiscountCodeManagement = () => {
             })
             const data = await res.json();
             message.success("Las modificaciones han sido registradas con éxito!")
-            getDiscounts(`${process.env.REACT_APP_API_URL_BASE}/discountCodes`)
+            getCategories()
         } catch (error) {
             console.log(error)
         }
@@ -150,49 +138,25 @@ const DiscountCodeManagement = () => {
 
     const columns = [
         {
-            title: 'Código',
-            dataIndex: 'code',
-            key: 'code'
+            title: 'Categoría',
+            dataIndex: 'name',
+            key: 'name'
         },
         {
-            title: 'Descuento',
-            dataIndex: 'amount',
-            key: 'amount',
-            render: (_, record) => (
-                <Price key={record.key} price={record.amount} isText={true} />
-            )
-        },
-        {
-            title: 'Utilizado',
-            dataIndex: 'used',
-            key: 'used',
-            render: (_, record) => (
-                record.used ? "Sí" : "No"
-            )
-        },
-        {
-            title: 'Fecha de vencimiento',
-            dataIndex: 'due_date',
-            key: 'due_date',
-            render: (_, record) => (
-                <Text key={record.key}>{formatDate(record.due_date)}</Text>
-            )
-        },
-        {
-            title: 'Creado por',
-            dataIndex: 'created_by',
-            key: 'created_by'
+            title: 'URL',
+            dataIndex: 'url',
+            key: 'url'
         },
         {
             title: 'Acciones',
             render: (_, record) => (
                 <Space key={record._id}>
-                    <Button type='primary' onClick={() => { handleUpdateDiscount(record) }}>
+                    <Button type='primary' onClick={() => { handleUpdateCategory(record) }}>
                         Modificar
                     </Button>
                     <Popconfirm
-                        title="Estás seguro que deseas eliminar este descuento?"
-                        onConfirm={() => { handleDeleteDiscount(record) }}
+                        title="Estás seguro que deseas eliminar esta categoría?"
+                        onConfirm={() => { handleDeleteCategory(record) }}
                         onCancel={cancel}
                         okText="Si"
                         cancelText="No"
@@ -214,17 +178,17 @@ const DiscountCodeManagement = () => {
                     : <>
                         <Row>
                             <Col span={12}>
-                                <Title level={2}>Gestión de descuentos</Title>
+                                <Title level={2}>Gestión de categorías</Title>
                             </Col>
                             <Col span={12} style={{ textAlign: 'right' }}>
-                                <Button type='primary' onClick={handleCreateDiscount}>
-                                    Crear descuento
+                                <Button type='primary' onClick={handleCreateCategory}>
+                                    Crear categoría
                                 </Button>
                             </Col>
                         </Row>
                         <Row>
                             <Col span={24}>
-                                <Table dataSource={dicounts} columns={columns} pagination={{ pageSize: 5 }}></Table>
+                                <Table dataSource={categories} columns={columns} pagination={{ pageSize: 5 }}></Table>
                             </Col>
                         </Row>
                         {
@@ -238,55 +202,32 @@ const DiscountCodeManagement = () => {
                                 form={form}
                             >
                                 <Row gutter={8}>
-                                    <Col span={6}>
+                                    <Col span={12}>
                                         <Form.Item
-                                            label="Código"
-                                            name="code"
+                                            label="Categoría"
+                                            name="name"
                                             rules={[
                                                 {
                                                     required: true,
-                                                    message: 'Por favor ingresá el código!',
+                                                    message: 'Por favor ingresá el nombre de la categoría!',
                                                 },
                                             ]}
                                         >
-                                            <Input placeholder="Código" />
+                                            <Input placeholder="Ingrese el nombre de la categoría" />
                                         </Form.Item>
                                     </Col>
-                                    <Col span={6}>
+                                    <Col span={12}>
                                         <Form.Item
-                                            label="Descuento"
-                                            name="amount"
+                                            label="URL"
+                                            name="url"
                                             rules={[
                                                 {
                                                     required: true,
-                                                    message: 'Por favor ingresá el monto del descuento!',
+                                                    message: 'Por favor ingresá la URL de la categoría!',
                                                 },
                                             ]}
                                         >
-                                            <InputNumber placeholder="Monto del descuento" style={{ width: 200 }} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col span={6}>
-                                        <Form.Item
-                                            label="Utilizado"
-                                            name="used"
-                                            valuePropName="checked"
-                                        >
-                                            <Switch />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col span={6}>
-                                        <Form.Item
-                                            label="Fecha de vencimiento"
-                                            name="due_date"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: 'Por favor ingresá la fecha de vencimiento!',
-                                                },
-                                            ]}
-                                        >
-                                            <DatePicker format={'DD/MM/YYYY'} />
+                                            <Input placeholder="Ingrese la URL de la categoría" />
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -318,4 +259,4 @@ const DiscountCodeManagement = () => {
     );
 }
 
-export default DiscountCodeManagement;
+export default CategoryManagement;

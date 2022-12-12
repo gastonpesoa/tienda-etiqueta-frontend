@@ -79,6 +79,11 @@ const Checkout = () => {
         setTotal(result);
     }, [subtotal, shippingCost, discount, discountRate, deliveryMethod, paymentMethod]);
 
+    useEffect(() => {
+        if (user !== undefined && user.province !== undefined && provinces.length > 0)
+            onChangeProvinceSelection(user.province);
+    }, [provinces])
+
     const initializeForm = () => {
         form.setFieldsValue({
             name: user.name,
@@ -87,7 +92,8 @@ const Checkout = () => {
             address: user.address,
             city: user.city,
             province: user.province,
-            postal_code: user.postal_code
+            postal_code: user.postal_code,
+            telephone_number: user.telephone
         });
     }
 
