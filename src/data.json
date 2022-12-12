@@ -1,141 +1,6 @@
 {
-    "menu_client": [
-        {
-            "key": "trajes",
-            "title": "Trajes",
-            "link": "/products/trajes",
-            "items": [
-                {
-                    "key": "trajes-ejecutivos",
-                    "title": "Trajes Ejecutivos",
-                    "link": "/products/trajes/trajes-ejecutivos"
-                },
-                {
-                    "key": "trajes-chaque",
-                    "title": "Trajes Chaqué",
-                    "link": "/products/trajes/trajes-chaque"
-                },
-                {
-                    "key": "trajes-novio",
-                    "title": "Trajes de Novio",
-                    "link": "/products/trajes/trajes-novio"
-                },
-                {
-                    "key": "esmoquins",
-                    "title": "Esmoquins",
-                    "link": "/products/trajes/esmoquins"
-                }
-            ]
-        },
-        {
-            "key": "camisas",
-            "title": "Camisas",
-            "link": "/products/camisas",
-            "items": [
-                {
-                    "key": "camisas-lisas",
-                    "title": "Camisas Lisas",
-                    "link": "/products/camisas/camisas-lisas"
-                },
-                {
-                    "key": "camisas-rayadas",
-                    "title": "Camisas Rayadas",
-                    "link": "/products/camisas/camisas-rayadas"
-                },
-                {
-                    "key": "camisas-estampadas",
-                    "title": "Camisas Estampadas",
-                    "link": "/products/camisas/camisas-estampadas"
-                }
-            ]
-        },
-        {
-            "key": "zapatos",
-            "title": "Zapatos",
-            "link": "/products/zapatos",
-            "items": []
-        },
-        {
-            "key": "corbatas",
-            "title": "Corbatas",
-            "link": "/products/corbatas",
-            "items": []
-        },
-        {
-            "key": "accesorios",
-            "title": "Accesorios",
-            "link": "/products/accesorios",
-            "items": []
-        }
-    ],
+    "menu_client": [],
     "menu_employee": [
-        {
-            "key": "trajes",
-            "title": "Trajes",
-            "link": "/products/trajes",
-            "items": [
-                {
-                    "key": "trajes-ejecutivos",
-                    "title": "Trajes Ejecutivos",
-                    "link": "/products/trajes/trajes-ejecutivos"
-                },
-                {
-                    "key": "trajes-chaque",
-                    "title": "Trajes Chaqué",
-                    "link": "/products/trajes/trajes-chaque"
-                },
-                {
-                    "key": "trajes-novio",
-                    "title": "Trajes de Novio",
-                    "link": "/products/trajes/trajes-novio"
-                },
-                {
-                    "key": "esmoquins",
-                    "title": "Esmoquins",
-                    "link": "/products/trajes/esmoquins"
-                }
-            ]
-        },
-        {
-            "key": "camisas",
-            "title": "Camisas",
-            "link": "/products/camisas",
-            "items": [
-                {
-                    "key": "camisas-lisas",
-                    "title": "Camisas Lisas",
-                    "link": "/products/camisas/camisas-lisas"
-                },
-                {
-                    "key": "camisas-rayadas",
-                    "title": "Camisas Rayadas",
-                    "link": "/products/camisas/camisas-rayadas"
-                },
-                {
-                    "key": "camisas-estampadas",
-                    "title": "Camisas Estampadas",
-                    "link": "/products/camisas/camisas-estampadas"
-                }
-            ]
-        },
-        {
-            "key": "zapatos",
-            "title": "Zapatos",
-            "link": "/products/zapatos",
-            "items": []
-        },
-        {
-            "key": "corbatas",
-            "title": "Corbatas",
-            "link": "/products/corbatas",
-            "items": []
-        },
-        {
-            "key": "accesorios",
-            "title": "Accesorios",
-            "link": "/products/accesorios",
-            "items": []
-        },
         {
             "key": "products",
             "title": "Gestión de artículos",
@@ -147,88 +12,9 @@
             "title": "Gestión de compras",
             "link": "/order-management",
             "items": []
-        },
-        {
-            "key": "banks",
-            "title": "Gestión de bancos",
-            "link": "/banks",
-            "items": []
-        },
-        {
-            "key": "zonas",
-            "title": "Gestión de zonas",
-            "link": "/zones-management",
-            "items": []
         }
     ],
     "menu_admin": [
-        {
-            "key": "trajes",
-            "title": "Trajes",
-            "link": "/products/trajes",
-            "items": [
-                {
-                    "key": "trajes-ejecutivos",
-                    "title": "Trajes Ejecutivos",
-                    "link": "/products/trajes/trajes-ejecutivos"
-                },
-                {
-                    "key": "trajes-chaque",
-                    "title": "Trajes Chaqué",
-                    "link": "/products/trajes/trajes-chaque"
-                },
-                {
-                    "key": "trajes-novio",
-                    "title": "Trajes de Novio",
-                    "link": "/products/trajes/trajes-novio"
-                },
-                {
-                    "key": "esmoquins",
-                    "title": "Esmoquins",
-                    "link": "/products/trajes/esmoquins"
-                }
-            ]
-        },
-        {
-            "key": "camisas",
-            "title": "Camisas",
-            "link": "/products/camisas",
-            "items": [
-                {
-                    "key": "camisas-lisas",
-                    "title": "Camisas Lisas",
-                    "link": "/products/camisas/camisas-lisas"
-                },
-                {
-                    "key": "camisas-rayadas",
-                    "title": "Camisas Rayadas",
-                    "link": "/products/camisas/camisas-rayadas"
-                },
-                {
-                    "key": "camisas-estampadas",
-                    "title": "Camisas Estampadas",
-                    "link": "/products/camisas/camisas-estampadas"
-                }
-            ]
-        },
-        {
-            "key": "zapatos",
-            "title": "Zapatos",
-            "link": "/products/zapatos",
-            "items": []
-        },
-        {
-            "key": "corbatas",
-            "title": "Corbatas",
-            "link": "/products/corbatas",
-            "items": []
-        },
-        {
-            "key": "accesorios",
-            "title": "Accesorios",
-            "link": "/products/accesorios",
-            "items": []
-        },
         {
             "key": "users",
             "title": "Gestión de usuarios",
@@ -278,6 +64,7 @@
             "items": []
         }
     ],
+
     "carousel_source": [
         {
             "src": "https://img.freepik.com/foto-gratis/tienda-ropa-tienda-ropa-perchas-tienda-boutique-moderna_1150-8886.jpg?w=996&t=st=1666222193~exp=1666222793~hmac=75f6335bce583359867e8bc4c9df98d26c3a9598e3aa95df758e10f52d285d0b",

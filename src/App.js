@@ -37,9 +37,11 @@ function App() {
   const [user, setUser] = useState({});
   const [shoppingCart, setShoppingCart] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
-  const [menu, setMenu] = useState(menu_client);
+  const [menu, setMenu] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
+    getCategories();
     let shoppingCartLocalStorage = localStorage.getItem("shoppingCart")
     let tokenStorage = localStorage.getItem("token")
     let userStorage = localStorage.getItem("user")
@@ -70,9 +72,9 @@ function App() {
       renderUserMenu()
     } else {
       localStorage.removeItem("user");
-      setMenu(menu_client)
+      setMenu([...categories, ...menu_client])
     }
-  }, [user, token])
+  }, [user, token, categories])
 
   useEffect(() => {
     if (shoppingCart?.length > 0) {
@@ -94,13 +96,13 @@ function App() {
 
   const renderUserMenu = () => {
     if (user.type === "client") {
-      setMenu(menu_client)
+      setMenu([...categories, ...menu_client])
     }
     else if (user.type === "employee") {
-      setMenu(menu_employee)
+      setMenu([...categories, ...menu_employee])
     }
     else if (user.type === "admin") {
-      setMenu(menu_admin)
+      setMenu([...categories, ...menu_admin])
     }
   }
 
@@ -135,6 +137,28 @@ function App() {
     }
   }
 
+  const getCategories = async () => {
+    try {
+        const res = await fetch(`${process.env.REACT_APP_API_URL_BASE}/categories/subcategories`, {
+            headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+        })
+        const data = await res.json();
+        let newArray = []
+        data.data.map(item => {
+            newArray.push({
+                key: item._id,
+                title: item.name,
+                link: `/products/${item.url}`,
+                items: [...item.items]
+            })
+        })
+        setCategories(newArray);
+    } catch (error) {
+        message.error(error)
+        console.log(error)
+    }
+}
+
   return (
     <>
       <Layout id="page-container" className="layout">
@@ -142,7 +166,9 @@ function App() {
         <AppContext.Provider value={{ token, user, shoppingCart, subtotal, dispatchUserEvent, dispatchShoppingCartEvent }}>
           <HeaderSearch />
           <Header>
-            <MenuHeader menu={menu} />
+
+              <MenuHeader menu={menu} />
+
           </Header>
           <Content>
             <div id="content-wrap" className="site-layout-content">
