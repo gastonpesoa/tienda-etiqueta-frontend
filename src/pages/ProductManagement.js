@@ -361,7 +361,7 @@ const ProductManagement = () => {
                                 form={form}
                             >
                                 <Row>
-                                    <Col span={24}>
+                                    <Col span={12}>
                                         <Form.Item>
                                             <Title level={3} >
                                             {
@@ -369,6 +369,11 @@ const ProductManagement = () => {
                                             }
                                             </Title>
                                             <Title level={5} type="secondary">Introduzca los datos del artículo</Title>
+                                        </Form.Item>
+                                    </Col>
+                                    <Col span={12}>
+                                        <Form.Item>
+                                            <Title level={5} type="secondary" style={{ paddingTop: '51px', paddingLeft: '30px' }}>Gestión del stock</Title>
                                         </Form.Item>
                                     </Col>
                                 </Row>

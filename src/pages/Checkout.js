@@ -20,9 +20,6 @@ const Checkout = () => {
     const [cardNumber, setCardNumber] = useState('');
     const [bank, setBank] = useState('');
     const [bankList, setBankList] = useState([]);
-    const [titular, setTitular] = useState('');
-    const [dueDate, setDueDate] = useState('');
-    const [cvc, setCvc] = useState('');
     const [total, setTotal] = useState(0);
     const [shippingCost, setShippingCost] = useState(0);
     const [validatingDiscountCode, setValidatingDiscountCode] = useState(false);
@@ -93,7 +90,9 @@ const Checkout = () => {
             city: user.city,
             province: user.province,
             postal_code: user.postal_code,
-            telephone_number: user.telephone
+            telephone_number: user.telephone,
+            delivery_method: 'Retiro en local',
+            payment_method: user.warnings >= 3 ? 'Tarjeta de crédito' : 'Pago en el local'
         });
     }
 
@@ -403,7 +402,10 @@ const Checkout = () => {
                                     >
                                         <Space direction="vertical" style={{ width: '100%' }}>
                                             <Card>
-                                                <Radio value={'Pago en el local'}>Pago en el local</Radio>
+                                                <Radio value={'Pago en el local'} disabled>Pago en el local</Radio>
+                                                {
+                                                    user.warnings >= 3 && "El medio de pago en el local se encuentra deshabilitado para usted"
+                                                }
                                             </Card>
                                             <Card>
                                                 <Radio value={'Tarjeta de crédito'}>
