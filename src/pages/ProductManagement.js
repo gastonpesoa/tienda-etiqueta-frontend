@@ -230,7 +230,7 @@ const ProductManagement = () => {
             title: item.title,
             price: item.price,
             categoryId: item.category._id,
-            subcategoryId: item.subcategory._id,
+            subcategoryId: item.subcategory ? item.subcategory._id : null,
             brand: item.brand,
             color: item.color,
             cut: item.cut,
