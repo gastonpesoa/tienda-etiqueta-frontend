@@ -97,8 +97,13 @@ const SubcategoryManagement = () => {
                 }
             })
             const data = await res.json();
-            message.success("Subcategoría eliminada con éxito!")
-            getSubcategories()
+
+            if (res.status !== 200) {
+                message.error(data.message);
+            } else {
+                message.success("Sub-categoría eliminada con éxito!")
+                getSubcategories();
+            }
         } catch (error) {
             console.log(error)
         }

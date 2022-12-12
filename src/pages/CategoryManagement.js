@@ -64,8 +64,13 @@ const CategoryManagement = () => {
                 }
             })
             const data = await res.json();
-            message.success("Categoría eliminada con éxito!")
-            getCategories()
+
+            if (res.status !== 200) {
+                message.error(data.message);
+            } else {
+                message.success("Categoría eliminada con éxito!");
+                getCategories();
+            }
         } catch (error) {
             console.log(error)
         }
