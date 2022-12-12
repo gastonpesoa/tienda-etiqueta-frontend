@@ -23,6 +23,7 @@ import OrderManagementDetail from './pages/OrderManagementDetail';
 import UserManagement from './pages/UserManagement';
 import ZoneManagement from './pages/ZoneManagement';
 import DiscountCodeManagement from './pages/DiscountCodeManagement';
+import CarouselManagement from './pages/CarouselManagement';
 import ProductForm from './pages/ProductForm';
 const { Header, Footer, Content } = Layout;
 
@@ -167,6 +168,7 @@ function App() {
                 <Route path="/users-management" element={<UserManagement />} />
                 <Route path="/zones-management" element={<ZoneManagement />} />
                 <Route path="/discounts-management" element={<DiscountCodeManagement />} />
+                <Route path="/carousel-management" element={<CarouselManagement />} />
                 <Route path="/banks" element={<Banks />} />
                 <Route path="*" element={<Error404 />} />
               </Routes>
