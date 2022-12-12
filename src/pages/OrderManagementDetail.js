@@ -61,8 +61,6 @@ const OrderManagementDetail = () => {
     }, [order])
 
     const handleChangeState = (state) => {
-        console.log(`Estado: ${state}`);
-
         fetch(`${process.env.REACT_APP_API_URL_BASE}/orders/state/${orderId}`, {
                 method: "PUT",
                 headers: {
@@ -71,7 +69,10 @@ const OrderManagementDetail = () => {
                 },
                 body: JSON.stringify({ state })
             })
-            .then((res) => res.ok ? res.json() : Promise.reject(res))
+            .then((res) => {
+                message.success('Estado de la orden modificado con éxito!');
+                return res.ok ? res.json() : Promise.reject(res)
+            })
             .then((orderEdited) => {
                 setOrder(orderEdited);
             })
