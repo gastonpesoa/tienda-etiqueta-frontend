@@ -1,14 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Skeleton, Row, Col, Image, Table, Typography, Button, Input, message, Space, Form, Upload, Popconfirm, notification } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import { toBase64 } from '../Utils'
 const { Title, Text } = Typography;
-
-const toBase64 = file => new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
-});
 
 const beforeUpload = (file) => {
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
@@ -37,9 +31,8 @@ const CarouselManagement = () => {
         getCarousels(`${process.env.REACT_APP_API_URL_BASE}/carousel`)
     }, [])
 
-    const onChange = async (file) => {
+    const handleUploadChange = async (file) => {
         setNewFile(await toBase64(file.file))
-        //console.log("base64", await toBase64(file.file))
     }
 
     const getCarousels = async (url) => {
@@ -237,7 +230,7 @@ const CarouselManagement = () => {
                                     listType="picture-card"
                                     className="avatar-uploader"
                                     beforeUpload={beforeUpload}
-                                    onChange={onChange}
+                                    onChange={handleUploadChange}
                                 >
                                     <div>
                                         <PlusOutlined />
@@ -246,7 +239,7 @@ const CarouselManagement = () => {
                                                 marginTop: 8,
                                             }}
                                         >
-                                            Upload
+                                            Subir imágen
                                         </div>
                                     </div>
                                 </Upload>

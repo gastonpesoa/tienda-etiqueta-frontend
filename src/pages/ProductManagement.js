@@ -1,33 +1,26 @@
 import { Link } from 'react-router-dom';
 import { Col, Row, Button, Typography, Form, Input, Select, InputNumber, message, Upload, notification, Popconfirm, Space, Skeleton, Table } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 import TextArea from 'antd/lib/input/TextArea';
 import { useEffect, useState } from 'react';
 import Article from '../components/Article';
 import Price from '../components/Price';
+import { toBase64 } from '../Utils'
 const { Option } = Select;
 const { Title } = Typography;
 
-/*const fileList = [
-    {
-      uid: '0',
-      name: 'xxx.png',
-      status: 'uploading',
-      percent: 33,
-    },
-    {
-      uid: '-1',
-      name: 'yyy.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-    {
-      uid: '-2',
-      name: 'zzz.png',
-      status: 'error',
-    },
-];*/
+const beforeUpload = (file) => {
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isJpgOrPng) {
+        message.error('Solo podés subir archivos JPG/PNG!');
+    }
+    // const isLt2M = file.size / 1024 / 1024 < 2;
+    // if (!isLt2M) {
+    //     message.error('Image must smaller than 2MB!');
+    // }
+    return false
+    //&& isLt2M;
+};
 
 const ProductManagement = () => {
     const [products, setProducts] = useState([]);
@@ -39,11 +32,29 @@ const ProductManagement = () => {
     const [categoriesList, setCategoriesList] = useState([]);
     const [subcategoriesList, setSubcategoriesList] = useState([]);
     const [articlesAmount, setArticlesAmout] = useState(1);
+    const [files, setFiles] = useState([]);
 
     useEffect(() => {
         getProducts();
         getCategories();
     }, []);
+
+    useEffect(() => {
+        console.log(files)
+    }, [files]);
+
+    const handleUploadChange = async (file) => {
+        let newArray = []
+        await file.fileList.map(async image => {
+            let file = await toBase64(image.originFileObj)
+            let newFile = {
+                fileName: image.name,
+                file: file
+            }
+            newArray.push(newFile)
+        })
+        setFiles(newArray)
+    }
 
     const onChangeCategory = (idCategory) => {
         getSubcategories(idCategory);
@@ -113,30 +124,30 @@ const ProductManagement = () => {
 
     const getSubcategories = (idCategory) => {
         fetch(`${process.env.REACT_APP_API_URL_BASE}/subcategories/category/${idCategory}`)
-        .then((res) => res.ok ? res.json() : Promise.reject(res))
-        .then(({ data }) => {
-            setSubcategoriesList([]);
-            if (data.length > 0) {
-                data.forEach((subcategory) => {
-                    setSubcategoriesList((savedSubcategories) => {
-                        return [
-                            ...savedSubcategories,
-                            {
-                                id: subcategory.id,
-                                value: subcategory.id,
-                                label: subcategory.name
-                            }
-                        ];
-                    })
-                });
-            } /*else {
+            .then((res) => res.ok ? res.json() : Promise.reject(res))
+            .then(({ data }) => {
+                setSubcategoriesList([]);
+                if (data.length > 0) {
+                    data.forEach((subcategory) => {
+                        setSubcategoriesList((savedSubcategories) => {
+                            return [
+                                ...savedSubcategories,
+                                {
+                                    id: subcategory.id,
+                                    value: subcategory.id,
+                                    label: subcategory.name
+                                }
+                            ];
+                        })
+                    });
+                } /*else {
                 message.error("No hay subcategorías disponibles");
             }*/
-        })
-        .catch((err) => {
-            console.error(err);
-            message.error("Hubo un error al traer el listado de subcategorías, intente nuevamente más tarde");
-        });
+            })
+            .catch((err) => {
+                console.error(err);
+                message.error("Hubo un error al traer el listado de subcategorías, intente nuevamente más tarde");
+            });
     }
 
     const onFinish = (values) => {
@@ -148,9 +159,10 @@ const ProductManagement = () => {
             })
         }
         values.articles = articles;
+        values.files = files
         if (isCreateForm)
             createProduct(values);
-        else 
+        else
             updateProduct(values);
     };
 
@@ -171,9 +183,9 @@ const ProductManagement = () => {
     const createProduct = (value) => {
         fetch(`${process.env.REACT_APP_API_URL_BASE}/products`, {
             method: "POST",
-            headers: { 
-                "Authorization": `Bearer ${localStorage.getItem("token")}`, 
-                "Content-Type": "application/json" 
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(value)
         })
@@ -208,12 +220,12 @@ const ProductManagement = () => {
     }
 
     const handleAddArticle = () => {
-        setArticlesAmout(articlesAmount+1);
+        setArticlesAmout(articlesAmount + 1);
     }
 
     const handleRemoveArticle = () => {
         if (articlesAmount > 1)
-            setArticlesAmout(articlesAmount-1);
+            setArticlesAmout(articlesAmount - 1);
     }
 
     const handleCreateProduct = () => {
@@ -239,8 +251,8 @@ const ProductManagement = () => {
             detail: item.detail,
         });
         for (let i = 0; i < item.articles.length; i++) {
-            form.setFieldValue(`size${i+1}`, item.articles[i].size);
-            form.setFieldValue(`stock${i+1}`, item.articles[i].stock);
+            form.setFieldValue(`size${i + 1}`, item.articles[i].size);
+            form.setFieldValue(`stock${i + 1}`, item.articles[i].stock);
         }
         setUpdateId(item.key);
         setIsCreateForm(false);
@@ -279,7 +291,7 @@ const ProductManagement = () => {
             dataIndex: 'category',
             key: 'category',
             render: (_, record) => {
-                let retorno = record.category.name 
+                let retorno = record.category.name
                 if (record.subcategory !== undefined && record.subcategory !== null)
                     retorno += record.subcategory.name && ` / ${record.subcategory.name}`
                 return retorno;
@@ -364,9 +376,9 @@ const ProductManagement = () => {
                                     <Col span={12}>
                                         <Form.Item>
                                             <Title level={3} >
-                                            {
-                                                isCreateForm ? 'Crear artículo' : 'Modificar artículo'
-                                            }
+                                                {
+                                                    isCreateForm ? 'Crear artículo' : 'Modificar artículo'
+                                                }
                                             </Title>
                                             <Title level={5} type="secondary">Introduzca los datos del artículo</Title>
                                         </Form.Item>
@@ -405,8 +417,8 @@ const ProductManagement = () => {
                                                         },
                                                     ]}
                                                 >
-                                                    <InputNumber 
-                                                        placeholder="Ingrese el precio del artículo" 
+                                                    <InputNumber
+                                                        placeholder="Ingrese el precio del artículo"
                                                         formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                                         parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                                                         style={{ width: '100%' }}
@@ -547,6 +559,28 @@ const ProductManagement = () => {
                                                 </Form.Item>
                                             </Col>
                                         </Row>
+                                        <Row>
+                                            <Col span={12}>
+                                                <Upload
+                                                    maxCount={3}
+                                                    listType="picture-card"
+                                                    className="avatar-uploader"
+                                                    beforeUpload={beforeUpload}
+                                                    onChange={handleUploadChange}
+                                                >
+                                                    <div>
+                                                        <PlusOutlined />
+                                                        <div
+                                                            style={{
+                                                                marginTop: 8,
+                                                            }}
+                                                        >
+                                                            Subir imágenes
+                                                        </div>
+                                                    </div>
+                                                </Upload>
+                                            </Col>
+                                        </Row>
                                         <Form.Item>
                                             <Button type="primary" htmlType="submit" style={{ marginRight: '8px' }}>
                                                 {
@@ -565,11 +599,11 @@ const ProductManagement = () => {
                                         {
                                             (function (rows, i, len) {
                                                 while (++i <= len) {
-                                                    rows.push(<Article articleNumber={i-1} />)
+                                                    rows.push(<Article articleNumber={i - 1} />)
                                                 }
                                                 return rows;
                                             })
-                                            ([], 1, articlesAmount+1)
+                                                ([], 1, articlesAmount + 1)
                                         }
                                         <Row align='center'>
                                             <Button
@@ -580,7 +614,7 @@ const ProductManagement = () => {
                                                 Agregar talle
                                             </Button>
                                             {
-                                                articlesAmount > 1 && 
+                                                articlesAmount > 1 &&
                                                 <Button
                                                     type="default"
                                                     size='large'
@@ -592,15 +626,6 @@ const ProductManagement = () => {
                                             }
                                         </Row>
                                     </Col>
-                                    {/*<Col span={12} style={{ padding: '30px 0px 0px 30px', textAlign: 'center' }}>
-                                        <Upload
-                                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                                            listType="picture"
-                                            defaultFileList={[...fileList]}
-                                        >
-                                            <Button icon={<UploadOutlined />} size='large'>Subir imagen</Button>
-                                        </Upload>
-                                    </Col>*/}
                                 </Row>
                             </Form>
                         }

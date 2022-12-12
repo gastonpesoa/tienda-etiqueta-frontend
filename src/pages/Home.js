@@ -1,14 +1,15 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { Carousel, Image, Row, Col, Layout, Typography, Skeleton } from 'antd';
+import ProductSmallCard from "../components/ProductSmallCard";
 import LinksGroup from "../components/LinksGroup";
 import InfoCard from "../components/InfoCard";
-import ProductSmallCard from "../components/ProductSmallCard";
 import '../App.less';
-import { useEffect, useState } from 'react';
 const { Content } = Layout;
 const { Text } = Typography;
 
 const Home = ({ menu }) => {
+
     const navigate = useNavigate()
     const [loadingCarousel, setLoadingCarousel] = useState(true);
     const [loadingBestSellers, setLoadingBestSellers] = useState(true);

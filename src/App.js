@@ -31,7 +31,7 @@ const { Header, Footer, Content } = Layout;
 
 function App() {
 
-  const { menu_employee, menu_client, menu_admin, carousel_source } = myData;
+  const { menu_employee, menu_client, menu_admin } = myData;
 
   const [token, setToken] = useState('');
   const [user, setUser] = useState({});
@@ -139,25 +139,25 @@ function App() {
 
   const getCategories = async () => {
     try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL_BASE}/categories/subcategories`, {
-            headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+      const res = await fetch(`${process.env.REACT_APP_API_URL_BASE}/categories/subcategories`, {
+        headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+      })
+      const data = await res.json();
+      let newArray = []
+      data.data.map(item => {
+        newArray.push({
+          key: item._id,
+          title: item.name,
+          link: `/products/${item.url}`,
+          items: [...item.items]
         })
-        const data = await res.json();
-        let newArray = []
-        data.data.map(item => {
-            newArray.push({
-                key: item._id,
-                title: item.name,
-                link: `/products/${item.url}`,
-                items: [...item.items]
-            })
-        })
-        setCategories(newArray);
+      })
+      setCategories(newArray);
     } catch (error) {
-        message.error(error)
-        console.log(error)
+      message.error(error)
+      console.log(error)
     }
-}
+  }
 
   return (
     <>
@@ -167,19 +167,13 @@ function App() {
           <HeaderSearch />
           <Header>
 
-              <MenuHeader menu={menu} />
+            <MenuHeader menu={menu} />
 
           </Header>
           <Content>
             <div id="content-wrap" className="site-layout-content">
               <Routes>
-                <Route path="/" element={
-                  <Home
-                    carouselSource={carousel_source}
-                    menu={menu}
-                  />
-                }
-                />
+                <Route path="/" element={<Home menu={menu} />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/user-profile" element={<UserProfile />} />
