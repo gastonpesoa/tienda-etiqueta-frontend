@@ -89,22 +89,17 @@ const CarouselManagement = () => {
         {
             title: 'Acciones',
             render: (_, record) => (
-                <Space key={record._id}>
-                    <Button type='primary' onClick={() => { handleUpdateCarousel(record) }}>
-                        Modificar
+                <Popconfirm
+                    title="Estás seguro que deseas eliminar esta imagen?"
+                    onConfirm={() => { handleDeleteCarousel(record) }}
+                    onCancel={cancel}
+                    okText="Si"
+                    cancelText="No"
+                >
+                    <Button danger>
+                        Eliminar
                     </Button>
-                    <Popconfirm
-                        title="Estás seguro que deseas eliminar esta imagen?"
-                        onConfirm={() => { handleDeleteCarousel(record) }}
-                        onCancel={cancel}
-                        okText="Si"
-                        cancelText="No"
-                    >
-                        <Button danger>
-                            Eliminar
-                        </Button>
-                    </Popconfirm>
-                </Space>
+                </Popconfirm>
             )
         }
     ];
@@ -137,7 +132,7 @@ const CarouselManagement = () => {
                 }
             })
             const data = await res.json();
-            message.success("Carousel eliminada con éxito!")
+            message.success("Imagen eliminada con éxito!")
             getCarousels(`${process.env.REACT_APP_API_URL_BASE}/carousel`)
         } catch (error) {
             console.log(error)

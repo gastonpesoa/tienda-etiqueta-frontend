@@ -62,6 +62,12 @@
             "title": "Gestión de zonas",
             "link": "/zones-management",
             "items": []
+        },
+        {
+            "key": "carousel",
+            "title": "Gestión de carrusel",
+            "link": "/carousel-management",
+            "items": []
         }
     ],
 

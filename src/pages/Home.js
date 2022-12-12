@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import { Carousel, Image, Row, Col, Layout, Typography, Skeleton } from 'antd';
 import LinksGroup from "../components/LinksGroup";
 import InfoCard from "../components/InfoCard";
@@ -7,15 +8,39 @@ import { useEffect, useState } from 'react';
 const { Content } = Layout;
 const { Text } = Typography;
 
-const Home = ({ carouselSource, menu }) => {
-
+const Home = ({ menu }) => {
+    const navigate = useNavigate()
+    const [loadingCarousel, setLoadingCarousel] = useState(true);
     const [loadingBestSellers, setLoadingBestSellers] = useState(true);
     const [loadingBestSuits, setLoadingBestSuits] = useState(true);
     const [currentPromotions, setCurrentPromotions] = useState([]);
+    const [carousel, setCarousel] = useState([]);
     const [bestSellers, setBestSellers] = useState([]);
     const [bestSuits, setBestSuits] = useState([]);
 
     useEffect(() => {
+        const getCarousel = async (url) => {
+            setLoadingCarousel(true)
+            try {
+                let newArray = []
+                const res = await fetch(url)
+                const data = await res.json();
+                data.data.map(async (doc) => {
+                    const res = await fetch(`${process.env.REACT_APP_API_URL_BASE}/carousel/id/${doc._id}`)
+                    const data = await res.json()
+                    newArray.push({
+                        key: doc._id,
+                        filename: doc.filename,
+                        link: doc.metadata.value,
+                        src: `data:image/png;base64,${data.data}`
+                    })
+                    setCarousel([...newArray]);
+                })
+                setLoadingCarousel(false);
+            } catch (error) {
+                console.log(error)
+            }
+        }
         const getBestSellers = async (url) => {
             setLoadingBestSellers(true);
             try {
@@ -55,7 +80,7 @@ const Home = ({ carouselSource, menu }) => {
             .catch((err) => {
                 console.error(err);
             });
-
+        getCarousel(`${process.env.REACT_APP_API_URL_BASE}/carousel`)
         getBestSellers(`${process.env.REACT_APP_API_URL_BASE}/products/best-sellers`)
         getBestSuits(`${process.env.REACT_APP_API_URL_BASE}/products/best/trajes`)
     }, []);
@@ -63,13 +88,23 @@ const Home = ({ carouselSource, menu }) => {
     return (
         <>
             <div className='carousel-container-style'>
-                <Carousel autoplay>
-                    {
-                        carouselSource.map((img, i) => (
-                            <Image key={i} src={img.src} alt={img.alt} className='carousel-img' preview={false} />
-                        ))
-                    }
-                </Carousel>
+                {
+                    loadingCarousel ? <Skeleton active /> :
+                        <Carousel autoplay>
+                            {
+                                carousel.map((img, i) => (
+                                    <Image
+                                        key={i}
+                                        src={img.src}
+                                        alt={img.filename}
+                                        className='carousel-img'
+                                        preview={false}
+                                        onClick={() => { navigate(img.link) }}
+                                    />
+                                ))
+                            }
+                        </Carousel>
+                }
             </div>
             <Content style={{ padding: '0 50px' }} >
                 <Row gutter={16} className='space-margin-bottom'>
