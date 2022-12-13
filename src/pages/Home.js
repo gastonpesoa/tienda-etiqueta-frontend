@@ -47,9 +47,37 @@ const Home = ({ menu }) => {
             try {
                 const res = await fetch(url)
                 const data = await res.json();
-                console.log(data.data)
-                setBestSellers(data.data);
-                setLoadingBestSellers(false);
+                let newArray = []
+                data.data.map(async item => {
+                    let newProduct = {
+                        _id: item.item._id,
+                        articles: item.item.articles,
+                        brand: item.item.brand,
+                        category: item.item.category,
+                        color: item.item.color,
+                        cut: item.item.cut,
+                        description: item.item.description,
+                        detail: item.item.detail,
+                        gender: item.item.gender,
+                        price: item.item.price,
+                        subcategory: item.item.subcategory,
+                        title: item.item.title,
+                        reviews: item.item.reviews,
+                        rating_average: item.item.rating_average
+                    }
+                    const res = await fetch(`${process.env.REACT_APP_API_URL_BASE}/products/image-docs/${item._id}`)
+                    const data = await res.json()
+                    let images = []
+                    for (const doc of data.data) {
+                        const res = await fetch(`${process.env.REACT_APP_API_URL_BASE}/products/image/${doc._id}`)
+                        const data = await res.json()
+                        images.push({ fileName: doc.filename, src: `data:image/png;base64,${data.data}` })
+                    }
+                    newProduct.images = images
+                    newArray.push(newProduct)
+                    setBestSellers([...newArray]);
+                    setLoadingBestSellers(false);
+                })
             } catch (error) {
                 alert(error)
             }
@@ -59,9 +87,38 @@ const Home = ({ menu }) => {
             try {
                 const res = await fetch(url)
                 const data = await res.json();
-                console.log(data.data)
-                setBestSuits(data.data);
-                setLoadingBestSuits(false);
+                let newArray = []
+                console.log(data.data);
+                data.data.map(async item => {
+                    let newProduct = {
+                        _id: item._id,
+                        articles: item.articles,
+                        brand: item.brand,
+                        category: item.category,
+                        color: item.color,
+                        cut: item.cut,
+                        description: item.description,
+                        detail: item.detail,
+                        gender: item.gender,
+                        price: item.price,
+                        subcategory: item.subcategory,
+                        title: item.title,
+                        reviews: item.reviews,
+                        rating_average: item.rating_average
+                    }
+                    const res = await fetch(`${process.env.REACT_APP_API_URL_BASE}/products/image-docs/${item._id}`)
+                    const data = await res.json()
+                    let images = []
+                    for (const doc of data.data) {
+                        const res = await fetch(`${process.env.REACT_APP_API_URL_BASE}/products/image/${doc._id}`)
+                        const data = await res.json()
+                        images.push({ fileName: doc.filename, src: `data:image/png;base64,${data.data}` })
+                    }
+                    newProduct.images = images
+                    newArray.push(newProduct)
+                    setBestSuits([...newArray]);
+                    setLoadingBestSuits(false);
+                })
             } catch (error) {
                 alert(error)
             }
@@ -172,7 +229,7 @@ const Home = ({ menu }) => {
                                         title="Productos más vendidos"
                                         items={
                                             bestSellers.map((item, i) => {
-                                                return { title: item.item.title, link: `/product-detail/${item._id}` }
+                                                return { title: item.title, link: `/product-detail/${item._id}` }
                                             })
                                         }
                                     />
@@ -180,7 +237,7 @@ const Home = ({ menu }) => {
                                 {
                                     bestSellers.map(item => (
                                         <Col key={item._id} sm={24} lg={6} >
-                                            <ProductSmallCard product={item.item} />
+                                            <ProductSmallCard product={item} />
                                         </Col>
                                     ))
                                 }

@@ -12,8 +12,8 @@ const ProductCard = ({ product }) => {
                     <Row gutter={16}>
                         <Col span={7}>
                             <Image
-                                alt={product.title}
-                                src={product.images[0]}
+                                alt={product.images[0].fileName}
+                                src={product.images[0].src}
                                 preview={false} />
                         </Col>
                         <Col span={10}>

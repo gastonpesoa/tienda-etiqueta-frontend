@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Col, Row, Button, Typography, Form, Input, Select, InputNumber, message, Upload, notification, Popconfirm, Space, Skeleton, Table } from 'antd';
+import { Col, Row, Button, Typography, Form, Image, Input, Select, InputNumber, message, Upload, notification, Popconfirm, Space, Skeleton, Table } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import TextArea from 'antd/lib/input/TextArea';
 import { useEffect, useState } from 'react';
@@ -23,6 +23,7 @@ const beforeUpload = (file) => {
 };
 
 const ProductManagement = () => {
+
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showForm, setShowForm] = useState(false);
@@ -33,6 +34,7 @@ const ProductManagement = () => {
     const [subcategoriesList, setSubcategoriesList] = useState([]);
     const [articlesAmount, setArticlesAmout] = useState(1);
     const [files, setFiles] = useState([]);
+    const [defaultFileList, setDefaultFileList] = useState([]);
 
     useEffect(() => {
         getProducts();
@@ -40,20 +42,24 @@ const ProductManagement = () => {
     }, []);
 
     useEffect(() => {
-        console.log(files)
-    }, [files]);
+        console.log("products", products)
+    }, [products]);
 
-    const handleUploadChange = async (file) => {
+    const handleUploadChange = async (files) => {
+        console.log("files change", files)
         let newArray = []
-        await file.fileList.map(async image => {
-            let file = await toBase64(image.originFileObj)
-            let newFile = {
-                fileName: image.name,
-                file: file
+        await files.fileList.map(async image => {
+            let file
+            try {
+                file = await toBase64(image.originFileObj)
+            } catch (error) {
+                console.log("error", error)
+            } finally {
+                newArray.push({ fileName: image.name, file: file })
             }
-            newArray.push(newFile)
         })
         setFiles(newArray)
+        setDefaultFileList(files.fileList)
     }
 
     const onChangeCategory = (idCategory) => {
@@ -63,14 +69,14 @@ const ProductManagement = () => {
     const getProducts = async () => {
         setLoading(true);
         try {
-            const res = await fetch(`${process.env.REACT_APP_API_URL_BASE}/products`, {
+            const res = await fetch(`${process.env.REACT_APP_API_URL_BASE}/products/all`, {
                 headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
             })
             const data = await res.json();
             let newArray = []
             console.log(data.data);
-            data.data.map(item => {
-                newArray.push({
+            data.data.map(async item => {
+                let newProduct = {
                     key: item._id,
                     articles: item.articles,
                     brand: item.brand,
@@ -80,14 +86,23 @@ const ProductManagement = () => {
                     description: item.description,
                     detail: item.detail,
                     gender: item.gender,
-                    images: item.images,
                     price: item.price,
                     subcategory: item.subcategory,
                     title: item.title
-                })
+                }
+                const res = await fetch(`${process.env.REACT_APP_API_URL_BASE}/products/image-docs/${item._id}`)
+                const data = await res.json()
+                let images = []
+                for (const doc of data.data) {
+                    const res = await fetch(`${process.env.REACT_APP_API_URL_BASE}/products/image/${doc._id}`)
+                    const data = await res.json()
+                    images.push({ fileName: doc.filename, src: `data:image/png;base64,${data.data}` })
+                }
+                newProduct.images = images
+                newArray.push(newProduct)
+                setProducts([...newArray]);
+                setLoading(false);
             })
-            setProducts(newArray);
-            setLoading(false);
         } catch (error) {
             message.error(error)
             console.error(error)
@@ -254,6 +269,19 @@ const ProductManagement = () => {
             form.setFieldValue(`size${i + 1}`, item.articles[i].size);
             form.setFieldValue(`stock${i + 1}`, item.articles[i].stock);
         }
+        setDefaultFileList(item.images.map((image, i) => {
+            return {
+                uid: i,
+                name: image.fileName,
+                url: image.src,
+            }
+        }))
+        // setFiles(item.images.map(image => {
+        //     return {
+        //         fileName: image.fileName,
+        //         file: image.src,
+        //     }
+        // }))
         setUpdateId(item.key);
         setIsCreateForm(false);
         setShowForm(true)
@@ -281,6 +309,14 @@ const ProductManagement = () => {
     };
 
     const columns = [
+        {
+            title: 'Imágen',
+            dataIndex: 'image',
+            key: 'image',
+            render: (_, record) => (
+                <Image width={100} src={record.images[0]?.src} alt={record.images[0]?.fileName} />
+            )
+        },
         {
             title: 'Título',
             dataIndex: 'title',
@@ -563,6 +599,7 @@ const ProductManagement = () => {
                                             <Col span={12}>
                                                 <Upload
                                                     maxCount={3}
+                                                    fileList={defaultFileList}
                                                     listType="picture-card"
                                                     className="avatar-uploader"
                                                     beforeUpload={beforeUpload}

@@ -32,8 +32,35 @@ const ProductDetail = () => {
             try {
                 const res = await fetch(url)
                 const data = await res.json();
-                setProduct(data.data);
-                setArticle(data.data.articles[0])
+
+                let product = {
+                    _id: data.data._id,
+                    articles: data.data.articles,
+                    brand: data.data.brand,
+                    category: data.data.category,
+                    color: data.data.color,
+                    cut: data.data.cut,
+                    description: data.data.description,
+                    detail: data.data.detail,
+                    gender: data.data.gender,
+                    price: data.data.price,
+                    subcategory: data.data.subcategory,
+                    title: data.data.title,
+                    reviews: data.data.reviews,
+                    rating_average: data.data.rating_average
+                }
+                const imageDocsRes = await fetch(`${process.env.REACT_APP_API_URL_BASE}/products/image-docs/${product._id}`)
+                const imageDocsData = await imageDocsRes.json()
+                let images = []
+                for (const doc of imageDocsData.data) {
+                    const res = await fetch(`${process.env.REACT_APP_API_URL_BASE}/products/image/${doc._id}`)
+                    const data = await res.json()
+                    images.push({ fileName: doc.filename, src: `data:image/png;base64,${data.data}` })
+                }
+                product.images = images
+                console.log("product", product)
+                setProduct(product);
+                setArticle(product.articles[0])
                 let descriptionTab = {
                     label: <Text>Descripción</Text>,
                     key: 'description',
@@ -150,7 +177,7 @@ const ProductDetail = () => {
                                 product.images.map((image, i) => (
                                     <Row key={i} style={{ marginBottom: '30px' }}>
                                         <Col span={24}>
-                                            <Image src={image} />
+                                            <Image src={image.src} alt={image.fileName} />
                                         </Col>
                                     </Row>
                                 ))

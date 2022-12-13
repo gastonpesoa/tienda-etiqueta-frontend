@@ -1,16 +1,16 @@
 import { Link } from 'react-router-dom';
 import { Card, Image } from 'antd';
 import Price from "./Price";
+import { useEffect } from 'react';
 const { Meta } = Card;
 
 const ProductSmallCard = ({ product }) => {
-
     return (
         <Link to={`../product-detail/${product._id}`}>
             <Card hoverable style={{ width: 330 }}>
                 <Image
-                    alt={product.title}
-                    src={product.images[0]}
+                    alt={product.images[0].fileName}
+                    src={product.images[0].src}
                     preview={false}
                     style={{ marginBottom: '20px' }} />
                 <Meta
