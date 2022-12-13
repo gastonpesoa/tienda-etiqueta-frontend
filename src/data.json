@@ -19,7 +19,13 @@
             "key": "users",
             "title": "Gestión de usuarios",
             "link": "/users-management",
-            "items": []
+            "items": [
+                {
+                    "key": "blacklist",
+                    "title": "Blacklist",
+                    "link": "/blacklist"
+                }
+            ]
         },
         {
             "key": "categories",

@@ -28,6 +28,7 @@ import ProductManagement from './pages/ProductManagement';
 import CategoryManagement from './pages/CategoryManagement';
 import SubcategoryManagement from './pages/SubcategoryManagement';
 import Reports from './pages/Reports';
+import Blacklist from './pages/Blacklist';
 const { Header, Footer, Content } = Layout;
 
 function App() {
@@ -196,6 +197,7 @@ function App() {
                 <Route path="/carousel-management" element={<CarouselManagement />} />
                 <Route path="/banks" element={<Banks />} />
                 <Route path="/reports" element={<Reports />} />
+                <Route path="/blacklist" element={<Blacklist />} />
                 <Route path="*" element={<Error404 />} />
               </Routes>
 
