@@ -39,16 +39,12 @@ const OrderDetail = () => {
                     navigate('/')
                     return
                 }
-                console.log("data", data)
-
                 Promise.all(
                     data.data.items.map(async item => {
                         const imageDocsRes = await fetch(`${process.env.REACT_APP_API_URL_BASE}/products/image-docs/${item.product.id}`)
                         const imageDocsData = await imageDocsRes.json()
-                        console.log("imageDocsData", imageDocsData)
                         const imageRes = await fetch(`${process.env.REACT_APP_API_URL_BASE}/products/image/${imageDocsData.data[0]._id}`)
                         const imageData = await imageRes.json()
-                        console.log("imagedata", imageData)
                         item.product.image = { fileName: imageDocsData.data[0].filename, src: `data:image/png;base64,${imageData.data}` }
                     })
                 ).then(rs => {

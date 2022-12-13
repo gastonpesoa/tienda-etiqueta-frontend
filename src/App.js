@@ -27,6 +27,7 @@ import CarouselManagement from './pages/CarouselManagement';
 import ProductManagement from './pages/ProductManagement';
 import CategoryManagement from './pages/CategoryManagement';
 import SubcategoryManagement from './pages/SubcategoryManagement';
+import Reports from './pages/Reports';
 const { Header, Footer, Content } = Layout;
 
 function App() {
@@ -194,6 +195,7 @@ function App() {
                 <Route path="/subcategories-management" element={<SubcategoryManagement />} />
                 <Route path="/carousel-management" element={<CarouselManagement />} />
                 <Route path="/banks" element={<Banks />} />
+                <Route path="/reports" element={<Reports />} />
                 <Route path="*" element={<Error404 />} />
               </Routes>
 

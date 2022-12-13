@@ -68,6 +68,12 @@
             "title": "Gestión de carrusel",
             "link": "/carousel-management",
             "items": []
+        },
+        {
+            "key": "reports",
+            "title": "Reportes",
+            "link": "/reports",
+            "items": []
         }
     ],
     "sizes_list": [
