@@ -92,7 +92,7 @@ const Checkout = () => {
             postal_code: user.postal_code,
             telephone_number: user.telephone,
             delivery_method: 'Retiro en local',
-            payment_method: user.warnings >= 3 ? 'Tarjeta de crédito' : 'Pago en el local'
+            payment_method: user.warnings !== undefined && user.warnings >= 3 ? 'Tarjeta de crédito' : 'Pago en el local'
         });
     }
 
@@ -402,9 +402,11 @@ const Checkout = () => {
                                     >
                                         <Space direction="vertical" style={{ width: '100%' }}>
                                             <Card>
-                                                <Radio value={'Pago en el local'} disabled>Pago en el local</Radio>
                                                 {
-                                                    user.warnings >= 3 && "El medio de pago en el local se encuentra deshabilitado para usted"
+                                                    user.warnings >= 3 && <><Radio value={'Pago en el local'} disabled>Pago en el local</Radio>El medio de pago en el local se encuentra deshabilitado para usted</>
+                                                }
+                                                {
+                                                    (user.warnings === undefined || user.warnings < 3) && <Radio value={'Pago en el local'}>Pago en el local</Radio>
                                                 }
                                             </Card>
                                             <Card>
