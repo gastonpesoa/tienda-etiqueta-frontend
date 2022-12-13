@@ -27,7 +27,12 @@ const ShoppingCartPopoverItem = ({ item }) => {
     return (
         <Row>
             <Col span={8}>
-                <Image className='shoppingcartpopoveritem-img' src={item.image} alt={item.title} preview={false} />
+                <Image
+                    className='shoppingcartpopoveritem-img'
+                    src={item.image.src}
+                    alt={item.title}
+                    preview={false}
+                />
                 <Button
                     icon={<CloseOutlined />}
                     style={{ marginTop: '25px', float: 'left' }}
